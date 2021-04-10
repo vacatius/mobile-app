@@ -6,7 +6,7 @@ import SvgLogo from "../components/SvgLogo";
 import { useTranslation } from "react-i18next";
 
 export default function Login() {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -30,8 +30,8 @@ export default function Login() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <SvgLogo style={styles.logo} width={200} height={200}/>
-            <Text style={styles.text}>{t('login')}</Text>
+            <SvgLogo style={styles.logo} width={200} height={200} />
+            <Text style={styles.text}>{t("login")}</Text>
             <Input
                 label={t("email")}
                 placeholder={

@@ -1,5 +1,5 @@
-import * as React from "react"
-import Svg, { SvgProps, Path, Ellipse } from "react-native-svg"
+import * as React from "react";
+import Svg, { SvgProps, Path, Ellipse } from "react-native-svg";
 /* SVGR has dropped some elements not supported by react-native-svg: title */
 /* created using: https://react-svgr.com/playground/?native=true&typescript=true */
 
@@ -58,7 +58,7 @@ function SvgLogo(props: SvgProps) {
                 fill="#3f3d56"
             />
         </Svg>
-    )
+    );
 }
 
 export default SvgLogo;
