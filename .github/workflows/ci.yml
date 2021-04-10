@@ -1,17 +1,17 @@
-
 name: Continuous Integration
 
 on: [push, pull_request]
 
 jobs:
-  coding-guidelines:
+  project-build:
     name: Build Project
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Install npm dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Compile project
+        run: tsc --noEmit
