@@ -9,6 +9,20 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const passwordList = [
+        "V4c47uis",
+        "P4ssw0rd",
+        "SecurePassword123",
+        "not12345678",
+        "P455w0rd",
+        "4711691337",
+    ];
+    const mailList = [
+        "email@example.com",
+        "contact@vacatius.com",
+        "TheLegend27@mail.com",
+    ];
+
     const handleLogin = () => {
         console.log(`login with email: ${email}, password: ${password}`);
     };
@@ -23,7 +37,9 @@ export default function Login() {
             <Text style={styles.text}>{t("login")}</Text>
             <Input
                 label={t("email")}
-                placeholder="mail@example.com"
+                placeholder={
+                    mailList[Math.floor(Math.random() * mailList.length)]
+                }
                 leftIcon={
                     <Icon
                         style={styles.icon}
@@ -38,7 +54,11 @@ export default function Login() {
             />
             <Input
                 label={t("password")}
-                placeholder={t("password")}
+                placeholder={
+                    passwordList[
+                        Math.floor(Math.random() * passwordList.length)
+                    ]
+                }
                 leftIcon={
                     <Icon
                         style={styles.icon}
