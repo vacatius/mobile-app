@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import { Button, Icon, Input } from "react-native-elements";
-import { Image } from "react-native-elements/dist/image/Image";
+import { StyleSheet, Text } from "react-native";
+import { Button, Icon, Input, Image } from "react-native-elements";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -12,7 +12,7 @@ export default function Login() {
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <Image
                 source={{ uri: "https://placekitten.com/400/400" }}
                 style={{ width: 200, height: 200 }}
@@ -74,7 +74,7 @@ export default function Login() {
                 titleStyle={{ color: "darkslategray" }}
                 onPress={() => console.log("register")}
             />
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         padding: 20,
+        marginTop: 30,
     },
     text: {
         fontSize: 40,
