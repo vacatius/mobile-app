@@ -3,22 +3,28 @@ import { initReactI18next } from "react-i18next";
 import * as Localization from "expo-localization";
 
 export const resources = {
-      en: {
+    en: {
         translation: {
-          "hello_world": "Hello World",
+            login: "Login",
+            register: "Register",
+            email: "Email",
+            password: "Password",
         },
-      },
-      de: {
+    },
+    de: {
         translation: {
-          "hello_world": "Hallo Welt",
+            login: "Anmelden",
+            register: "Registrieren",
+            email: "Email",
+            password: "Passwort",
         },
-      },
-    };
+    },
+};
 
 i18n.use(initReactI18next).init({
-  lng: Localization.locale,
-  fallbackLng: "en",
-  resources,
+    lng: Localization.locale,
+    fallbackLng: "en",
+    resources,
 });
 
 export default i18n;
