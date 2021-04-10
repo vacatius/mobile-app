@@ -17,7 +17,7 @@ export default function Login() {
     return (
         <SafeAreaView style={styles.container}>
             <SvgLogo style={styles.logo} width={200} height={200}/>
-            <Text style={styles.text}>Login</Text>
+            <Text style={styles.text}>{t('login')}</Text>
             <Input
                 label={t("email")}
                 placeholder="mail@example.com"
