@@ -3,8 +3,10 @@ import { StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../components/SvgLogo";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
+    const { t, i18n } = useTranslation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -17,7 +19,7 @@ export default function Login() {
             <SvgLogo style={styles.logo} width={200} height={200}/>
             <Text style={styles.text}>Login</Text>
             <Input
-                label="Email"
+                label={t("email")}
                 placeholder="mail@example.com"
                 leftIcon={
                     <Icon
@@ -32,8 +34,8 @@ export default function Login() {
                 onChange={(e) => setEmail(e.nativeEvent.text)}
             />
             <Input
-                label="Password"
-                placeholder="Password"
+                label={t("password")}
+                placeholder={t("password")}
                 leftIcon={
                     <Icon
                         style={styles.icon}
@@ -50,7 +52,7 @@ export default function Login() {
             <Button
                 containerStyle={styles.buttonContainer}
                 buttonStyle={styles.buttonLogin}
-                title="Login"
+                title={t("login")}
                 titleStyle={{ color: "black", fontSize: 25 }}
                 icon={
                     <Icon
@@ -67,7 +69,7 @@ export default function Login() {
             <Button
                 containerStyle={styles.buttonContainer}
                 type="clear"
-                title="Register"
+                title={t("register")}
                 titleStyle={{ color: "darkslategray" }}
                 onPress={() => console.log("register")}
             />

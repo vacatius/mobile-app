@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # npm configuration
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    pull-request-branch-name:
+      separator: "-"
+
+  # GitHub Actions configuration
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "develop"
+    schedule:
+      interval: "weekly"
+    pull-request-branch-name:
+      separator: "-"
