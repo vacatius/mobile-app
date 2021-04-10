@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { StyleSheet, Text } from "react-native";
-import { Button, Icon, Input, Image } from "react-native-elements";
+import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SvgLogo from "../components/SvgLogo";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -13,11 +14,7 @@ export default function Login() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Image
-                source={{ uri: "https://placekitten.com/400/400" }}
-                style={{ width: 200, height: 200 }}
-                containerStyle={{ alignSelf: "center", marginBottom: 20 }}
-            />
+            <SvgLogo style={styles.logo} width={200} height={200}/>
             <Text style={styles.text}>Login</Text>
             <Input
                 label="Email"
@@ -102,5 +99,9 @@ const styles = StyleSheet.create({
     },
     buttonLogin: {
         backgroundColor: "#BCE1B0",
+    },
+    logo: {
+        alignSelf: "center",
+        marginBottom: 20,
     },
 });
