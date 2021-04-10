@@ -12,7 +12,7 @@ export default function App() {
     return (
         <SafeAreaProvider>
             <StatusBar style="dark" backgroundColor="white" />
-            <ScrollView keyboardShouldPersistTaps="handled">
+            <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <Login></Login>
             </ScrollView>
         </SafeAreaProvider>
