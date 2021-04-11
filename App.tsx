@@ -4,7 +4,6 @@ import { ScrollView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Login from "./src/screens/Login";
 import i18n from "./src/services/i18n";
-
 //init i18n
 i18n;
 
