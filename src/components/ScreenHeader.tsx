@@ -10,25 +10,24 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
 		<View>
 			<Header
 				placement="left"
-				centerComponent={
-                    <Text h1>{props.screenTitle}</Text>
-                }
+				centerComponent={<Text h1>{props.screenTitle}</Text>}
 				rightComponent={
-					<Avatar rounded title="V" containerStyle={styles.avatar} />
+					<Avatar rounded title="V" containerStyle={styles.avatar} size="medium" />
 				}
-                containerStyle={styles.header}
+				containerStyle={styles.header}
 			/>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: "transparent",
-        color: "black",
-    },
+	header: {
+		backgroundColor: "transparent",
+		color: "black",
+	},
 	avatar: {
-        backgroundColor: "red"
-    }
+		backgroundColor: "red",
+        borderWidth: 2,
+	},
 });
 export default ScreenHeader;
