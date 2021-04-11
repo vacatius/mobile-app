@@ -16,6 +16,7 @@ import {
 import { getEnvironment } from "./src/get-environment";
 import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
+import ScreenHeader from "./src/components/ScreenHeader";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
@@ -60,6 +61,7 @@ export default function App() {
     return (
 		<ApolloProvider client={client}>
         <SafeAreaProvider>
+            <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
             <StatusBar style="dark" backgroundColor="white" />
             <NavigationContainer>
                 <Stack.Navigator initialRouteName="login">
