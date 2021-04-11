@@ -21,6 +21,7 @@ jobs:
           expo-version: 4.x
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-cache: true
 
       - name: Install dependencies
         run: yarn install
@@ -33,4 +34,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          msg: App is ready for review, you can [see it here](https://expo.io/@${{ secrets.EXPO_CLI_USERNAME }}/use-expo?release-channel=pr-${{ github.event.number }}).
+          msg: App is ready for review, you can [see it here](https://expo.io/@${{ secrets.EXPO_CLI_USERNAME }}/${{ secrets.EXPO_CLI_USERNAME }}?release-channel=pr-${{ github.event.number }}).
