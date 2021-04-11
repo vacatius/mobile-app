@@ -5,19 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../components/SvgLogo";
 import { useTranslation } from "react-i18next";
 
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
-
-type ProfileScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    "Login"
->;
-
-type Props = {
-    navigation: ProfileScreenNavigationProp;
-};
-
-export default function Login(props: Props) {
+export default function Register() {
     const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -43,7 +31,7 @@ export default function Login(props: Props) {
     return (
         <SafeAreaView style={styles.container}>
             <SvgLogo style={styles.logo} width={200} height={200} />
-            <Text style={styles.text}>{t("login")}</Text>
+            <Text style={styles.text}>{t("register")}</Text>
             <Input
                 label={t("email")}
                 placeholder={
@@ -103,7 +91,7 @@ export default function Login(props: Props) {
                 type="clear"
                 title={t("register")}
                 titleStyle={{ color: "darkslategray" }}
-                onPress={() => props.navigation.navigate("Register")}
+                onPress={() => console.log("register")}
             />
         </SafeAreaView>
     );
