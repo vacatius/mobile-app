@@ -9,6 +9,32 @@ export const resources = {
             register: "Register",
             email: "Email",
             password: "Password",
+            repeatPassword: "Repeat Password",
+            username: "Username",
+            startJourney: ["Start Journey", "Lets go"],
+            placeholder: {
+                username: [
+                    "Gordon_Freeman",
+                    "al1ce",
+                    "GLaDOS",
+                    "lux69",
+                    "j_sparrow",
+                    "bender1337",
+                ],
+                password: [
+                    "V4c47uis",
+                    "P4ssw0rd",
+                    "SecurePassword123",
+                    "not12345678",
+                    "P455w0rd",
+                    "4711691337",
+                ],
+                email: [
+                    "email@example.com",
+                    "contact@vacatius.com",
+                    "TheLegend27@mail.com",
+                ],
+            },
         },
     },
     de: {
@@ -17,6 +43,9 @@ export const resources = {
             register: "Registrieren",
             email: "Email",
             password: "Passwort",
+            repeatPassword: "Passwort Wiederholen",
+            username: "Benutzername",
+            startJourney: ["Resie Starten", "Los gehts"],
         },
     },
 };

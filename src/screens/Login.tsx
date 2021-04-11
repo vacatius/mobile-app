@@ -19,25 +19,11 @@ type Props = {
 
 export default function Login(props: Props) {
     const { t } = useTranslation();
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const passwordList = [
-        "V4c47uis",
-        "P4ssw0rd",
-        "SecurePassword123",
-        "not12345678",
-        "P455w0rd",
-        "4711691337",
-    ];
-    const mailList = [
-        "email@example.com",
-        "contact@vacatius.com",
-        "TheLegend27@mail.com",
-    ];
-
     const handleLogin = () => {
-        console.log(`login with email: ${email}, password: ${password}`);
+        console.log(`login with username: ${username}, password: ${password}`);
     };
 
     return (
@@ -46,27 +32,39 @@ export default function Login(props: Props) {
                 <SvgLogo style={styles.logo} width={150} height={150} />
                 <Text style={styles.text}>{t("login")}</Text>
                 <Input
-                    label={t("email")}
+                    label={t("username")}
                     placeholder={
-                        mailList[Math.floor(Math.random() * mailList.length)]
+                        t("placeholder.username", { returnObjects: true })[
+                            Math.floor(
+                                Math.random() *
+                                    t("placeholder.username", {
+                                        returnObjects: true,
+                                    }).length
+                            )
+                        ]
                     }
                     leftIcon={
                         <Icon
                             style={styles.icon}
-                            name="envelope"
+                            name="user"
                             size={24}
                             color="black"
                             type="font-awesome-5"
                         />
                     }
-                    value={email}
-                    onChange={(e) => setEmail(e.nativeEvent.text)}
+                    value={username}
+                    onChange={(e) => setUsername(e.nativeEvent.text)}
                 />
                 <Input
                     label={t("password")}
                     placeholder={
-                        passwordList[
-                            Math.floor(Math.random() * passwordList.length)
+                        t("placeholder.password", { returnObjects: true })[
+                            Math.floor(
+                                Math.random() *
+                                    t("placeholder.password", {
+                                        returnObjects: true,
+                                    }).length
+                            )
                         ]
                     }
                     leftIcon={

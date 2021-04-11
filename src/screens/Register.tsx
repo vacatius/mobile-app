@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../components/SvgLogo";
@@ -9,91 +9,130 @@ export default function Register() {
     const { t } = useTranslation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [password2, setPassword2] = useState("");
+    const [username, setUsername] = useState("");
 
-    const passwordList = [
-        "V4c47uis",
-        "P4ssw0rd",
-        "SecurePassword123",
-        "not12345678",
-        "P455w0rd",
-        "4711691337",
-    ];
-    const mailList = [
-        "email@example.com",
-        "contact@vacatius.com",
-        "TheLegend27@mail.com",
-    ];
-
-    const handleLogin = () => {
-        console.log(`login with email: ${email}, password: ${password}`);
+    const handleRegister = () => {
+        console.log(t("startJourney", { returnObjects: true }));
+        if (password !== password2) {
+            return;
+        }
+        console.log(
+            `register with email: ${email}, password: ${password}, username: ${username}`
+        );
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <SvgLogo style={styles.logo} width={200} height={200} />
-            <Text style={styles.text}>{t("register")}</Text>
-            <Input
-                label={t("email")}
-                placeholder={
-                    mailList[Math.floor(Math.random() * mailList.length)]
-                }
-                leftIcon={
-                    <Icon
-                        style={styles.icon}
-                        name="envelope"
-                        size={24}
-                        color="black"
-                        type="font-awesome-5"
-                    />
-                }
-                value={email}
-                onChange={(e) => setEmail(e.nativeEvent.text)}
-            />
-            <Input
-                label={t("password")}
-                placeholder={
-                    passwordList[
-                        Math.floor(Math.random() * passwordList.length)
-                    ]
-                }
-                leftIcon={
-                    <Icon
-                        style={styles.icon}
-                        name="lock"
-                        size={24}
-                        color="black"
-                        type="font-awesome-5"
-                    />
-                }
-                value={password}
-                secureTextEntry={true}
-                onChange={(e) => setPassword(e.nativeEvent.text)}
-            />
-            <Button
-                containerStyle={styles.buttonContainer}
-                buttonStyle={styles.buttonLogin}
-                title={t("login")}
-                titleStyle={{ color: "black", fontSize: 25 }}
-                icon={
-                    <Icon
-                        style={styles.iconButton}
-                        name="arrow-right"
-                        size={15}
-                        color="black"
-                        type="font-awesome-5"
-                    />
-                }
-                iconRight={true}
-                onPress={handleLogin}
-            />
-            <Button
-                containerStyle={styles.buttonContainer}
-                type="clear"
-                title={t("register")}
-                titleStyle={{ color: "darkslategray" }}
-                onPress={() => console.log("register")}
-            />
-        </SafeAreaView>
+        <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
+            <SafeAreaView style={styles.container}>
+                <SvgLogo style={styles.logo} width={100} height={100} />
+                <Input
+                    label={t("email")}
+                    placeholder={
+                        t("placeholder.email", { returnObjects: true })[
+                            Math.floor(
+                                Math.random() *
+                                    t("placeholder.email", {
+                                        returnObjects: true,
+                                    }).length
+                            )
+                        ]
+                    }
+                    leftIcon={
+                        <Icon
+                            style={styles.icon}
+                            name="envelope"
+                            size={24}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    value={email}
+                    onChange={(e) => setEmail(e.nativeEvent.text)}
+                />
+                <Input
+                    label={t("username")}
+                    placeholder={
+                        t("placeholder.username", { returnObjects: true })[
+                            Math.floor(
+                                Math.random() *
+                                    t("placeholder.username", {
+                                        returnObjects: true,
+                                    }).length
+                            )
+                        ]
+                    }
+                    leftIcon={
+                        <Icon
+                            style={styles.icon}
+                            name="user"
+                            size={24}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    value={username}
+                    onChange={(e) => setUsername(e.nativeEvent.text)}
+                />
+                <Input
+                    label={t("password")}
+                    placeholder={t("password")}
+                    leftIcon={
+                        <Icon
+                            style={styles.icon}
+                            name="lock"
+                            size={24}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    value={password}
+                    secureTextEntry={true}
+                    onChange={(e) => setPassword(e.nativeEvent.text)}
+                />
+                <Input
+                    label={t("repeatPassword")}
+                    placeholder={t("password")}
+                    leftIcon={
+                        <Icon
+                            style={styles.icon}
+                            name="lock"
+                            size={24}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    value={password2}
+                    secureTextEntry={true}
+                    onChange={(e) => setPassword2(e.nativeEvent.text)}
+                />
+                <Button
+                    containerStyle={styles.buttonContainer}
+                    buttonStyle={styles.buttonLogin}
+                    title={
+                        t("startJourney", { returnObjects: true })[
+                            Math.floor(
+                                Math.random() *
+                                    t("startJourney", { returnObjects: true })
+                                        .length
+                            )
+                        ]
+                    }
+                    titleStyle={{ color: "black", fontSize: 25 }}
+                    icon={
+                        <Icon
+                            style={styles.iconButton}
+                            name="umbrella-beach"
+                            size={15}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    iconRight={true}
+                    onPress={handleRegister}
+                />
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 
@@ -103,7 +142,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         padding: 20,
-        marginTop: 30,
     },
     text: {
         fontSize: 40,
