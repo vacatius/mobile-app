@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text, ScrollView } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../components/SvgLogo";
@@ -41,71 +41,73 @@ export default function Login(props: Props) {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
-            <SvgLogo style={styles.logo} width={200} height={200} />
-            <Text style={styles.text}>{t("login")}</Text>
-            <Input
-                label={t("email")}
-                placeholder={
-                    mailList[Math.floor(Math.random() * mailList.length)]
-                }
-                leftIcon={
-                    <Icon
-                        style={styles.icon}
-                        name="envelope"
-                        size={24}
-                        color="black"
-                        type="font-awesome-5"
-                    />
-                }
-                value={email}
-                onChange={(e) => setEmail(e.nativeEvent.text)}
-            />
-            <Input
-                label={t("password")}
-                placeholder={
-                    passwordList[
-                        Math.floor(Math.random() * passwordList.length)
-                    ]
-                }
-                leftIcon={
-                    <Icon
-                        style={styles.icon}
-                        name="lock"
-                        size={24}
-                        color="black"
-                        type="font-awesome-5"
-                    />
-                }
-                value={password}
-                secureTextEntry={true}
-                onChange={(e) => setPassword(e.nativeEvent.text)}
-            />
-            <Button
-                containerStyle={styles.buttonContainer}
-                buttonStyle={styles.buttonLogin}
-                title={t("login")}
-                titleStyle={{ color: "black", fontSize: 25 }}
-                icon={
-                    <Icon
-                        style={styles.iconButton}
-                        name="arrow-right"
-                        size={15}
-                        color="black"
-                        type="font-awesome-5"
-                    />
-                }
-                iconRight={true}
-                onPress={handleLogin}
-            />
-            <Button
-                containerStyle={styles.buttonContainer}
-                type="clear"
-                title={t("register")}
-                titleStyle={{ color: "darkslategray" }}
-                onPress={() => props.navigation.navigate("Register")}
-            />
-        </SafeAreaView>
+        <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
+            <SafeAreaView style={styles.container}>
+                <SvgLogo style={styles.logo} width={150} height={150} />
+                <Text style={styles.text}>{t("login")}</Text>
+                <Input
+                    label={t("email")}
+                    placeholder={
+                        mailList[Math.floor(Math.random() * mailList.length)]
+                    }
+                    leftIcon={
+                        <Icon
+                            style={styles.icon}
+                            name="envelope"
+                            size={24}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    value={email}
+                    onChange={(e) => setEmail(e.nativeEvent.text)}
+                />
+                <Input
+                    label={t("password")}
+                    placeholder={
+                        passwordList[
+                            Math.floor(Math.random() * passwordList.length)
+                        ]
+                    }
+                    leftIcon={
+                        <Icon
+                            style={styles.icon}
+                            name="lock"
+                            size={24}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    value={password}
+                    secureTextEntry={true}
+                    onChange={(e) => setPassword(e.nativeEvent.text)}
+                />
+                <Button
+                    containerStyle={styles.buttonContainer}
+                    buttonStyle={styles.buttonLogin}
+                    title={t("login")}
+                    titleStyle={{ color: "black", fontSize: 25 }}
+                    icon={
+                        <Icon
+                            style={styles.iconButton}
+                            name="arrow-right"
+                            size={15}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    iconRight={true}
+                    onPress={handleLogin}
+                />
+                <Button
+                    containerStyle={styles.buttonContainer}
+                    type="clear"
+                    title={t("register")}
+                    titleStyle={{ color: "darkslategray" }}
+                    onPress={() => props.navigation.navigate("Register")}
+                />
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         padding: 20,
-        marginTop: 30,
     },
     text: {
         fontSize: 40,
