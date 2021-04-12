@@ -45,7 +45,7 @@ export const resources = {
             password: "Passwort",
             repeatPassword: "Passwort Wiederholen",
             username: "Benutzername",
-            startJourney: ["Resie Starten", "Los gehts"],
+            startJourney: ["Reise Starten", "Los gehts"],
         },
     },
 };
