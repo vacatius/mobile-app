@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, Text, ScrollView } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SvgLogo from "../components/SvgLogo";
+import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../App";
+import { RootStackParamList } from "../../../App";
+import { useLoginMutation } from "./types/loginMutation";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -21,9 +22,19 @@ export default function Login(props: Props) {
     const { t } = useTranslation();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [execute, { data, error, loading }] = useLoginMutation();
 
     const handleLogin = () => {
         console.log(`login with username: ${username}, password: ${password}`);
+        execute({
+            variables: { input: { password: password, username: username } },
+        })
+            .then((res) => {
+                console.log(res.data?.login.token);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     };
 
     return (
@@ -96,6 +107,7 @@ export default function Login(props: Props) {
                     }
                     iconRight={true}
                     onPress={handleLogin}
+                    loading={loading}
                 />
                 <Button
                     containerStyle={styles.buttonContainer}
