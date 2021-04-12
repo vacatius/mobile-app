@@ -13,7 +13,6 @@ export default function Register() {
     const [username, setUsername] = useState("");
 
     const handleRegister = () => {
-        console.log(t("startJourney", { returnObjects: true }));
         if (password !== password2) {
             return;
         }
