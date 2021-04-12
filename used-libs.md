@@ -19,4 +19,18 @@
     - [documentation](https://docs.expo.io/versions/latest/sdk/localization/)
     - license: MIT
 
+## Communication
+1. Apollo-Client
+    - [documentation](https://www.apollographql.com/docs/react/)
+    - [github](https://github.com/apollographql/apollo-client)
+    - license: MIT
+## Tools
+1. GraphQL code generator
+    - [documentation](https://www.graphql-code-generator.com/)
+    - [github](https://github.com/dotansimha/graphql-code-generator)
+    - license: MIT
+2. Expo SecureStore
+    - [documentation](https://docs.expo.io/versions/latest/sdk/securestore/)
+    - [github](https://github.com/expo/expo/tree/master/packages/expo-secure-store)
+    - license: MIT
    
