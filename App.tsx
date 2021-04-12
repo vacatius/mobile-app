@@ -1,9 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Icon } from "react-native-elements";
-import { useTranslation } from "react-i18next";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import Login from "./src/screens/Login";
 import i18n from "./src/services/i18n";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
+import Register from "./src/screens/Register";
 import {
 	ApolloClient,
 	ApolloProvider,
@@ -13,9 +16,14 @@ import {
 import { getEnvironment } from "./src/get-environment";
 import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
+//init i18n
+i18n;
+const Stack = createStackNavigator();
 
-const initI18n = i18n;
-
+export type RootStackParamList = {
+    Login: undefined;
+    Register: undefined;
+};
 // Initialize Apollo Client (Backend)
 const httpLink = createHttpLink({
 	uri: getEnvironment()?.backendUrl,
@@ -48,29 +56,26 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-	const { t, i18n } = useTranslation();
-	return (
+    const { t } = useTranslation();
+    return (
 		<ApolloProvider client={client}>
-			<View style={styles.container}>
-				<Text>{t("hello_world")}</Text>
-				<Icon
-					reverse
-					name="beer"
-					type="font-awesome-5"
-					color="#f50"
-					onPress={() => i18n.changeLanguage("en")}
-				/>
-				<StatusBar style="auto" />
-			</View>
+        <SafeAreaProvider>
+            <StatusBar style="dark" backgroundColor="white" />
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="login">
+                    <Stack.Screen
+                        name="Login"
+                        component={Login}
+                        options={{ title: t("login") }}
+                    />
+                    <Stack.Screen
+                        name="Register"
+                        component={Register}
+                        options={{ title: t("register") }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </SafeAreaProvider>
 		</ApolloProvider>
-	);
+    );
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
-	},
-});
