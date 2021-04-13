@@ -5,6 +5,7 @@ import { Avatar, Header, Text } from "react-native-elements";
 export interface ScreenHeaderProps {
     screenTitle: string;
 }
+
 const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
     return (
         <View>
@@ -35,4 +36,5 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
 });
+
 export default ScreenHeader;

@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Avatar, Card, Icon } from "react-native-elements";
-import { TripUserRole } from "../../types.d";
+import { StyleSheet, View } from "react-native";
+import { Card, Icon } from "react-native-elements";
+import { TripUserRole } from "../../types";
 import AvatarList from "./AvatarList";
 import { TripsQuery } from "./types/trip-dashboard.query";
 
@@ -11,6 +11,7 @@ export interface TripCardProps {
 
 const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
     const mockedMembers = [
+        // TODO - Remove once real data is available
         {
             id:
                 "VHJpcE1lbWJlcjpiOGQyYjM2Mi0yY2JmLTRhYmUtOTQwMS1lY2M0ODMxODhhYTA=",
@@ -64,10 +65,6 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
 export default TripCard;
 
 const styles = StyleSheet.create({
-    avatar: {
-        backgroundColor: "red",
-        borderWidth: 2,
-    },
     tripCard: {
         borderColor: "black",
     },

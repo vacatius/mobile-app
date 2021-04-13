@@ -1,8 +1,7 @@
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Tooltip } from "react-native-elements/dist/tooltip/Tooltip";
-import { TripMember } from "../../types";
 import { TripsQuery } from "./types/trip-dashboard.query";
 
 export interface AvatarListProps {
@@ -40,13 +39,5 @@ const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => {
         />
     );
 };
-
-const styles = StyleSheet.create({
-    avatar: {
-        // TODO - How to assign to Avatar?
-        borderWidth: 2,
-        marginRight: 3,
-    },
-});
 
 export default AvatarList;
