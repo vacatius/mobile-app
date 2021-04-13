@@ -1,25 +1,63 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { Card } from "react-native-elements";
-import { Trip } from "../../types";
+import { StyleSheet, Text, View } from "react-native";
+import { Avatar, Card, Icon } from "react-native-elements";
+import { TripUserRole } from "../../types.d";
 import AvatarList from "./AvatarList";
+import { TripsQuery } from "./types/trip-dashboard.query";
 
 export interface TripCardProps {
-    // TODO
-    trip?: Trip;
+    trip: TripsQuery["trips"][0];
 }
 
 const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
+    const mockedMembers = [
+        {
+            id:
+                "VHJpcE1lbWJlcjpiOGQyYjM2Mi0yY2JmLTRhYmUtOTQwMS1lY2M0ODMxODhhYTA=",
+            role: TripUserRole.Admin,
+            color: "#f9acbf",
+            user: {
+                id: "VXNlcjo2MDUwYjUxYTZmN2FiZjIxMjA2NTI4MzY=",
+                displayName: "Valentin",
+                username: "testuser",
+                email: "test@test.com",
+            },
+        },
+        {
+            id:
+                "VHJpcE1lbWJlcjoxYjk2MmNmNS02NmMxLTQ3NDUtOWU2MC1jZGRmOWYyOTIwYjI=",
+            role: TripUserRole.Member,
+            color: "#fff1a5",
+            user: {
+                id: "VXNlcjphZjY2NWJhMi1kZTU3LTRjNmEtYWI4ZS02NjkyN2M1Y2FjYWM=",
+                displayName: "Testuser2",
+                username: "testuser2",
+                email: "test@test.com",
+            },
+        },
+    ];
     return (
         <Card containerStyle={styles.tripCard}>
             <Card.Title h4 style={styles.tripCardTitle}>
-                Berlin 05/21
+                {props.trip.name}
             </Card.Title>
             <Card.Divider />
-            <Card.FeaturedTitle style={styles.tripCardDate}>
-                02.05.2021 - 10.05.2021
-            </Card.FeaturedTitle>
-            <AvatarList />
+
+            <View style={styles.tripCardContent}>
+                <View style={styles.tripCardLeftContent}>
+                    <Card.FeaturedTitle style={styles.tripCardDate}>
+                        {new Date(props.trip.startDate).toLocaleDateString()} -{" "}
+                        {new Date(props.trip.endDate).toLocaleDateString()}
+                    </Card.FeaturedTitle>
+                    <AvatarList tripMembers={mockedMembers} />
+                </View>
+                <Icon
+                    size={64}
+                    name="calendar"
+                    type="material-community"
+                    style={styles.tripCardIcon}
+                />
+            </View>
         </Card>
     );
 };
@@ -41,7 +79,18 @@ const styles = StyleSheet.create({
         color: "black",
         fontWeight: "500",
     },
-    tripCardInfo: {
-        color: "black",
+    tripCardContent: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    tripCardIcon: {
+        flexBasis: 100,
+        alignSelf: "center",
+        justifyContent: "center",
+    },
+    tripCardLeftContent: {
+        flexBasis: "auto",
+        flexGrow: 1,
     },
 });

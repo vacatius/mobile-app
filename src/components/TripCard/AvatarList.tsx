@@ -2,42 +2,26 @@ import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { Avatar } from "react-native-elements";
 import { TripMember } from "../../types";
+import { TripsQuery } from "./types/trip-dashboard.query";
 
 export interface AvatarListProps {
     // TODO
-    tripMembers?: TripMember[];
+    tripMembers: TripsQuery["trips"][0]["members"];
 }
 
-const testData = [
-    // TODO - Remove in favor of tripMembers
-    {
-        id: "1",
-        color: "red",
-        user: {
-            username: "A",
-        },
-    },
-    {
-        id: "2",
-        color: "blue",
-        user: {
-            username: "C",
-        },
-    },
-];
 
 const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => {
     return (
         <FlatList
             horizontal
-            data={testData} // TODO
+            data={props.tripMembers} // TODO
             renderItem={({ item: member }) => {
                 return (
                     <Avatar
                         rounded
                         containerStyle={{ backgroundColor: member.color }}
                         size={"medium"}
-                        title={member.user.username}
+                        title={member.user.displayName.charAt(0)?.toUpperCase() ?? "?"}
                     />
                 );
             }}

@@ -6,13 +6,7 @@ const defaultOptions =  {}
 export type TripsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TripsQuery = { trips: Array<(
-    Pick<Types.Trip, 'id' | 'createdAt' | 'name' | 'description' | 'startDate' | 'endDate'>
-    & { members: Array<(
-      Pick<Types.TripMember, 'role' | 'color'>
-      & { user: Pick<Types.User, 'id' | 'displayName' | 'username' | 'email'> }
-    )> }
-  )> };
+export type TripsQuery = { trips: Array<{ id: string, createdAt: any, name: string, description?: Types.Maybe<string>, startDate?: Types.Maybe<any>, endDate?: Types.Maybe<any>, members: Array<{ id: string, role: Types.TripUserRole, color: string, user: { id: string, displayName: string, username: string, email: string } }> }> };
 
 
 export const TripsDocument = gql`
@@ -25,6 +19,7 @@ export const TripsDocument = gql`
     startDate
     endDate
     members {
+      id
       role
       color
       user {

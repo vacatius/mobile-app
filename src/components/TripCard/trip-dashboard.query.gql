@@ -7,6 +7,7 @@ query trips {
         startDate
         endDate
         members {
+            id
             role
             color
             user {
