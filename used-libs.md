@@ -1,7 +1,6 @@
 # Library documentation
 
 ## UI-libs
-
 1. react-native-elements
     - [documentation](https://reactnativeelements.com/)
     - [github](https://github.com/react-native-elements/react-native-elements)
@@ -33,8 +32,12 @@
     - [documentation](https://www.graphql-code-generator.com/)
     - [github](https://github.com/dotansimha/graphql-code-generator)
     - license: MIT
-2. Expo SecureStore
+1. Expo SecureStore
     - [documentation](https://docs.expo.io/versions/latest/sdk/securestore/)
     - [github](https://github.com/expo/expo/tree/master/packages/expo-secure-store)
+    - license: MIT
+1. react-native-dotenv
+    - [npm documentation](https://www.npmjs.com/package/react-native-dotenv)
+    - [github](https://github.com/goatandsheep/react-native-dotenv)
     - license: MIT
    
