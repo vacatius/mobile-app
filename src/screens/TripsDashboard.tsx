@@ -1,8 +1,9 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { RootStackParamList } from "../../App";
 import ScreenHeader from "../components/ScreenHeader";
-import { StackNavigationProp } from "@react-navigation/stack";
+import TripCard from "../components/TripCard/TripCard";
 
 type TripsDashboardScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -15,5 +16,10 @@ type Props = {
 
 export default function TripsDashboard(props: Props) {
     const { t } = useTranslation();
-    return <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />;
+    return (
+        <>
+            <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
+            <TripCard />
+        </>
+    );
 }
