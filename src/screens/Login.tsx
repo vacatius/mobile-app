@@ -4,7 +4,6 @@ import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../components/SvgLogo";
 import { useTranslation } from "react-i18next";
-import * as SecureStore from "expo-secure-store";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../App";
@@ -18,19 +17,6 @@ type Props = {
     navigation: ProfileScreenNavigationProp;
 };
 
-async function saveInSecureStore(key: string, value: string) {
-    await SecureStore.setItemAsync(key, value);
-}
-
-async function getValueFor(key: string) {
-    let result = await SecureStore.getItemAsync(key);
-    if (result) {
-        console.log("🔐 Here's your value 🔐 \n" + result);
-    } else {
-        console.log("No values stored under that key.");
-    }
-}
-
 export default function Login(props: Props) {
     const { t } = useTranslation();
     const [username, setUsername] = useState("");
@@ -38,22 +24,6 @@ export default function Login(props: Props) {
 
     const handleLogin = () => {
         console.log(`login with username: ${username}, password: ${password}`);
-        execute({
-            variables: { input: { password: password, username: username } },
-        })
-            .then((res) => {
-                if (res.data?.login.token) {
-                    saveInSecureStore(
-                        "accessToken",
-                        res.data?.login.token
-                    ).catch((e) => console.log(e));
-                    console.log(res.data?.login.token);
-                    getValueFor("accessToken").catch((e) => console.log(e));
-                }
-            })
-            .catch((e) => {
-                console.log(e);
-            });
     };
 
     return (
