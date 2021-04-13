@@ -23,23 +23,43 @@ async function saveInSecureStore(key: string, value: string) {
     await SecureStore.setItemAsync(key, value);
 }
 
-async function getValueFor(key: string) {
-    let result = await SecureStore.getItemAsync(key);
-    if (result) {
-        console.log("🔐 Here's your value 🔐 \n" + result);
-    } else {
-        console.log("No values stored under that key.");
-    }
-}
-
 export default function Login(props: Props) {
     const { t } = useTranslation();
     const [username, setUsername] = useState("");
+    const [usernameError, setUsernameError] = useState("");
     const [password, setPassword] = useState("");
-    const [execute, { data, error, loading }] = useLoginMutation();
+    const [passwordError, setPasswordError] = useState("");
+    const [placeholder, setPlaceholder] = useState({
+        username: t("placeholder.username", { returnObjects: true })[
+            Math.floor(
+                Math.random() *
+                    t("placeholder.username", {
+                        returnObjects: true,
+                    }).length
+            )
+        ],
+        password: t("placeholder.password", { returnObjects: true })[
+            Math.floor(
+                Math.random() *
+                    t("placeholder.password", {
+                        returnObjects: true,
+                    }).length
+            )
+        ],
+    });
+    const [execute, { error, loading }] = useLoginMutation();
 
     const handleLogin = () => {
-        console.log(`login with username: ${username}, password: ${password}`);
+        if (username === "") {
+            setUsernameError(t("error.username"));
+        }
+        if (password === "") {
+            setPasswordError(t("error.password"));
+        }
+        if (password === "" || username === "") {
+            return;
+        }
+
         execute({
             variables: { input: { password: password, username: username } },
         })
@@ -49,8 +69,6 @@ export default function Login(props: Props) {
                         "accessToken",
                         res.data?.login.token
                     ).catch((e) => console.log(e));
-                    console.log(res.data?.login.token);
-                    getValueFor("accessToken").catch((e) => console.log(e));
                 }
             })
             .catch((e) => {
@@ -65,16 +83,9 @@ export default function Login(props: Props) {
                 <Text style={styles.text}>{t("login")}</Text>
                 <Input
                     label={t("username")}
-                    placeholder={
-                        t("placeholder.username", { returnObjects: true })[
-                            Math.floor(
-                                Math.random() *
-                                    t("placeholder.username", {
-                                        returnObjects: true,
-                                    }).length
-                            )
-                        ]
-                    }
+                    errorMessage={usernameError}
+                    errorStyle={styles.errorMessage}
+                    placeholder={placeholder.username}
                     leftIcon={
                         <Icon
                             style={styles.icon}
@@ -85,20 +96,18 @@ export default function Login(props: Props) {
                         />
                     }
                     value={username}
-                    onChange={(e) => setUsername(e.nativeEvent.text)}
+                    onChange={(e) => {
+                        setUsername(e.nativeEvent.text);
+                        if (usernameError) {
+                            setUsernameError("");
+                        }
+                    }}
                 />
                 <Input
                     label={t("password")}
-                    placeholder={
-                        t("placeholder.password", { returnObjects: true })[
-                            Math.floor(
-                                Math.random() *
-                                    t("placeholder.password", {
-                                        returnObjects: true,
-                                    }).length
-                            )
-                        ]
-                    }
+                    errorMessage={passwordError}
+                    errorStyle={styles.errorMessage}
+                    placeholder={placeholder.password}
                     leftIcon={
                         <Icon
                             style={styles.icon}
@@ -110,8 +119,22 @@ export default function Login(props: Props) {
                     }
                     value={password}
                     secureTextEntry={true}
-                    onChange={(e) => setPassword(e.nativeEvent.text)}
+                    onChange={(e) => {
+                        setPassword(e.nativeEvent.text);
+                        if (passwordError) {
+                            setPasswordError("");
+                        }
+                    }}
                 />
+                {error && (
+                    <Text style={styles.errorText}>
+                        {error.message.includes("credentials")
+                            ? t("error.credentials")
+                            : error.networkError
+                            ? t("error.network")
+                            : error.message}
+                    </Text>
+                )}
                 <Button
                     containerStyle={styles.buttonContainer}
                     buttonStyle={styles.buttonLogin}
@@ -169,5 +192,15 @@ const styles = StyleSheet.create({
     logo: {
         alignSelf: "center",
         marginBottom: 20,
+    },
+    errorText: {
+        fontSize: 16,
+        marginBottom: 15,
+        alignSelf: "center",
+        color: "#e03030",
+    },
+    errorMessage: {
+        color: "#e03030",
+        fontSize: 13,
     },
 });

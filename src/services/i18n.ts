@@ -12,6 +12,12 @@ export const resources = {
             repeatPassword: "Repeat Password",
             username: "Username",
             startJourney: ["Start Journey", "Lets go"],
+            error: {
+                network: "No Connection 😢",
+                credentials: "Invalid Credentials",
+                username: "Invalid Username",
+                password: "Invalid Password",
+            },
             placeholder: {
                 username: [
                     "Gordon_Freeman",
@@ -46,6 +52,12 @@ export const resources = {
             repeatPassword: "Passwort Wiederholen",
             username: "Benutzername",
             startJourney: ["Reise Starten", "Los gehts"],
+            error: {
+                network: "Keine Verbindung 😢",
+                credentials: "Falsche Benutzerdaten",
+                username: "Falscher Benutzername",
+                password: "Falsches Passwort",
+            },
         },
     },
 };
