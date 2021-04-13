@@ -26,3 +26,4 @@ generates:
             withComponent: false
             skipTypename: true
             withRefetchFn: true
+            preResolveTypes: true
