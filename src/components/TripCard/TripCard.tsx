@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, TouchableHighlight, View } from "react-native";
 import { Card, Icon } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { TripUserRole } from "../../types.d";
@@ -40,8 +40,8 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
         },
     ];
     return (
-        <View
-            onTouchStart={() => {
+        <Pressable
+            onPress={() => {
                 props.openTripDetails(props.trip);
             }}
         >
@@ -70,7 +70,7 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
                     />
                 </View>
             </Card>
-        </View>
+        </Pressable>
     );
 };
 export default TripCard;
