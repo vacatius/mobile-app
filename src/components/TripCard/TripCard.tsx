@@ -11,9 +11,7 @@ export interface TripCardProps {
     openTripDetails: (trip: TripsQuery["trips"][0]) => void;
 }
 
-const TripCard: React.FC<TripCardProps> = (
-    props: TripCardProps
-) => {
+const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
     const mockedMembers = [
         // TODO - Remove once real data is available
         {
@@ -42,12 +40,12 @@ const TripCard: React.FC<TripCardProps> = (
         },
     ];
     return (
-        <Card containerStyle={styles.tripCard}>
-            <TouchableOpacity
-                onPress={() => {
-                    props.openTripDetails(props.trip);
-                }}
-            >
+        <View
+            onTouchStart={() => {
+                props.openTripDetails(props.trip);
+            }}
+        >
+            <Card containerStyle={styles.tripCard}>
                 <Card.Title h4 style={styles.tripCardTitle}>
                     {props.trip.name}
                 </Card.Title>
@@ -71,8 +69,8 @@ const TripCard: React.FC<TripCardProps> = (
                         style={styles.tripCardIcon}
                     />
                 </View>
-            </TouchableOpacity>
-        </Card>
+            </Card>
+        </View>
     );
 };
 export default TripCard;
