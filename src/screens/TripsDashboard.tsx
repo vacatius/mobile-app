@@ -55,7 +55,40 @@ export default function TripsDashboard(props: Props) {
                 },
             },
         ],
-    };
+    },
+    {
+        id: "VHJpcDpiMmQxYzI2OS02YTY2LTQ4YmEtOGE5OS0zZTYzZYI3YTQ3Mjg=",
+        createdAt: "2021-03-28T17:29:21.742Z",
+        name: "Roadtrip 2023",
+        description: "Very Nice trip",
+        startDate: new Date("2022-05-02"),
+        endDate: new Date("2022-05-10"),
+        members: [
+            {
+                "id": "VHJpcE1lbWJlcjpiOGQyYjM2Mi0yY2JmLTRhYmUtYTQwMS1lY2M0ODMxODhhYTA=",
+                role: TripUserRole.Admin,
+                color: "#f9acbf",
+                user: {
+                    id: "VXNlcjo2MDUwYjUxYTZmN2FiZjIxMjA2NTI4MzY=",
+                    displayName: "Awesome user",
+                    username: "testuser",
+                    email: "test@test.com",
+                },
+            },
+            {
+                "id": "VHJpcE1lbWJlcjoxYjk2MmNmNS02NmMxLTQ3NDUtOWU2MC1jZGRmOWYyOTIwYjI=",
+                role: TripUserRole.Member,
+                color: "#fff1a5",
+                user: {
+                    id:
+                        "VXNlcjphZjY2NWJhMi1kZTU3LTRjNmEtYWI4ZS02NjkyN2M1Y2FjYWM=",
+                    displayName: "Cool user",
+                    username: "testuser2",
+                    email: "test@test.com",
+                },
+            },
+        ],
+    }];
     return (
         <>
             <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />

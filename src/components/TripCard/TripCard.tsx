@@ -23,7 +23,7 @@ const TripCard: React.FC<TripCardProps> = (
             color: "#f9acbf",
             user: {
                 id: "VXNlcjo2MDUwYjUxYTZmN2FiZjIxMjA2NTI4MzY=",
-                displayName: "Valentin",
+                displayName: "Don",
                 username: "testuser",
                 email: "test@test.com",
             },
@@ -35,7 +35,7 @@ const TripCard: React.FC<TripCardProps> = (
             color: "#fff1a5",
             user: {
                 id: "VXNlcjphZjY2NWJhMi1kZTU3LTRjNmEtYWI4ZS02NjkyN2M1Y2FjYWM=",
-                displayName: "Testuser2",
+                displayName: "Wild",
                 username: "testuser2",
                 email: "test@test.com",
             },
