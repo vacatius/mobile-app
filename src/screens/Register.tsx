@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../components/SvgLogo";
 import { useTranslation } from "react-i18next";
+import ReCaptchaV3 from "@haskkor/react-native-recaptchav3";
+import { getEnvironment } from "../../src/get-environment";
 
 export default function Register() {
     const { t } = useTranslation();
@@ -11,6 +13,7 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [username, setUsername] = useState("");
+    const [token, setToken] = useState("");
 
     const handleRegister = () => {
         if (password !== password2) {
@@ -23,8 +26,11 @@ export default function Register() {
 
     return (
         <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
+            <ReCaptchaV3 captchaDomain={"https://vacatius.com"} siteKey={getEnvironment()?.siteKey as string}
+            onReceiveToken={(token: string) => setToken(token)} action="submit" />
             <SafeAreaView style={styles.container}>
                 <SvgLogo style={styles.logo} width={100} height={100} />
+                <Text>{token}</Text>
                 <Input
                     label={t("email")}
                     placeholder={
