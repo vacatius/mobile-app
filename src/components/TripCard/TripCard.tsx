@@ -1,7 +1,6 @@
 import React from "react";
-import { Pressable, StyleSheet, TouchableHighlight, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Card, Icon } from "react-native-elements";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { TripUserRole } from "../../types.d";
 import AvatarList from "./AvatarList";
 import { TripsQuery } from "./types/trip-dashboard.query";
@@ -78,6 +77,7 @@ export default TripCard;
 const styles = StyleSheet.create({
     tripCard: {
         borderColor: "black",
+        borderRadius: 5,
     },
     tripCardTitle: {
         color: "black",

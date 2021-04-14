@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Avatar, Header, Text } from "react-native-elements";
 
 export interface ScreenHeaderProps {
@@ -13,12 +13,14 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
                 placement="left"
                 centerComponent={<Text h1>{props.screenTitle}</Text>}
                 rightComponent={
-                    <Avatar
-                        rounded
-                        title="V"
-                        containerStyle={styles.avatar}
-                        size="medium"
-                    />
+                    <TouchableOpacity>
+                        <Avatar
+                            rounded
+                            title="V"
+                            containerStyle={styles.avatar}
+                            size="medium"
+                        />
+                    </TouchableOpacity>
                 }
                 containerStyle={styles.header}
             />

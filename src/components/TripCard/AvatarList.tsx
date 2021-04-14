@@ -24,6 +24,7 @@ const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => {
                                 rounded
                                 containerStyle={{
                                     backgroundColor: member.color,
+                                    marginRight: 5,
                                 }}
                                 size={"medium"}
                                 title={
