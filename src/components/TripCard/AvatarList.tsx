@@ -12,6 +12,7 @@ const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => {
     return (
         <FlatList
             horizontal
+            scrollEnabled={false}
             data={props.tripMembers}
             renderItem={({ item: member }) => {
                 return (
