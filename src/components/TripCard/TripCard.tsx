@@ -1,15 +1,19 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Icon } from "react-native-elements";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { TripUserRole } from "../../types.d";
 import AvatarList from "./AvatarList";
 import { TripsQuery } from "./types/trip-dashboard.query";
 
 export interface TripCardProps {
     trip: TripsQuery["trips"][0];
+    openTripDetails: (trip: TripsQuery["trips"][0]) => void;
 }
 
-const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
+const TripCard: React.FC<TripCardProps> = (
+    props: TripCardProps
+) => {
     const mockedMembers = [
         // TODO - Remove once real data is available
         {
@@ -39,26 +43,35 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
     ];
     return (
         <Card containerStyle={styles.tripCard}>
-            <Card.Title h4 style={styles.tripCardTitle}>
-                {props.trip.name}
-            </Card.Title>
-            <Card.Divider />
+            <TouchableOpacity
+                onPress={() => {
+                    props.openTripDetails(props.trip);
+                }}
+            >
+                <Card.Title h4 style={styles.tripCardTitle}>
+                    {props.trip.name}
+                </Card.Title>
+                <Card.Divider />
 
-            <View style={styles.tripCardContent}>
-                <View style={styles.tripCardLeftContent}>
-                    <Card.FeaturedTitle style={styles.tripCardDate}>
-                        {new Date(props.trip.startDate).toLocaleDateString()} -{" "}
-                        {new Date(props.trip.endDate).toLocaleDateString()}
-                    </Card.FeaturedTitle>
-                    <AvatarList tripMembers={mockedMembers} />
+                <View style={styles.tripCardContent}>
+                    <View style={styles.tripCardLeftContent}>
+                        <Card.FeaturedTitle style={styles.tripCardDate}>
+                            {new Date(
+                                props.trip.startDate
+                            ).toLocaleDateString()}{" "}
+                            -{" "}
+                            {new Date(props.trip.endDate).toLocaleDateString()}
+                        </Card.FeaturedTitle>
+                        <AvatarList tripMembers={mockedMembers} />
+                    </View>
+                    <Icon
+                        size={64}
+                        name="calendar"
+                        type="material-community"
+                        style={styles.tripCardIcon}
+                    />
                 </View>
-                <Icon
-                    size={64}
-                    name="calendar"
-                    type="material-community"
-                    style={styles.tripCardIcon}
-                />
-            </View>
+            </TouchableOpacity>
         </Card>
     );
 };

@@ -7,6 +7,7 @@ import ScreenHeader from "../components/ScreenHeader";
 import TripCard from "../components/TripCard/TripCard";
 import { TripUserRole } from "../types.d";
 import { StyleSheet } from "react-native";
+import { TripsQuery } from "../components/TripCard/types/trip-dashboard.query";
 
 type TripsDashboardScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -19,7 +20,10 @@ type Props = {
 
 export default function TripsDashboard(props: Props) {
     const { t } = useTranslation();
-    const mockedTrip = {
+    const openTripDetails = (trip: TripsQuery["trips"][0]) => {
+        console.log("Opening trip details");
+    }
+    const mockedTrips = [{
         id: "VHJpcDpiMmQxYzI2OS02YTY2LTQ4YmEtOGE5OS0zZTYzZGI3YTQ3Mjg=",
         createdAt: "2021-03-28T17:29:21.742Z",
         name: "Roadtrip 2022",
@@ -56,7 +60,9 @@ export default function TripsDashboard(props: Props) {
         <>
             <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
             <Text h3 style={styles.headlines}>Current Journeys</Text>
-            <TripCard trip={mockedTrip} />
+            {mockedTrips.map((trip) => {
+                return <TripCard trip={trip} openTripDetails={openTripDetails} />
+            })}
             <Text h3 style={styles.headlines}>Past Journeys</Text>
         </>
     );
