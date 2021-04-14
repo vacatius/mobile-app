@@ -12,6 +12,7 @@ export const resources = {
             repeatPassword: "Repeat Password",
             username: "Username",
             startJourney: ["Start Journey", "Lets go"],
+            displayName: "Display Name",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
@@ -51,6 +52,7 @@ export const resources = {
             password: "Passwort",
             repeatPassword: "Passwort Wiederholen",
             username: "Benutzername",
+            displayName: "Anzeige Name",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",

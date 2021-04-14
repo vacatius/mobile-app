@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SvgLogo from "../components/SvgLogo";
+import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
 import ReCaptchaV3 from "@haskkor/react-native-recaptchav3";
-import { getEnvironment } from "../../src/get-environment";
+import { getEnvironment } from "../../get-environment";
+import { useCreateUserMutation } from "./types/registerMutation";
 
 export default function Register() {
     const { t } = useTranslation();
@@ -13,12 +14,23 @@ export default function Register() {
     const [password, setPassword] = useState("");
     const [password2, setPassword2] = useState("");
     const [username, setUsername] = useState("");
+    const [displayName, setDisplayName] = useState("");
     const [token, setToken] = useState("");
+    const [execute, { error, loading }] = useCreateUserMutation();
 
     const handleRegister = () => {
         if (password !== password2) {
             return;
         }
+        execute({
+            variables: {input: {
+                username: username,
+                displayName: displayName,
+                password: password,
+                email: email,
+                captchaToken: token
+            }}
+        })
         console.log(
             `register with email: ${email}, password: ${password}, username: ${username}`
         );
@@ -78,6 +90,30 @@ export default function Register() {
                     }
                     value={username}
                     onChange={(e) => setUsername(e.nativeEvent.text)}
+                />
+                <Input
+                    label={t("displayName")}
+                    placeholder={
+                        t("placeholder.username", { returnObjects: true })[
+                            Math.floor(
+                                Math.random() *
+                                    t("placeholder.username", {
+                                        returnObjects: true,
+                                    }).length
+                            )
+                        ]
+                    }
+                    leftIcon={
+                        <Icon
+                            style={styles.icon}
+                            name="user"
+                            size={24}
+                            color="black"
+                            type="font-awesome-5"
+                        />
+                    }
+                    value={username}
+                    onChange={(e) => setDisplayName(e.nativeEvent.text)}
                 />
                 <Input
                     label={t("password")}

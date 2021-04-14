@@ -6,7 +6,7 @@ import i18n from "./src/services/i18n";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import Register from "./src/screens/Register";
+import Register from "./src/screens/Register/Register";
 import {
     ApolloClient,
     ApolloProvider,
