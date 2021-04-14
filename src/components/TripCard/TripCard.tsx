@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Icon } from "react-native-elements";
-import { TripUserRole } from "../../types";
+import { TripUserRole } from "../../types.d";
 import AvatarList from "./AvatarList";
 import { TripsQuery } from "./types/trip-dashboard.query";
 
