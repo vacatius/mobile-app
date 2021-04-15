@@ -11,33 +11,6 @@ export interface TripCardProps {
 }
 
 const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
-    const mockedMembers = [
-        // TODO - Remove once real data is available
-        {
-            id:
-                "VHJpcE1lbWJlcjpiOGQyYjM2Mi0yY2JmLTRhYmUtOTQwMS1lY2M0ODMxODhhYTA=",
-            role: TripUserRole.Admin,
-            color: "#f9acbf",
-            user: {
-                id: "VXNlcjo2MDUwYjUxYTZmN2FiZjIxMjA2NTI4MzY=",
-                displayName: "Don",
-                username: "testuser",
-                email: "test@test.com",
-            },
-        },
-        {
-            id:
-                "VHJpcE1lbWJlcjoxYjk2MmNmNS02NmMxLTQ3NDUtOWU2MC1jZGRmOWYyOTIwYjI=",
-            role: TripUserRole.Member,
-            color: "#fff1a5",
-            user: {
-                id: "VXNlcjphZjY2NWJhMi1kZTU3LTRjNmEtYWI4ZS02NjkyN2M1Y2FjYWM=",
-                displayName: "Wild",
-                username: "testuser2",
-                email: "test@test.com",
-            },
-        },
-    ];
     return (
         <Pressable
             onPress={() => {
@@ -59,7 +32,7 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
                             -{" "}
                             {new Date(props.trip.endDate).toLocaleDateString()}
                         </Card.FeaturedTitle>
-                        <AvatarList tripMembers={mockedMembers} />
+                        <AvatarList tripMembers={props.trip.members} />
                     </View>
                     <Icon
                         size={64}
@@ -72,6 +45,7 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
         </Pressable>
     );
 };
+
 export default TripCard;
 
 const styles = StyleSheet.create({
