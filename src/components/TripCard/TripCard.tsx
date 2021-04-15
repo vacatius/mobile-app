@@ -50,8 +50,17 @@ export default TripCard;
 
 const styles = StyleSheet.create({
     tripCard: {
-        borderColor: "black",
-        borderRadius: 5,
+        borderColor: "grey",
+        borderRadius: 3,
+        margin: 0,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6,
     },
     tripCardTitle: {
         color: "black",

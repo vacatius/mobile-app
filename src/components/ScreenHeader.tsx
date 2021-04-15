@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: "transparent",
         color: "black",
+        marginLeft: -15, // TODO - Find a way how to not hard code this value
     },
     avatar: {
         backgroundColor: "red",

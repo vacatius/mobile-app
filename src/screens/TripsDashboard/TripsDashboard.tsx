@@ -60,8 +60,11 @@ export default function TripsDashboard(props: Props) {
 
     return (
         <>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
+            <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                style={styles.scrollView}
+            >
                 <Text h3 style={styles.headlines}>
                     Current Journeys
                 </Text>
@@ -101,15 +104,7 @@ export default function TripsDashboard(props: Props) {
             </ScrollView>
             <TouchableOpacity
                 activeOpacity={0.7}
-                style={{
-                    position: "absolute",
-                    width: 130,
-                    height: 110,
-                    right: 47,
-                    bottom: 15,
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
+                style={styles.floatingTouchableOpacity}
             >
                 <Button
                     icon={
@@ -121,14 +116,7 @@ export default function TripsDashboard(props: Props) {
                         color: "white",
                         fontSize: 24,
                     }}
-                    buttonStyle={{
-                        height: 70,
-                        width: 195,
-                        borderRadius: 40,
-                        backgroundColor: "#F7A223",
-                        borderWidth: 2,
-                        borderColor: "#EAA045",
-                    }}
+                    buttonStyle={styles.floatingButton}
                 />
             </TouchableOpacity>
         </>
@@ -136,14 +124,37 @@ export default function TripsDashboard(props: Props) {
 }
 
 const styles = StyleSheet.create({
+    scrollView: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
     logo: {
         alignSelf: "center",
         marginLeft: 10,
     },
     headlines: {
+        marginBottom: 10,
+        marginTop: 20,
         textAlign: "left",
     },
     noTripsFound: {
         textAlign: "center",
     },
+    floatingButton: {
+        height: 70,
+        width: 195,
+        borderRadius: 40,
+        backgroundColor: "#F7A223",
+        borderWidth: 2,
+        borderColor: "#EAA045",
+    },
+    floatingTouchableOpacity: {
+        position: "absolute",
+        width: 130,
+        height: 110,
+        right: 47,
+        bottom: 15,
+        alignItems: "center",
+        justifyContent: "center",
+    }
 });
