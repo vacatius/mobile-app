@@ -1,7 +1,6 @@
 # Library documentation
 
 ## UI-libs
-
 1. react-native-elements
     - [documentation](https://reactnativeelements.com/)
     - [github](https://github.com/react-native-elements/react-native-elements)
@@ -11,6 +10,7 @@
     - license: MIT
 
 ## Internationalization
+
 1. i18next
     - [documentation](https://www.i18next.com/)
     - [github](https://github.com/i18next/i18next)
@@ -24,17 +24,28 @@
     - license: MIT
 
 ## Communication
+
 1. Apollo-Client
     - [documentation](https://www.apollographql.com/docs/react/)
     - [github](https://github.com/apollographql/apollo-client)
     - license: MIT
+
 ## Tools
+
 1. GraphQL code generator
     - [documentation](https://www.graphql-code-generator.com/)
     - [github](https://github.com/dotansimha/graphql-code-generator)
     - license: MIT
-2. Expo SecureStore
+1. Expo SecureStore
     - [documentation](https://docs.expo.io/versions/latest/sdk/securestore/)
     - [github](https://github.com/expo/expo/tree/master/packages/expo-secure-store)
     - license: MIT
+1. react-native-dotenv
+    - [npm documentation](https://www.npmjs.com/package/react-native-dotenv)
+    - [github](https://github.com/goatandsheep/react-native-dotenv)
+    - license: MIT
    
+## Pictures
+1. Undraw.co
+   -  [documentation](https://undraw.co/)
+   - license: Custom open source license

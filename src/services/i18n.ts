@@ -35,6 +35,7 @@ export const resources = {
                     "TheLegend27@mail.com",
                 ],
             },
+            screen_header_trip_dashBoard: "Dashboard",
         },
     },
     de: {

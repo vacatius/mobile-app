@@ -8,14 +8,16 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import Register from "./src/screens/Register";
 import {
-	ApolloClient,
-	ApolloProvider,
-	createHttpLink,
-	InMemoryCache,
+    ApolloClient,
+    ApolloProvider,
+    createHttpLink,
+    InMemoryCache,
 } from "@apollo/client";
 import { getEnvironment } from "./src/get-environment";
 import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
+import ScreenHeader from "./src/components/ScreenHeader";
+import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
@@ -23,59 +25,67 @@ const Stack = createStackNavigator();
 export type RootStackParamList = {
     Login: undefined;
     Register: undefined;
+    Dashboard: undefined;
 };
 // Initialize Apollo Client (Backend)
 const httpLink = createHttpLink({
-	uri: getEnvironment()?.backendUrl,
+    uri: getEnvironment()?.backendUrl,
 });
 
 const authLink = setContext(async (_, { headers }) => {
-	// get the authentication token from secure storage if it exists
-	const token = await SecureStore.getItemAsync("accessToken");
+    // get the authentication token from secure storage if it exists
+    const token = await SecureStore.getItemAsync("accessToken");
 
-	if (token) {
-		// return the headers to the context so httpLink can read them
-		return {
-			headers: {
-				...headers,
-				authorization: token ? `Bearer ${token}` : "",
-			},
-		};
-	} else {
-		return {
-			headers: {
-				...headers,
-			},
-		};
-	}
+    if (token) {
+        // return the headers to the context so httpLink can read them
+        return {
+            headers: {
+                ...headers,
+                authorization: token ? `Bearer ${token}` : "",
+            },
+        };
+    } else {
+        return {
+            headers: {
+                ...headers,
+            },
+        };
+    }
 });
 
 const client = new ApolloClient({
-	link: httpLink,
-	cache: new InMemoryCache(),
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
 });
 
 export default function App() {
     const { t } = useTranslation();
     return (
-		<ApolloProvider client={client}>
-        <SafeAreaProvider>
-            <StatusBar style="dark" backgroundColor="white" />
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="login">
-                    <Stack.Screen
-                        name="Login"
-                        component={Login}
-                        options={{ title: t("login") }}
-                    />
-                    <Stack.Screen
-                        name="Register"
-                        component={Register}
-                        options={{ title: t("register") }}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </SafeAreaProvider>
-		</ApolloProvider>
+        <ApolloProvider client={client}>
+            <SafeAreaProvider>
+                <StatusBar style="dark" backgroundColor="white" />
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Dashboard">
+                        <Stack.Screen
+                            name="Login"
+                            component={Login}
+                            options={{ title: t("login") }}
+                        />
+                        <Stack.Screen
+                            name="Register"
+                            component={Register}
+                            options={{ title: t("register") }}
+                        />
+                        <Stack.Screen
+                            name="Dashboard"
+                            component={TripsDashboard}
+                            options={{
+                                title: t("screen_header_trip_dashBoard"),
+                            }}
+                        />
+                    </Stack.Navigator>
+                </NavigationContainer>
+            </SafeAreaProvider>
+        </ApolloProvider>
     );
 }
