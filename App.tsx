@@ -17,7 +17,7 @@ import { getEnvironment } from "./src/get-environment";
 import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
 import ScreenHeader from "./src/components/ScreenHeader";
-import TripsDashboard from "./src/screens/TripsDashboard";
+import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
