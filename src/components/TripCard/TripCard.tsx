@@ -1,9 +1,9 @@
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Card, Icon } from "react-native-elements";
+import { TripsQuery } from "../../screens/TripsDashboard/types/trip-dashboard.query";
 import { TripUserRole } from "../../types.d";
 import AvatarList from "./AvatarList";
-import { TripsQuery } from "./types/trip-dashboard.query";
 
 export interface TripCardProps {
     trip: TripsQuery["trips"][0];

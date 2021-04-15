@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, Text, View } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Tooltip } from "react-native-elements/dist/tooltip/Tooltip";
-import { TripsQuery } from "./types/trip-dashboard.query";
+import { TripsQuery } from "../../screens/TripsDashboard/types/trip-dashboard.query";
 
 export interface AvatarListProps {
     tripMembers: TripsQuery["trips"][0]["members"];
