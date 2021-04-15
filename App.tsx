@@ -16,6 +16,8 @@ import {
 import { getEnvironment } from "./src/get-environment";
 import { setContext } from "@apollo/client/link/context";
 import * as SecureStore from "expo-secure-store";
+import ScreenHeader from "./src/components/ScreenHeader";
+import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
@@ -23,6 +25,7 @@ const Stack = createStackNavigator();
 export type RootStackParamList = {
     Login: undefined;
     Register: undefined;
+    Dashboard: undefined;
 };
 // Initialize Apollo Client (Backend)
 const httpLink = createHttpLink({
@@ -51,7 +54,7 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 const client = new ApolloClient({
-    link: httpLink,
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
 
@@ -62,7 +65,7 @@ export default function App() {
             <SafeAreaProvider>
                 <StatusBar style="dark" backgroundColor="white" />
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName="login">
+                    <Stack.Navigator initialRouteName="Login">
                         <Stack.Screen
                             name="Login"
                             component={Login}
@@ -72,6 +75,13 @@ export default function App() {
                             name="Register"
                             component={Register}
                             options={{ title: t("register") }}
+                        />
+                        <Stack.Screen
+                            name="Dashboard"
+                            component={TripsDashboard}
+                            options={{
+                                title: t("screen_header_trip_dashBoard"),
+                            }}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

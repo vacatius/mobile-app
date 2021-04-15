@@ -60,6 +60,7 @@ export const resources = {
                     welcome: "Welcome {{displayName}} 🎉",
                 },
             },
+            screen_header_trip_dashBoard: "Dashboard",
         },
     },
     de: {

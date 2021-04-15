@@ -18,6 +18,7 @@
     - license: MIT
 
 ## Internationalization
+
 1. i18next
     - [documentation](https://www.i18next.com/)
     - [github](https://github.com/i18next/i18next)
@@ -31,12 +32,15 @@
     - license: MIT
 
 ## Communication
+
 1. Apollo-Client
     - [documentation](https://www.apollographql.com/docs/react/)
     - [github](https://github.com/apollographql/apollo-client)
     - license: MIT
-   
+
+
 ## Tools
+
 1. GraphQL code generator
     - [documentation](https://www.graphql-code-generator.com/)
     - [github](https://github.com/dotansimha/graphql-code-generator)
@@ -50,3 +54,7 @@
     - [github](https://github.com/goatandsheep/react-native-dotenv)
     - license: MIT
    
+## Pictures
+1. Undraw.co
+   -  [documentation](https://undraw.co/)
+   - license: Custom open source license

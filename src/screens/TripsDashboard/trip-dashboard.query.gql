@@ -1,0 +1,21 @@
+query trips {
+    trips {
+        id
+        createdAt
+        name
+        description
+        startDate
+        endDate
+        members {
+            id
+            role
+            color
+            user {
+                id
+                displayName
+                username
+                email
+            }
+        }
+    }
+}

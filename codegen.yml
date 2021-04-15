@@ -1,28 +1,29 @@
 schema: ${BACKEND_URL}
 documents:
-  - 'src/**/*.gql'
+    - "src/**/*.gql"
 generates:
-  ./src/types.d.ts:
-    plugins:
-      - typescript
-  ./src/graphql.schema.json:
-    plugins:
-      - introspection:
-          minify: false
-  src/:
-    preset: near-operation-file
-    presetConfig:
-      baseTypesPath: ./types.d.ts
-      folder: types
-      extension: .ts
-    plugins:
-      - typescript-operations
-      - typescript-react-apollo
-      - named-operations-object
-    config:
-      reactApolloVersion: 3
-      withHOC: false
-      withHooks: true
-      withComponent: false
-      skipTypename: true
-      withRefetchFn: true
+    ./src/types.d.ts:
+        plugins:
+            - typescript
+    ./src/graphql.schema.json:
+        plugins:
+            - introspection:
+                  minify: false
+    src/:
+        preset: near-operation-file
+        presetConfig:
+            baseTypesPath: ./types.d.ts
+            folder: types
+            extension: .ts
+        plugins:
+            - typescript-operations
+            - typescript-react-apollo
+            - named-operations-object
+        config:
+            reactApolloVersion: 3
+            withHOC: false
+            withHooks: true
+            withComponent: false
+            skipTypename: true
+            withRefetchFn: true
+            preResolveTypes: true

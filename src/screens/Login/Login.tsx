@@ -60,6 +60,7 @@ export default function Login(props: Props) {
                         res.data?.login.token
                     ).catch((e) => console.log(e));
                 }
+                props.navigation.replace("Dashboard");
             })
             .catch((e) => {
                 console.log(e);
