@@ -18,6 +18,8 @@ export const resources = {
                 credentials: "Invalid Credentials",
                 username: "Invalid Username",
                 password: "Invalid Password",
+                takenEmailUsername:
+                    "The Email or username is already taken, please choose another one",
             },
             placeholder: {
                 username: [
@@ -70,6 +72,8 @@ export const resources = {
                 credentials: "Falsche Benutzerdaten",
                 username: "Falscher Benutzername",
                 password: "Falsches Passwort",
+                takenEmailUsername:
+                    "Die Email Adresse oder der Benutzername sind schon vergeben",
             },
             validation: {
                 emailRequired: "Bitte gib eine gültige E-Mail Adresse ein!",

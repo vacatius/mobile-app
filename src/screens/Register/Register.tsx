@@ -1,24 +1,16 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Button, Icon, Input } from "react-native-elements";
+import { Button, Icon, Input, Text } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
-import ReCaptchaV3 from "@haskkor/react-native-recaptchav3";
-import { getEnvironment } from "../../get-environment";
 import { useCreateUserMutation } from "./types/registerMutation";
-import { Formik } from "formik";
+import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { TFunction } from "i18next";
 
 export default function Register() {
     const { t } = useTranslation();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [password2, setPassword2] = useState("");
-    const [username, setUsername] = useState("");
-    const [displayName, setDisplayName] = useState("");
-    const [token, setToken] = useState("");
     const [execute, { error, loading }] = useCreateUserMutation();
     const [placeholder] = useState({
         username: t("placeholder.username", {
@@ -43,34 +35,25 @@ export default function Register() {
         ],
     });
 
-    const handleRegister = () => {
-        if (password !== password2) {
-            return;
-        }
+    const handleRegister = (values: FormikValues) => {
         execute({
             variables: {
                 input: {
-                    username: username,
-                    displayName: displayName,
-                    password: password,
-                    email: email,
-                    captchaToken: token,
+                    username: values.username,
+                    displayName: values.displayName,
+                    password: values.password,
+                    email: values.email,
+                    captchaToken: "todo", //TODO
                 },
             },
+        }).catch((e) => {
+            console.log(e);
         });
-        console.log(
-            `register with email: ${email}, password: ${password}, username: ${username}`
-        );
+        console.log(`register with user ${values.username}`);
     };
 
     return (
         <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
-            <ReCaptchaV3
-                captchaDomain={"https://vacatius.com"}
-                siteKey={getEnvironment()?.siteKey as string}
-                onReceiveToken={(token: string) => setToken(token)}
-                action="submit"
-            />
             <SafeAreaView style={styles.container}>
                 <SvgLogo style={styles.logo} width={100} height={100} />
                 <Formik
@@ -81,7 +64,7 @@ export default function Register() {
                         password: "",
                         password2: "",
                     }}
-                    onSubmit={(values) => console.log(values)}
+                    onSubmit={(values) => handleRegister(values)}
                     validationSchema={validationSchema(t)}
                 >
                     {({
@@ -89,8 +72,6 @@ export default function Register() {
                         values,
                         handleSubmit,
                         errors,
-                        isValid,
-                        isSubmitting,
                         touched,
                         handleBlur,
                     }) => (
@@ -108,7 +89,6 @@ export default function Register() {
                                     />
                                 }
                                 value={values.email}
-                                // onChange={(e) => setEmail(e.nativeEvent.text)}
                                 onChangeText={handleChange("email")}
                                 onBlur={handleBlur("email")}
                                 errorMessage={
@@ -116,6 +96,7 @@ export default function Register() {
                                         ? errors.email
                                         : undefined
                                 }
+                                errorStyle={styles.errorMessage}
                             />
                             <Input
                                 label={t("username")}
@@ -130,9 +111,6 @@ export default function Register() {
                                     />
                                 }
                                 value={values.username}
-                                // onChange={(e) =>
-                                //     setUsername(e.nativeEvent.text)
-                                // }
                                 onChangeText={handleChange("username")}
                                 onBlur={handleBlur("username")}
                                 errorMessage={
@@ -140,6 +118,7 @@ export default function Register() {
                                         ? errors.username
                                         : undefined
                                 }
+                                errorStyle={styles.errorMessage}
                             />
                             <Input
                                 label={t("displayName")}
@@ -154,9 +133,6 @@ export default function Register() {
                                     />
                                 }
                                 value={values.displayName}
-                                // onChange={(e) =>
-                                //     setDisplayName(e.nativeEvent.text)
-                                // }
                                 onChangeText={handleChange("displayName")}
                                 onBlur={handleBlur("displayName")}
                                 errorMessage={
@@ -164,6 +140,7 @@ export default function Register() {
                                         ? errors.displayName
                                         : undefined
                                 }
+                                errorStyle={styles.errorMessage}
                             />
                             <Input
                                 label={t("password")}
@@ -179,9 +156,6 @@ export default function Register() {
                                 }
                                 value={values.password}
                                 secureTextEntry={true}
-                                // onChange={(e) =>
-                                //     setPassword(e.nativeEvent.text)
-                                // }
                                 onChangeText={handleChange("password")}
                                 onBlur={handleBlur("password")}
                                 errorMessage={
@@ -189,6 +163,7 @@ export default function Register() {
                                         ? errors.password
                                         : undefined
                                 }
+                                errorStyle={styles.errorMessage}
                             />
                             <Input
                                 label={t("repeatPassword")}
@@ -204,9 +179,6 @@ export default function Register() {
                                 }
                                 value={values.password2}
                                 secureTextEntry={true}
-                                // onChange={(e) =>
-                                //     setPassword2(e.nativeEvent.text)
-                                // }
                                 onChangeText={handleChange("password2")}
                                 onBlur={handleBlur("password2")}
                                 errorMessage={
@@ -214,10 +186,20 @@ export default function Register() {
                                         ? errors.password2
                                         : undefined
                                 }
+                                errorStyle={styles.errorMessage}
                             />
+                            {error && (
+                                <Text style={styles.errorText}>
+                                    {error.message.includes("Invalid")
+                                        ? t("error.takenEmailUsername")
+                                        : error.networkError
+                                        ? t("error.network")
+                                        : error.message}
+                                </Text>
+                            )}
                             <Button
                                 containerStyle={styles.buttonContainer}
-                                buttonStyle={styles.buttonLogin}
+                                buttonStyle={styles.buttonRegister}
                                 title={
                                     t("startJourney", { returnObjects: true })[
                                         Math.floor(
@@ -239,10 +221,8 @@ export default function Register() {
                                     />
                                 }
                                 iconRight={true}
-                                disabled={!isValid || isSubmitting}
-                                loading={isSubmitting}
-                                // onPress={handleRegister}
-                                onPress={() => handleSubmit}
+                                loading={loading}
+                                onPress={() => handleSubmit()}
                             />
                         </>
                     )}
@@ -254,12 +234,14 @@ export default function Register() {
 
 const validationSchema = (t: TFunction): object => {
     return Yup.object().shape({
-        email: Yup.string().required(t("validation.emailRequired")).email(),
+        email: Yup.string()
+            .required(t("validation.emailRequired"))
+            .email(t("validation.emailRequired")),
         username: Yup.string().required(t("validation.usernameRequired")),
         displayName: Yup.string().required(t("validation.displayNameRequired")),
         password: Yup.string()
             .required(t("validation.password.required"))
-            .min(4, t("validation.password.minLength", { amount: "4" })),
+            .min(8, t("validation.password.minLength", { amount: "8" })),
         password2: Yup.string()
             .required(t("validation.password.required"))
             .oneOf(
@@ -290,11 +272,21 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginBottom: 20,
     },
-    buttonLogin: {
+    buttonRegister: {
         backgroundColor: "#BCE1B0",
     },
     logo: {
         alignSelf: "center",
         marginBottom: 20,
+    },
+    errorText: {
+        fontSize: 16,
+        marginBottom: 15,
+        alignSelf: "center",
+        color: "#e03030",
+    },
+    errorMessage: {
+        color: "#e03030",
+        fontSize: 13,
     },
 });
