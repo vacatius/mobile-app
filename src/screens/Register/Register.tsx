@@ -75,7 +75,7 @@ export default function Register(props: Props) {
                     isVisible={signInOverlay.length > 0}
                     overlayStyle={styles.overlay}
                 >
-                    <SvgLogo style={styles.logo} width={50} height={50} />
+                    <SvgLogo style={styles.logo} width={80} height={80} />
                     <Text style={styles.welcomeText}>
                         {t("screens.register.welcome", {
                             displayName: signInOverlay,
@@ -86,6 +86,7 @@ export default function Register(props: Props) {
                         title={t("login")}
                         buttonStyle={styles.buttonRegister}
                         containerStyle={styles.buttonContainerWelcome}
+                        titleStyle={styles.buttonTitle}
                     />
                 </Overlay>
                 <SvgLogo style={styles.logo} width={100} height={100} />
@@ -243,7 +244,7 @@ export default function Register(props: Props) {
                                         )
                                     ]
                                 }
-                                titleStyle={{ color: "black", fontSize: 25 }}
+                                titleStyle={styles.buttonTitle}
                                 icon={
                                     <Icon
                                         style={styles.iconButton}
@@ -326,10 +327,16 @@ const styles = StyleSheet.create({
         fontSize: 13,
     },
     overlay: {
+        minWidth: "80%",
         margin: 30,
         padding: 20,
     },
     welcomeText: {
         textAlign: "center",
+        fontSize: 20,
+    },
+    buttonTitle: {
+        color: "black",
+        fontSize: 25,
     },
 });
