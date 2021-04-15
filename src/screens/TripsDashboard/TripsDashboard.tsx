@@ -66,7 +66,7 @@ export default function TripsDashboard(props: Props) {
                 style={styles.scrollView}
             >
                 <Text h3 style={styles.headlines}>
-                    Current Journeys
+                    Current Trips
                 </Text>
                 {currentTrips &&
                     currentTrips?.map((trip) => {
@@ -84,7 +84,7 @@ export default function TripsDashboard(props: Props) {
                     </Text>
                 )}
                 <Text h3 style={styles.headlines}>
-                    Past Journeys
+                    Past Trips
                 </Text>
                 {pastTrips &&
                     pastTrips?.map((trip) => {
