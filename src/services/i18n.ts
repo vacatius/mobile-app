@@ -55,6 +55,11 @@ export const resources = {
                     match: "Passwords must match",
                 },
             },
+            screens: {
+                register: {
+                    welcome: "Welcome {{displayName}} 🎉",
+                },
+            },
         },
     },
     de: {
@@ -84,6 +89,12 @@ export const resources = {
                     minLength:
                         "Das Passwort muss mindestens {{amount}} Zeichen besitzten",
                     match: "Die Passwörter müssen übereinstimmen!",
+                },
+            },
+            screens: {
+                register: {
+                    welcome:
+                        "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
                 },
             },
         },

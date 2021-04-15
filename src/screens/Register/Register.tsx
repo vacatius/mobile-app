@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Button, Icon, Input, Text } from "react-native-elements";
+import { Button, Icon, Input, Overlay, Text } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
@@ -8,10 +8,22 @@ import { useCreateUserMutation } from "./types/registerMutation";
 import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { TFunction } from "i18next";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../../App";
 
-export default function Register() {
+type ProfileScreenNavigationProp = StackNavigationProp<
+    RootStackParamList,
+    "Register"
+>;
+
+type Props = {
+    navigation: ProfileScreenNavigationProp;
+};
+
+export default function Register(props: Props) {
     const { t } = useTranslation();
     const [execute, { error, loading }] = useCreateUserMutation();
+    const [signInOverlay, setSignInOverlay] = useState("");
     const [placeholder] = useState({
         username: t("placeholder.username", {
             returnObjects: true,
@@ -46,15 +58,36 @@ export default function Register() {
                     captchaToken: "todo", //TODO
                 },
             },
-        }).catch((e) => {
-            console.log(e);
-        });
+        })
+            .then((data) => {
+                setSignInOverlay(values.displayName);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
         console.log(`register with user ${values.username}`);
     };
 
     return (
         <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
             <SafeAreaView style={styles.container}>
+                <Overlay
+                    isVisible={signInOverlay.length > 0}
+                    overlayStyle={styles.overlay}
+                >
+                    <SvgLogo style={styles.logo} width={50} height={50} />
+                    <Text style={styles.welcomeText}>
+                        {t("screens.register.welcome", {
+                            displayName: signInOverlay,
+                        })}
+                    </Text>
+                    <Button
+                        onPress={() => props.navigation.navigate("Login")}
+                        title={t("login")}
+                        buttonStyle={styles.buttonRegister}
+                        containerStyle={styles.buttonContainerWelcome}
+                    />
+                </Overlay>
                 <SvgLogo style={styles.logo} width={100} height={100} />
                 <Formik
                     initialValues={{
@@ -272,6 +305,9 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginBottom: 20,
     },
+    buttonContainerWelcome: {
+        margin: 20,
+    },
     buttonRegister: {
         backgroundColor: "#BCE1B0",
     },
@@ -288,5 +324,12 @@ const styles = StyleSheet.create({
     errorMessage: {
         color: "#e03030",
         fontSize: 13,
+    },
+    overlay: {
+        margin: 30,
+        padding: 20,
+    },
+    welcomeText: {
+        textAlign: "center",
     },
 });
