@@ -8,6 +8,14 @@
 1. react-native-svg
     - [documentation](https://docs.expo.io/versions/latest/sdk/svg/)
     - license: MIT
+#### Forms and Validation
+1. formik
+    - [documentation](https://formik.org/docs/overview)
+    - [github](https://github.com/formium/formik)
+    - license: Apache-2.0 License
+1. yup
+    - [github](https://github.com/jquense/yup)
+    - license: MIT
 
 ## Internationalization
 1. i18next
@@ -27,6 +35,7 @@
     - [documentation](https://www.apollographql.com/docs/react/)
     - [github](https://github.com/apollographql/apollo-client)
     - license: MIT
+   
 ## Tools
 1. GraphQL code generator
     - [documentation](https://www.graphql-code-generator.com/)

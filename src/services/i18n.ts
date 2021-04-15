@@ -42,6 +42,17 @@ export const resources = {
                     "TheLegend27@mail.com",
                 ],
             },
+            validation: {
+                emailRequired: "Please enter a valid email address!",
+                usernameRequired: "Please enter a username!",
+                displayNameRequired: "Please enter a display name!",
+                password: {
+                    required: "Please enter a password!",
+                    minLength:
+                        "The password must have at least {{amount}} characters",
+                    match: "Passwords must match",
+                },
+            },
         },
     },
     de: {
@@ -59,6 +70,17 @@ export const resources = {
                 credentials: "Falsche Benutzerdaten",
                 username: "Falscher Benutzername",
                 password: "Falsches Passwort",
+            },
+            validation: {
+                emailRequired: "Bitte gib eine gültige E-Mail Adresse ein!",
+                usernameRequired: "Bitte gib einen Benutzernamen ein!",
+                displayNameRequired: "Bitte gib einen Anzeigenamen ein!",
+                password: {
+                    required: "Bitte gib ein Passwort ein!",
+                    minLength:
+                        "Das Passwort muss mindestens {{amount}} Zeichen besitzten",
+                    match: "Die Passwörter müssen übereinstimmen!",
+                },
             },
         },
     },
