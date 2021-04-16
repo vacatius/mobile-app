@@ -9,7 +9,7 @@ import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { TFunction } from "i18next";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../App";
+import RootStackParamList from "../../types/RootStackParamList";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
