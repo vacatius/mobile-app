@@ -14,6 +14,7 @@ import Register from "./src/screens/Register/Register";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 import i18n from "./src/services/i18n";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
+import SvgLogo from "./src/components/SvgLogo";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
@@ -25,7 +26,7 @@ export default function App() {
         navigationRef.current?.dispatch(StackActions.replace(name, params));
     };
     const { getCurrentUser } = useCurrentAuthUser();
-    const [initialRoute, setInitialRoute] = useState("Login");
+    const [initialRoute, setInitialRoute] = useState("");
 
     useEffect(() => {
         async function loadInitalRoute() {
@@ -39,29 +40,31 @@ export default function App() {
     return (
         <SafeAreaProvider>
             <StatusBar style="dark" backgroundColor="white" />
-            <NavigationContainer ref={navigationRef}>
-                <ApolloConnection navigationFn={replace}>
-                    <Stack.Navigator initialRouteName={initialRoute}>
-                        <Stack.Screen
-                            name="Login"
-                            component={Login}
-                            options={{ title: t("login") }}
-                        />
-                        <Stack.Screen
-                            name="Register"
-                            component={Register}
-                            options={{ title: t("register") }}
-                        />
-                        <Stack.Screen
-                            name="Dashboard"
-                            component={TripsDashboard}
-                            options={{
-                                title: t("screen_header_trip_dashBoard"),
-                            }}
-                        />
-                    </Stack.Navigator>
-                </ApolloConnection>
-            </NavigationContainer>
+            {(initialRoute === "" && <SvgLogo></SvgLogo>) || (
+                <NavigationContainer ref={navigationRef}>
+                    <ApolloConnection navigationFn={replace}>
+                        <Stack.Navigator initialRouteName={initialRoute}>
+                            <Stack.Screen
+                                name="Login"
+                                component={Login}
+                                options={{ title: t("login") }}
+                            />
+                            <Stack.Screen
+                                name="Register"
+                                component={Register}
+                                options={{ title: t("register") }}
+                            />
+                            <Stack.Screen
+                                name="Dashboard"
+                                component={TripsDashboard}
+                                options={{
+                                    title: t("screen_header_trip_dashBoard"),
+                                }}
+                            />
+                        </Stack.Navigator>
+                    </ApolloConnection>
+                </NavigationContainer>
+            )}
         </SafeAreaProvider>
     );
 }
