@@ -8,7 +8,7 @@ export type LoginMutationVariables = Types.Exact<{
 }>;
 
 
-export type LoginMutation = { login: Pick<Types.LoginResult, 'token'> };
+export type LoginMutation = { login: { token: string } };
 
 
 export const LoginDocument = gql`

@@ -8,7 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import { useTranslation } from "react-i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import ApolloConnection from "./src/components/ApolloConnection";
+import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
 import Login from "./src/screens/Login/Login";
 import Register from "./src/screens/Register/Register";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
@@ -22,7 +22,9 @@ export type RootStackParamList = {
     Register: undefined;
     Dashboard: undefined;
 };
-
+export const SecureStorageItems = {
+    ACCESS_TOKEN: "accessToken"
+}
 export default function App() {
     const { t } = useTranslation();
     const navigationRef = useRef<NavigationContainerRef>(null);

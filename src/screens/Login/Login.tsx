@@ -6,7 +6,7 @@ import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
 import * as SecureStore from "expo-secure-store";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../App";
+import { RootStackParamList, SecureStorageItems } from "../../../App";
 import { useLoginMutation } from "./types/loginMutation";
 import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
@@ -56,7 +56,7 @@ export default function Login(props: Props) {
             .then((res) => {
                 if (res.data?.login.token) {
                     saveInSecureStore(
-                        "accessToken",
+                        SecureStorageItems.ACCESS_TOKEN,
                         res.data?.login.token
                     ).catch((e) => console.log(e));
                 }
