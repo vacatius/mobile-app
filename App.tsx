@@ -1,5 +1,9 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useRef } from "react";
+import {
+    NavigationContainer,
+    NavigationContainerRef,
+    StackActions,
+} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import { useTranslation } from "react-i18next";
@@ -21,12 +25,16 @@ export type RootStackParamList = {
 
 export default function App() {
     const { t } = useTranslation();
+    const navigationRef = useRef<NavigationContainerRef>(null);
+    const replace = (name: string, params: any) => {
+        navigationRef.current?.dispatch(StackActions.replace(name, params));
+    };
     return (
-        <ApolloConnection>
-            <SafeAreaProvider>
-                <StatusBar style="dark" backgroundColor="white" />
-                <NavigationContainer>
-                    <Stack.Navigator initialRouteName="Login">
+        <SafeAreaProvider>
+            <StatusBar style="dark" backgroundColor="white" />
+            <NavigationContainer ref={navigationRef}>
+                <ApolloConnection navigationFn={replace}>
+                    <Stack.Navigator initialRouteName="Dashboard">
                         <Stack.Screen
                             name="Login"
                             component={Login}
@@ -45,8 +53,8 @@ export default function App() {
                             }}
                         />
                     </Stack.Navigator>
-                </NavigationContainer>
-            </SafeAreaProvider>
-        </ApolloConnection>
+                </ApolloConnection>
+            </NavigationContainer>
+        </SafeAreaProvider>
     );
 }
