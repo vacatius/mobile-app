@@ -11,9 +11,8 @@ import { setContext } from "@apollo/client/link/context";
 import { getEnvironment } from "../../get-environment";
 import * as SecureStore from "expo-secure-store";
 import { onError } from "@apollo/client/link/error";
-import { useNavigation } from "@react-navigation/native";
-import { SecureStorageItems } from "../../../App";
 import { REFRESH_TOKEN_MUTATION } from "./refresh-token.mutation";
+import SecureStorageItems from "../../types/SecureStorageItems";
 export type Props = {
     children: JSX.Element;
     navigationFn: (name: string, params: any) => void;
@@ -33,10 +32,14 @@ export default function ApolloConnection(props: Props) {
         credentials: "include",
     });
     const getNewToken = () => {
+        console.log("get new token");
+
         return client
-            .mutate({ mutation: REFRESH_TOKEN_MUTATION })
+            .mutate({ mutation: REFRESH_TOKEN_MUTATION, errorPolicy: "all" })
             .then((response) => {
                 // extract your accessToken from your response data and return it
+
+                console.log("fetch token");
                 const data = response.data?.refreshToken;
                 if (!data) {
                     throw new Error("could not get a refresh token");
@@ -57,11 +60,10 @@ export default function ApolloConnection(props: Props) {
                             console.log(
                                 "Acess Token no longer valid, trying to refresh"
                             );
-                            let forward$;
 
                             if (!isRefreshing) {
                                 isRefreshing = true;
-                                forward$ = fromPromise(
+                                fromPromise(
                                     getNewToken()
                                         .then(async (accessToken) => {
                                             console.log(
@@ -72,11 +74,12 @@ export default function ApolloConnection(props: Props) {
                                                 accessToken
                                             );
                                             resolvePendingRequests();
-                                   
+
                                             // retry the request, returning the new observable
-                                            return accessToken;
+                                            return forward(operation);
                                         })
                                         .catch((error) => {
+                                            console.log("could not refresh");
                                             pendingRequests = [];
                                             // Handle token refresh errors e.g clear stored tokens, redirect to login
                                             SecureStore.deleteItemAsync(
@@ -91,14 +94,12 @@ export default function ApolloConnection(props: Props) {
                                 );
                             } else {
                                 // Will only emit once the Promise is resolved
-                                forward$ = fromPromise(
+                                fromPromise(
                                     new Promise<void>((resolve) => {
                                         pendingRequests.push(() => resolve());
                                     })
                                 );
                             }
-
-                            return forward$.flatMap(() => forward(operation));
                     }
                 }
             }
@@ -107,8 +108,7 @@ export default function ApolloConnection(props: Props) {
 
     const authLink = setContext(async (_, { headers }) => {
         // get the authentication token from secure storage if it exists
-        // const token = await SecureStore.getItemAsync("accessToken");
-        const token = "aifjaofcdf";
+        const token = await SecureStore.getItemAsync("accessToken");
         if (token) {
             // return the headers to the context so httpLink can read them
             return {

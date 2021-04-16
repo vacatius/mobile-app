@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import {
     NavigationContainer,
     NavigationContainerRef,
@@ -13,30 +13,35 @@ import Login from "./src/screens/Login/Login";
 import Register from "./src/screens/Register/Register";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 import i18n from "./src/services/i18n";
+import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
 
-export type RootStackParamList = {
-    Login: undefined;
-    Register: undefined;
-    Dashboard: undefined;
-};
-export const SecureStorageItems = {
-    ACCESS_TOKEN: "accessToken"
-}
 export default function App() {
     const { t } = useTranslation();
     const navigationRef = useRef<NavigationContainerRef>(null);
     const replace = (name: string, params: any) => {
         navigationRef.current?.dispatch(StackActions.replace(name, params));
     };
+    const { getCurrentUser } = useCurrentAuthUser();
+    const [initialRoute, setInitialRoute] = useState("Login");
+
+    useEffect(() => {
+        async function loadInitalRoute() {
+            const result = await getCurrentUser();
+            const route = result != null ? "Dashboard" : "Login";
+            console.log("Initial route? " + route);
+            setInitialRoute(route);
+        }
+        loadInitalRoute();
+    }, []);
     return (
         <SafeAreaProvider>
             <StatusBar style="dark" backgroundColor="white" />
             <NavigationContainer ref={navigationRef}>
                 <ApolloConnection navigationFn={replace}>
-                    <Stack.Navigator initialRouteName="Dashboard">
+                    <Stack.Navigator initialRouteName={initialRoute}>
                         <Stack.Screen
                             name="Login"
                             component={Login}
@@ -59,4 +64,7 @@ export default function App() {
             </NavigationContainer>
         </SafeAreaProvider>
     );
+}
+function getCurrentUser() {
+    throw new Error("Function not implemented.");
 }

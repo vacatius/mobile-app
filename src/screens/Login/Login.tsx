@@ -6,11 +6,12 @@ import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
 import * as SecureStore from "expo-secure-store";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList, SecureStorageItems } from "../../../App";
 import { useLoginMutation } from "./types/loginMutation";
 import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { TFunction } from "i18next";
+import RootStackParamList from "../../types/RootStackParamList";
+import SecureStorageItems from "../../types/SecureStorageItems";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -58,6 +59,12 @@ export default function Login(props: Props) {
                     saveInSecureStore(
                         SecureStorageItems.ACCESS_TOKEN,
                         res.data?.login.token
+                    ).catch((e) => console.log(e));
+                }
+                if (res.data?.login.user) {
+                    saveInSecureStore(
+                        SecureStorageItems.CURRENT_USER,
+                        JSON.stringify(res.data?.login.user)
                     ).catch((e) => console.log(e));
                 }
                 props.navigation.replace("Dashboard");
