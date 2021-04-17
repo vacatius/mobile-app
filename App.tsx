@@ -65,10 +65,13 @@ export default function App() {
                             <Stack.Screen
                                 name="TripItinerary"
                                 component={TripItinerary}
-                                options={{
-                                    title: t(
-                                        "screens.tripItinerary.tripItinerary"
-                                    ),
+                                options={({ route }) => {
+                                    let params = route.params as {
+                                        tripName: string;
+                                    };
+                                    return {
+                                        title: params.tripName,
+                                    };
                                 }}
                             />
                         </Stack.Navigator>
