@@ -7,6 +7,7 @@ import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Yup from "yup";
+import SvgLogo from "../../components/SvgLogo";
 import { useCreateTripMutation } from "./types/add-trip.mutation";
 
 export type Props = {};
@@ -43,7 +44,8 @@ export const AddTrip = (props: Props) => {
             contentContainerStyle={styles.scrollView}
         >
             <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>{t("screen_header_add_trip")}</Text>
+                <SvgLogo style={styles.logo} width={150} height={150} />
+                <Text style={styles.text}>{t("screen_header_add_trip")}</Text>
                 <Formik
                     initialValues={{ tripName: "", description: "" }}
                     onSubmit={handleSubmit}
@@ -111,7 +113,7 @@ export const AddTrip = (props: Props) => {
                             )}
                             <Button
                                 containerStyle={styles.buttonContainer}
-                                buttonStyle={styles.buttonLogin}
+                                buttonStyle={styles.submitButton}
                                 title={t("screen_header_add_trip")}
                                 titleStyle={{
                                     color: "black",
@@ -136,7 +138,7 @@ export const AddTrip = (props: Props) => {
                 <Button
                     containerStyle={styles.buttonContainer}
                     type="clear"
-                    title={t("screen_header_trip_dashBoard")}
+                    title={t("screens.add_trip.stay_home")}
                     titleStyle={{ color: "darkslategray" }}
                     onPress={() => navigation.navigate("Dashboard")}
                 />
@@ -154,7 +156,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        padding: 20,
+        margin: 20,
     },
     text: {
         fontSize: 40,
@@ -170,12 +172,12 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginBottom: 20,
     },
-    buttonLogin: {
-        backgroundColor: "#BCE1B0",
-    },
     logo: {
         alignSelf: "center",
         marginBottom: 20,
+    },
+    submitButton: {
+        backgroundColor: "#BCE1B0",
     },
     errorText: {
         fontSize: 16,
