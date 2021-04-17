@@ -19,7 +19,7 @@ export const resources = {
                 username: "Invalid Username",
                 password: "Invalid Password",
                 takenEmailUsername:
-                    "The Email or username is already taken, please choose another one",
+                    "The Email or Username is already taken, please choose another one",
             },
             placeholder: {
                 username: [
@@ -45,8 +45,8 @@ export const resources = {
                 ],
             },
             validation: {
-                emailRequired: "Please enter a valid email address!",
-                usernameRequired: "Please enter a username!",
+                emailRequired: "Please enter a valid Email address!",
+                usernameRequired: "Please enter a Username!",
                 displayNameRequired: "Please enter a display name!",
                 password: {
                     required: "Please enter a password!",
