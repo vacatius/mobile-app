@@ -66,6 +66,8 @@ export const resources = {
                         "The password must have at least {{amount}} characters",
                     match: "Passwords must match",
                 },
+                tripNameRequired: "Please enter a name for this trip!",
+                descriptionRequired: "Please enter a description for this trip."
             },
             screens: {
                 register: {

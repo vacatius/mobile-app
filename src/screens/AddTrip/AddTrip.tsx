@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/core";
-import { Formik } from "formik";
+import { StackActions, useNavigation } from "@react-navigation/core";
+import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -34,8 +34,20 @@ export const AddTrip = (props: Props) => {
         ],
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = (values: FormikValues) => {
         console.log("add trip pressed");
+        execute({
+            variables: {
+                input: { name: values.tripName, description: values.description },
+            },
+        })
+            .then((res) => {
+                console.log("Successfully created this trip");
+                navigation.dispatch(StackActions.replace("Dashboard"));
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     };
     return (
         <ScrollView
@@ -151,7 +163,12 @@ export const AddTrip = (props: Props) => {
 };
 const validationSchema = (t: TFunction): object => {
     return Yup.object().shape({
-        name: Yup.string().min(1).required(t("validation.usernameRequired")),
+        tripName: Yup.string()
+            .min(1)
+            .required(t("validation.tripNameRequired")),
+        description: Yup.string()
+            .min(1)
+            .required(t("validation.descriptionRequired")),
     });
 };
 const styles = StyleSheet.create({
@@ -197,6 +214,6 @@ const styles = StyleSheet.create({
     },
     textArea: {
         height: 130,
-        textAlignVertical: "top"
-    }
+        textAlignVertical: "top",
+    },
 });
