@@ -61,6 +61,7 @@ export const resources = {
                 },
             },
             screen_header_trip_dashBoard: "Dashboard",
+            screen_header_add_trip: "Add Trip",
         },
     },
     de: {
@@ -98,6 +99,7 @@ export const resources = {
                         "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
                 },
             },
+            screen_header_add_trip: "Neuer Trip",
         },
     },
 };

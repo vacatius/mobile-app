@@ -15,6 +15,7 @@ import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 import i18n from "./src/services/i18n";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
 import SvgLogo from "./src/components/SvgLogo";
+import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
@@ -59,6 +60,13 @@ export default function App() {
                                 component={TripsDashboard}
                                 options={{
                                     title: t("screen_header_trip_dashBoard"),
+                                }}
+                            />
+                            <Stack.Screen
+                                name="AddTrip"
+                                component={AddTrip}
+                                options={{
+                                    title: t("screen_header_add_trip"),
                                 }}
                             />
                         </Stack.Navigator>
