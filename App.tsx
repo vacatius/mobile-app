@@ -9,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 import { useTranslation } from "react-i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
+import TripItinerary from "./src/screens/Itinerary/TripItinerary";
 import Login from "./src/screens/Login/Login";
 import Register from "./src/screens/Register/Register";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
@@ -59,6 +60,13 @@ export default function App() {
                                 component={TripsDashboard}
                                 options={{
                                     title: t("screen_header_trip_dashBoard"),
+                                }}
+                            />
+                            <Stack.Screen
+                                name="TripItinerary"
+                                component={TripItinerary}
+                                options={{
+                                    title: "TripItinerary",
                                 }}
                             />
                         </Stack.Navigator>

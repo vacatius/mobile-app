@@ -55,6 +55,7 @@ export default function TripsDashboard(props: Props) {
         );
     }
     const openTripDetails = (trip: TripsQuery["trips"][0]) => {
+        props.navigation.navigate("TripItinerary", { tripId: trip.id });
         console.log("Opening trip details");
     };
 
