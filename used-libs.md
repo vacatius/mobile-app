@@ -8,6 +8,10 @@
 1. react-native-svg
     - [documentation](https://docs.expo.io/versions/latest/sdk/svg/)
     - license: MIT
+1. accordion-collapse-react-native
+    - [documentation](https://www.npmjs.com/package/accordion-collapse-react-native)
+    - license: MIT
+   
 #### Forms and Validation
 1. formik
     - [documentation](https://formik.org/docs/overview)
@@ -15,6 +19,12 @@
     - license: Apache-2.0 License
 1. yup
     - [github](https://github.com/jquense/yup)
+    - license: MIT
+   
+## Navigation
+1. react-navigation
+    - [documentation](https://reactnavigation.org/docs/getting-started)
+    - [github](https://github.com/react-navigation/react-navigation)
     - license: MIT
 
 ## Internationalization
