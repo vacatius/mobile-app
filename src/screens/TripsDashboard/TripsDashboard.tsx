@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -29,6 +30,7 @@ export default function TripsDashboard(props: Props) {
     const { data: tripsData, error, loading } = useTripsQuery();
     const [currentTrips, setCurrentTrips] = useState<TripsQuery["trips"]>([]);
     const [pastTrips, setPastTrips] = useState<TripsQuery["trips"]>([]);
+    const nav = useNavigation();
 
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
@@ -57,7 +59,10 @@ export default function TripsDashboard(props: Props) {
     const openTripDetails = (trip: TripsQuery["trips"][0]) => {
         console.log("Opening trip details");
     };
-
+    const addTrip = () => {
+        console.log("Add trip button pressed");
+        nav.navigate("AddTrip");
+    }
     return (
         <>
             <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
@@ -117,6 +122,7 @@ export default function TripsDashboard(props: Props) {
                         fontSize: 24,
                     }}
                     buttonStyle={styles.floatingButton}
+                    onPress={addTrip}
                 />
             </TouchableOpacity>
         </>
