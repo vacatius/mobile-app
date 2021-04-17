@@ -11,8 +11,10 @@ export const resources = {
             password: "Password",
             repeatPassword: "Repeat Password",
             username: "Username",
+            description: "Description",
             startJourney: ["Start Journey", "Lets go"],
             displayName: "Display Name",
+            tripName: "Trip Name",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
@@ -43,6 +45,16 @@ export const resources = {
                     "contact@vacatius.com",
                     "TheLegend27@mail.com",
                 ],
+                tripName: [
+                    "Roadtrip 2022",
+                    "Awesome Roadtrip",
+                    "Iceland again",
+                    "Sun'n'Fun",
+                    "Up to Scandinavia"
+                ],
+                description: [
+                    "Awesome trip with my friends"
+                ]
             },
             validation: {
                 emailRequired: "Please enter a valid Email address!",
@@ -59,6 +71,9 @@ export const resources = {
                 register: {
                     welcome: "Welcome {{displayName}} 🎉",
                 },
+                add_trip: {
+                    trip_name: "Give your trip a name"
+                }
             },
             screen_header_trip_dashBoard: "Dashboard",
             screen_header_add_trip: "Add Trip",
