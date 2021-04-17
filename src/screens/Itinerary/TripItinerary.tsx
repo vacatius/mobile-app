@@ -4,6 +4,7 @@ import React from "react";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RootStackParamList from "../../types/RootStackParamList";
+import { useGetTripQuery } from "./types/getTripQuery";
 
 type TripItineraryScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -18,13 +19,29 @@ type Props = {
 };
 
 export default function TripItinerary(props: Props) {
-    return (
-        <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
-            <SafeAreaView style={styles.container}>
-                <Text>{props.route.params.tripId}</Text>
-            </SafeAreaView>
-        </ScrollView>
-    );
+    const { data, error, loading } = useGetTripQuery({
+        variables: { tripId: props.route.params.tripId },
+    });
+
+    if (data?.node?.__typename === "Trip") {
+        return (
+            <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
+                <SafeAreaView style={styles.container}>
+                    {loading && <Text>loading...</Text>}
+                    {data.node.itinerary.map((i) => (
+                        <>
+                            <Text key={i.id}>{i.name}</Text>
+                            {i.activities.map((a) => {
+                                <Text key={a.name}>{a.name}</Text>;
+                            })}
+                        </>
+                    ))}
+                </SafeAreaView>
+            </ScrollView>
+        );
+    } else {
+        return <></>;
+    }
 }
 
 const styles = StyleSheet.create({
