@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/core";
+import { RouteProp, useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,14 +20,15 @@ type TripsDashboardScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
     "Dashboard"
 >;
-
+type TripsDashboardScreenRouteProp = RouteProp<RootStackParamList, "Dashboard">;
 type Props = {
     navigation: TripsDashboardScreenNavigationProp;
+    route: TripsDashboardScreenRouteProp;
 };
 
 export default function TripsDashboard(props: Props) {
     const { t } = useTranslation();
-    const { data: tripsData, error, loading } = useTripsQuery();
+    const { data: tripsData, error, loading, refetch } = useTripsQuery();
     const [currentTrips, setCurrentTrips] = useState<TripsQuery["trips"]>([]);
     const [pastTrips, setPastTrips] = useState<TripsQuery["trips"]>([]);
     const nav = useNavigation();
@@ -35,14 +36,17 @@ export default function TripsDashboard(props: Props) {
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
         const currentTripsFiltered = tripsData?.trips.filter((trip) => {
-            console.log(trip)
             return (
                 (trip.startDate === null && trip.endDate === null) ||
                 new Date(trip.endDate).getTime() >= new Date().getTime()
             );
         });
         const pastTripsFiltered = tripsData?.trips.filter((trip) => {
-            return new Date(trip.endDate).getTime() < new Date().getTime();
+            return (
+                trip.startDate !== null &&
+                trip.endDate !== null &&
+                new Date(trip.endDate).getTime() < new Date().getTime()
+            );
         });
 
         setCurrentTrips(currentTripsFiltered || []);
@@ -59,6 +63,14 @@ export default function TripsDashboard(props: Props) {
                 <Text>An error has occurred. {error.message}</Text>
             </View>
         );
+    }
+
+    if (props.route && props?.route?.params?.refetchNecessary === true) {
+        console.log("Refetch necessary");
+        refetch();
+        props.navigation.setParams({
+            refetchNecessary: false,
+        });
     }
     const openTripDetails = (trip: TripsQuery["trips"][0]) => {
         console.log("Opening trip details");
