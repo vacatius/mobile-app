@@ -73,7 +73,8 @@ export const resources = {
                 },
                 add_trip: {
                     trip_name: "Give your trip a name",
-                    stay_home: "Stay home"
+                    stay_home: "Stay home",
+                    submit_add_trip: "Let's go!"
                 }
             },
             screen_header_trip_dashBoard: "Dashboard",

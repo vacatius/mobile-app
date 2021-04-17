@@ -44,7 +44,7 @@ export const AddTrip = (props: Props) => {
             contentContainerStyle={styles.scrollView}
         >
             <SafeAreaView style={styles.container}>
-                <SvgLogo style={styles.logo} width={150} height={150} />
+                <SvgLogo style={styles.logo} width={75} height={75} />
                 <Text style={styles.text}>{t("screen_header_add_trip")}</Text>
                 <Formik
                     initialValues={{ tripName: "", description: "" }}
@@ -105,6 +105,9 @@ export const AddTrip = (props: Props) => {
                                 value={values.description}
                                 onChangeText={handleChange("description")}
                                 onBlur={handleBlur("description")}
+                                multiline={true}
+                                numberOfLines={4}
+                                style={styles.textArea}
                             />
                             {error && (
                                 <Text style={styles.errorText}>
@@ -114,7 +117,7 @@ export const AddTrip = (props: Props) => {
                             <Button
                                 containerStyle={styles.buttonContainer}
                                 buttonStyle={styles.submitButton}
-                                title={t("screen_header_add_trip")}
+                                title={t("screens.add_trip.submit_add_trip")}
                                 titleStyle={{
                                     color: "black",
                                     fontSize: 25,
@@ -192,4 +195,8 @@ const styles = StyleSheet.create({
     scrollView: {
         flexGrow: 1,
     },
+    textArea: {
+        height: 130,
+        textAlignVertical: "top"
+    }
 });
