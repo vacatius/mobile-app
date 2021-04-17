@@ -72,7 +72,8 @@ export const resources = {
                     welcome: "Welcome {{displayName}} 🎉",
                 },
                 add_trip: {
-                    trip_name: "Give your trip a name"
+                    trip_name: "Give your trip a name",
+                    stay_home: "Stay home"
                 }
             },
             screen_header_trip_dashBoard: "Dashboard",
