@@ -1,91 +1,70 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import Login from "./src/screens/Login";
-import i18n from "./src/services/i18n";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { useTranslation } from "react-i18next";
-import Register from "./src/screens/Register";
+import React, { useRef, useEffect, useState } from "react";
 import {
-    ApolloClient,
-    ApolloProvider,
-    createHttpLink,
-    InMemoryCache,
-} from "@apollo/client";
-import { getEnvironment } from "./src/get-environment";
-import { setContext } from "@apollo/client/link/context";
-import * as SecureStore from "expo-secure-store";
-import ScreenHeader from "./src/components/ScreenHeader";
+    NavigationContainer,
+    NavigationContainerRef,
+    StackActions,
+} from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { StatusBar } from "expo-status-bar";
+import { useTranslation } from "react-i18next";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
+import Login from "./src/screens/Login/Login";
+import Register from "./src/screens/Register/Register";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
+import i18n from "./src/services/i18n";
+import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
+import SvgLogo from "./src/components/SvgLogo";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
 
-export type RootStackParamList = {
-    Login: undefined;
-    Register: undefined;
-    Dashboard: undefined;
-};
-// Initialize Apollo Client (Backend)
-const httpLink = createHttpLink({
-    uri: getEnvironment()?.backendUrl,
-});
-
-const authLink = setContext(async (_, { headers }) => {
-    // get the authentication token from secure storage if it exists
-    const token = await SecureStore.getItemAsync("accessToken");
-
-    if (token) {
-        // return the headers to the context so httpLink can read them
-        return {
-            headers: {
-                ...headers,
-                authorization: token ? `Bearer ${token}` : "",
-            },
-        };
-    } else {
-        return {
-            headers: {
-                ...headers,
-            },
-        };
-    }
-});
-
-const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
-});
-
 export default function App() {
     const { t } = useTranslation();
+    const navigationRef = useRef<NavigationContainerRef>(null);
+    const replace = (name: string, params: any) => {
+        navigationRef.current?.dispatch(StackActions.replace(name, params));
+    };
+    const { getCurrentUser } = useCurrentAuthUser();
+    const [initialRoute, setInitialRoute] = useState("");
+
+    useEffect(() => {
+        async function loadInitalRoute() {
+            const result = await getCurrentUser();
+            const route = result != null ? "Dashboard" : "Login";
+            console.log("Initial route? " + route);
+            setInitialRoute(route);
+        }
+        loadInitalRoute();
+    }, []);
     return (
-        <ApolloProvider client={client}>
-            <SafeAreaProvider>
-                <StatusBar style="dark" backgroundColor="white" />
-                <NavigationContainer>
-                    <Stack.Navigator initialRouteName="Dashboard">
-                        <Stack.Screen
-                            name="Login"
-                            component={Login}
-                            options={{ title: t("login") }}
-                        />
-                        <Stack.Screen
-                            name="Register"
-                            component={Register}
-                            options={{ title: t("register") }}
-                        />
-                        <Stack.Screen
-                            name="Dashboard"
-                            component={TripsDashboard}
-                            options={{
-                                title: t("screen_header_trip_dashBoard"),
-                            }}
-                        />
-                    </Stack.Navigator>
+        <SafeAreaProvider>
+            <StatusBar style="dark" backgroundColor="white" />
+            {(initialRoute === "" && <SvgLogo></SvgLogo>) || (
+                <NavigationContainer ref={navigationRef}>
+                    <ApolloConnection navigationFn={replace}>
+                        <Stack.Navigator initialRouteName={initialRoute}>
+                            <Stack.Screen
+                                name="Login"
+                                component={Login}
+                                options={{ title: t("login") }}
+                            />
+                            <Stack.Screen
+                                name="Register"
+                                component={Register}
+                                options={{ title: t("register") }}
+                            />
+                            <Stack.Screen
+                                name="Dashboard"
+                                component={TripsDashboard}
+                                options={{
+                                    title: t("screen_header_trip_dashBoard"),
+                                }}
+                            />
+                        </Stack.Navigator>
+                    </ApolloConnection>
                 </NavigationContainer>
-            </SafeAreaProvider>
-        </ApolloProvider>
+            )}
+        </SafeAreaProvider>
     );
 }

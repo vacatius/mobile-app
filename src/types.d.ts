@@ -109,6 +109,11 @@ export type LoginResult = {
   token: Scalars['String'];
 };
 
+export type MoveTripRoutePointInput = {
+  routePointId: Scalars['String'];
+  moveUp: Scalars['Boolean'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createTrip: Trip;
@@ -118,6 +123,7 @@ export type Mutation = {
   updateTrip: Trip;
   createTripRoutePoint: TripRoutePoint;
   updateTripRoutePoint: TripRoutePoint;
+  moveTripRoutePoint: TripRoutePoint;
   removeTripRoutePoint: TripRoutePoint;
   login: LoginResult;
   refreshToken: LoginResult;
@@ -163,6 +169,11 @@ export type MutationCreateTripRoutePointArgs = {
 
 export type MutationUpdateTripRoutePointArgs = {
   data: UpdateTripRoutePointInput;
+};
+
+
+export type MutationMoveTripRoutePointArgs = {
+  data: MoveTripRoutePointInput;
 };
 
 
@@ -229,6 +240,11 @@ export type Query = {
   activities: Array<Activity>;
   invitation: Invitation;
   node?: Maybe<Node>;
+};
+
+
+export type QueryTripsArgs = {
+  includeHistorical?: Maybe<Scalars['Boolean']>;
 };
 
 
