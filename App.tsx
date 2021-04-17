@@ -59,14 +59,16 @@ export default function App() {
                                 name="Dashboard"
                                 component={TripsDashboard}
                                 options={{
-                                    title: t("screen_header_trip_dashBoard"),
+                                    title: t("screens.dashboard.dashboard"),
                                 }}
                             />
                             <Stack.Screen
                                 name="TripItinerary"
                                 component={TripItinerary}
                                 options={{
-                                    title: "TripItinerary",
+                                    title: t(
+                                        "screens.tripItinerary.tripItinerary"
+                                    ),
                                 }}
                             />
                         </Stack.Navigator>

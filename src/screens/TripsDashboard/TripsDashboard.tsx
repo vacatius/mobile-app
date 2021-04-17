@@ -61,7 +61,7 @@ export default function TripsDashboard(props: Props) {
 
     return (
         <>
-            <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
+            <ScreenHeader screenTitle={t("screens.dashboard.dashboard")} />
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 style={styles.scrollView}

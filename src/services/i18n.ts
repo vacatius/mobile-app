@@ -59,8 +59,13 @@ export const resources = {
                 register: {
                     welcome: "Welcome {{displayName}} 🎉",
                 },
+                dashboard: {
+                    dashboard: "Dashboard",
+                },
+                tripItinerary: {
+                    tripItinerary: "Itinerary",
+                },
             },
-            screen_header_trip_dashBoard: "Dashboard",
         },
     },
     de: {
@@ -96,6 +101,12 @@ export const resources = {
                 register: {
                     welcome:
                         "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
+                },
+                dashboard: {
+                    dashboard: "Dashboard",
+                },
+                tripItinerary: {
+                    tripItinerary: "Reiseroute",
                 },
             },
         },
