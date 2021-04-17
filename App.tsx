@@ -68,6 +68,3 @@ export default function App() {
         </SafeAreaProvider>
     );
 }
-function getCurrentUser() {
-    throw new Error("Function not implemented.");
-}
