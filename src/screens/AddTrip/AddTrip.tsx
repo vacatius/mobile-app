@@ -38,12 +38,19 @@ export const AddTrip = (props: Props) => {
         console.log("add trip pressed");
         execute({
             variables: {
-                input: { name: values.tripName, description: values.description },
+                input: {
+                    name: values.tripName,
+                    description: values.description,
+                },
             },
         })
             .then((res) => {
                 console.log("Successfully created this trip");
-                navigation.dispatch(StackActions.replace("Dashboard"));
+                navigation.dispatch(
+                    StackActions.replace("Dashboard", {
+                        refetchNecessary: true,
+                    })
+                );
             })
             .catch((e) => {
                 console.log(e);

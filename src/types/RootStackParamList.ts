@@ -1,7 +1,7 @@
 type RootStackParamList = {
     Login: undefined;
     Register: undefined;
-    Dashboard: undefined;
+    Dashboard: { refetchNecessary?: boolean } | undefined;
 };
 
 export default RootStackParamList;
