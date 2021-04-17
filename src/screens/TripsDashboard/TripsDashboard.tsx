@@ -35,7 +35,11 @@ export default function TripsDashboard(props: Props) {
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
         const currentTripsFiltered = tripsData?.trips.filter((trip) => {
-            return new Date(trip.endDate).getTime() >= new Date().getTime();
+            console.log(trip)
+            return (
+                (trip.startDate === null && trip.endDate === null) ||
+                new Date(trip.endDate).getTime() >= new Date().getTime()
+            );
         });
         const pastTripsFiltered = tripsData?.trips.filter((trip) => {
             return new Date(trip.endDate).getTime() < new Date().getTime();
@@ -62,7 +66,7 @@ export default function TripsDashboard(props: Props) {
     const addTrip = () => {
         console.log("Add trip button pressed");
         nav.navigate("AddTrip");
-    }
+    };
     return (
         <>
             <ScreenHeader screenTitle={t("screen_header_trip_dashBoard")} />
