@@ -10,35 +10,41 @@ interface ActivityGroupHeaderProps {
     isOpen: boolean;
 }
 
+const iconValues = {
+    size: 30,
+    blue: "#007AFF",
+};
+
 export default function ActivityGroupHeader(
     props: ActivityGroupHeaderProps
 ): JSX.Element {
-    const iconSize = 30;
-
     return (
         <View style={styles.container}>
             <View style={styles.containerItemLeft}>
-                <Text style={styles.title}>{props.title}</Text>
-                <Icon
-                    name="pen"
-                    size={iconSize}
-                    type="font-awesome-5"
-                    color="#2596be"
-                    onPress={props.onEdit}
-                />
+                <Text numberOfLines={1} style={styles.title}>
+                    {props.title}
+                </Text>
             </View>
             <View style={styles.containerItemRight}>
                 <Icon
-                    name="plus"
-                    size={iconSize}
+                    name="pen"
+                    size={iconValues.size - 5}
                     type="font-awesome-5"
-                    color="#2596be"
+                    color={iconValues.blue}
+                    onPress={props.onEdit}
+                    style={styles.penIcon}
+                />
+                <Icon
+                    name="plus"
+                    size={iconValues.size}
+                    type="font-awesome-5"
+                    color={iconValues.blue}
                     onPress={props.onAdd}
-                    style={styles.add}
+                    style={styles.addIcon}
                 />
                 <Icon
                     name={props.isOpen ? "chevron-up" : "chevron-down"}
-                    size={iconSize}
+                    size={iconValues.size}
                     type="font-awesome-5"
                     color="black"
                     onPress={props.onOpen}
@@ -51,7 +57,7 @@ export default function ActivityGroupHeader(
 const styles = StyleSheet.create({
     container: {
         width: "100%",
-        backgroundColor: "yellow",
+        backgroundColor: "#ccc",
         flex: 1,
         justifyContent: "space-between",
         flexDirection: "row",
@@ -61,7 +67,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-around",
+        justifyContent: "flex-end",
         margin: 10,
     },
     containerItemLeft: {
@@ -71,8 +77,11 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         margin: 10,
     },
-    add: {
-        marginLeft: 30,
+    penIcon: {
+        marginRight: 30,
+    },
+    addIcon: {
+        marginRight: 30,
     },
     title: {
         fontSize: 24,

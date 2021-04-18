@@ -13,7 +13,7 @@ export interface ActivityCardProps {
 export default function ActivityCard(props: ActivityCardProps) {
     const date: Date = new Date(Date.parse(props.date || ""));
     return (
-        <View style={{ flex: 1, flexDirection: "column" }}>
+        <View style={styles.container}>
             <Pressable onPress={() => console.log("press activity")}>
                 <View style={styles.cardBody}>
                     <Text numberOfLines={2} style={styles.cardName}>
@@ -76,6 +76,11 @@ export default function ActivityCard(props: ActivityCardProps) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: "column",
+        marginBottom: 10,
+    },
     cardBody: {
         borderWidth: 1,
         borderRadius: 5,
