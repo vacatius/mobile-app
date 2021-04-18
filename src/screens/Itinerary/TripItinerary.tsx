@@ -31,25 +31,6 @@ export default function TripItinerary(props: Props) {
                     {loading && <Text>loading...</Text>}
                     {data.node.itinerary.map((i) => (
                         <ActivityGroup key={i.id} activityGroupData={i} />
-
-                        // <>
-                        //     <Text key={i.id}>{i.name}</Text>
-                        //     {i.activities.map((a) => {
-                        //         <ActivityCard
-                        //             key={a.id}
-                        //             date={a.startDate}
-                        //             dislikes={2}
-                        //             likes={3}
-                        //             name={a.name}
-                        //         />;
-                        //     })}
-                        //     <ActivityCard
-                        //         date="2019-12-03T09:54:33Z"
-                        //         dislikes={2}
-                        //         likes={100}
-                        //         name="Hardcoded Card with very long test text, very long"
-                        //     />
-                        // </>
                     ))}
                 </SafeAreaView>
             </ScrollView>
