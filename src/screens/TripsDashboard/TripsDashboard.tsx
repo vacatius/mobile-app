@@ -90,15 +90,13 @@ export default function TripsDashboard(props: Props) {
                     Current Trips
                 </Text>
                 {currentTrips &&
-                    currentTrips?.map((trip) => {
-                        return (
-                            <TripCard
-                                key={trip.id}
-                                trip={trip}
-                                openTripDetails={openTripDetails}
-                            />
-                        );
-                    })}
+                    currentTrips?.map((trip) => (
+                        <TripCard
+                            key={trip.id}
+                            trip={trip}
+                            openTripDetails={openTripDetails}
+                        />
+                    ))}
                 {(!currentTrips || currentTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
                         No current trips found.
@@ -108,15 +106,13 @@ export default function TripsDashboard(props: Props) {
                     Past Trips
                 </Text>
                 {pastTrips &&
-                    pastTrips?.map((trip) => {
-                        return (
-                            <TripCard
-                                key={trip.id}
-                                trip={trip}
-                                openTripDetails={openTripDetails}
-                            />
-                        );
-                    })}
+                    pastTrips?.map((trip) => (
+                        <TripCard
+                            key={trip.id}
+                            trip={trip}
+                            openTripDetails={openTripDetails}
+                        />
+                    ))}
                 {(!pastTrips || pastTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
                         No past trips found.

@@ -6,27 +6,27 @@ export interface ScreenHeaderProps {
     screenTitle: string;
 }
 
-const ScreenHeader: React.FC<ScreenHeaderProps> = (props) => {
-    return (
-        <View>
-            <Header
-                placement="left"
-                centerComponent={<Text h1>{props.screenTitle}</Text>}
-                rightComponent={
-                    <TouchableOpacity>
-                        <Avatar
-                            rounded
-                            title="V"
-                            containerStyle={styles.avatar}
-                            size="medium"
-                        />
-                    </TouchableOpacity>
-                }
-                containerStyle={styles.header}
-            />
-        </View>
-    );
-};
+const ScreenHeader: React.FC<ScreenHeaderProps> = (
+    props: ScreenHeaderProps
+) => (
+    <View>
+        <Header
+            placement="left"
+            centerComponent={<Text h1>{props.screenTitle}</Text>}
+            rightComponent={
+                <TouchableOpacity>
+                    <Avatar
+                        rounded
+                        title="V"
+                        containerStyle={styles.avatar}
+                        size="medium"
+                    />
+                </TouchableOpacity>
+            }
+            containerStyle={styles.header}
+        />
+    </View>
+);
 
 const styles = StyleSheet.create({
     header: {

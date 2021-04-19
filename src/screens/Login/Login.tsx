@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { StyleSheet, Text, ScrollView } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
 import * as SecureStore from "expo-secure-store";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useLoginMutation } from "./types/loginMutation";
 import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { TFunction } from "i18next";
+import { useLoginMutation } from "./types/loginMutation";
+import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
 import SecureStorageItems from "../../types/SecureStorageItems";
 
@@ -136,7 +136,7 @@ export default function Login(props: Props) {
                                     />
                                 }
                                 value={values.password}
-                                secureTextEntry={true}
+                                secureTextEntry
                                 onChangeText={handleChange("password")}
                                 onBlur={handleBlur("password")}
                             />
@@ -163,7 +163,7 @@ export default function Login(props: Props) {
                                         type="font-awesome-5"
                                     />
                                 }
-                                iconRight={true}
+                                iconRight
                                 onPress={() => handleSubmit()}
                                 loading={loading}
                             />
@@ -182,8 +182,8 @@ export default function Login(props: Props) {
     );
 }
 
-const validationSchema = (t: TFunction): object => {
-    return Yup.object().shape({
+const validationSchema = (t: TFunction): object => //eslint-disable-line
+    Yup.object().shape({
         username: Yup.string()
             .min(1)
             .required(t("validation.usernameRequired")),
@@ -191,7 +191,6 @@ const validationSchema = (t: TFunction): object => {
             .min(1)
             .required(t("validation.password.required")),
     });
-};
 
 const styles = StyleSheet.create({
     container: {

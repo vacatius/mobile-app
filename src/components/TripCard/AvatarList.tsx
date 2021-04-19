@@ -8,38 +8,31 @@ export interface AvatarListProps {
     tripMembers: TripsQuery["trips"][0]["members"];
 }
 
-const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => {
-    return (
-        <FlatList
-            horizontal
-            scrollEnabled={false}
-            data={props.tripMembers}
-            renderItem={({ item: member }) => {
-                return (
-                    <View>
-                        <Tooltip
-                            popover={<Text>{member.user.displayName}</Text>}
-                        >
-                            <Avatar
-                                rounded
-                                containerStyle={{
-                                    backgroundColor: member.color,
-                                    marginRight: 5,
-                                }}
-                                size={"medium"}
-                                title={
-                                    member.user.displayName
-                                        .charAt(0)
-                                        ?.toUpperCase() ?? "?"
-                                }
-                            />
-                        </Tooltip>
-                    </View>
-                );
-            }}
-            keyExtractor={(member) => member.id}
-        />
-    );
-};
+const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => (
+    <FlatList
+        horizontal
+        scrollEnabled={false}
+        data={props.tripMembers}
+        renderItem={({ item: member }) => (
+            <View>
+                <Tooltip popover={<Text>{member.user.displayName}</Text>}>
+                    <Avatar
+                        rounded
+                        containerStyle={{
+                            backgroundColor: member.color,
+                            marginRight: 5,
+                        }}
+                        size="medium"
+                        title={
+                            member.user.displayName.charAt(0)?.toUpperCase() ??
+                            "?"
+                        }
+                    />
+                </Tooltip>
+            </View>
+        )}
+        keyExtractor={(member) => member.id}
+    />
+);
 
 export default AvatarList;
