@@ -23,4 +23,9 @@ module.exports = {
         "no-console": "off",
     },
     ignorePatterns: ["*.d.ts", "*.query.ts", "*.mutation.ts"],
+    settings: {
+        react: {
+            version: "detect",
+        },
+    },
 };
