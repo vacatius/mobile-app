@@ -32,12 +32,12 @@ export default function TripsDashboard(props: Props) {
 
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
-        const currentTripsFiltered = tripsData?.trips.filter((trip) => {
-            return new Date(trip.endDate).getTime() >= new Date().getTime();
-        });
-        const pastTripsFiltered = tripsData?.trips.filter((trip) => {
-            return new Date(trip.endDate).getTime() < new Date().getTime();
-        });
+        const currentTripsFiltered = tripsData?.trips.filter(
+            (trip) => new Date(trip.endDate).getTime() >= new Date().getTime()
+        );
+        const pastTripsFiltered = tripsData?.trips.filter(
+            (trip) => new Date(trip.endDate).getTime() < new Date().getTime()
+        );
 
         setCurrentTrips(currentTripsFiltered || []);
         setPastTrips(pastTripsFiltered || []);
@@ -69,15 +69,13 @@ export default function TripsDashboard(props: Props) {
                     Current Trips
                 </Text>
                 {currentTrips &&
-                    currentTrips?.map((trip) => {
-                        return (
-                            <TripCard
-                                key={trip.id}
-                                trip={trip}
-                                openTripDetails={openTripDetails}
-                            />
-                        );
-                    })}
+                    currentTrips?.map((trip) => (
+                        <TripCard
+                            key={trip.id}
+                            trip={trip}
+                            openTripDetails={openTripDetails}
+                        />
+                    ))}
                 {(!currentTrips || currentTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
                         No current trips found.
@@ -87,15 +85,13 @@ export default function TripsDashboard(props: Props) {
                     Past Trips
                 </Text>
                 {pastTrips &&
-                    pastTrips?.map((trip) => {
-                        return (
-                            <TripCard
-                                key={trip.id}
-                                trip={trip}
-                                openTripDetails={openTripDetails}
-                            />
-                        );
-                    })}
+                    pastTrips?.map((trip) => (
+                        <TripCard
+                            key={trip.id}
+                            trip={trip}
+                            openTripDetails={openTripDetails}
+                        />
+                    ))}
                 {(!pastTrips || pastTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
                         No past trips found.

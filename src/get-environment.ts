@@ -2,12 +2,12 @@ import Constants from "expo-constants";
 import { BACKEND_URL } from "@env";
 
 export function getEnvironment() {
-    let releaseChannel = Constants.manifest.releaseChannel;
-    let develop = {
+    const { releaseChannel } = Constants.manifest;
+    const develop = {
         envName: "DEVELOPMENT",
         backendUrl: BACKEND_URL,
     };
-    let production = {
+    const production = {
         envName: "PRODUCTION",
         backendUrl: BACKEND_URL,
     };

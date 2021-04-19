@@ -8,19 +8,20 @@ import {
     fromPromise,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { getEnvironment } from "../../get-environment";
 import * as SecureStore from "expo-secure-store";
 import { onError } from "@apollo/client/link/error";
+import { getEnvironment } from "../../get-environment";
 import { REFRESH_TOKEN_MUTATION } from "./refresh-token.mutation";
 import SecureStorageItems from "../../types/SecureStorageItems";
+
 export type Props = {
     children: JSX.Element;
-    navigationFn: (name: string, params: any) => void;
+    navigationFn: (name: string, params: Record<string, unknown>) => void;
 };
-export default function ApolloConnection(props: Props) {
+export default function ApolloConnection(props: Props): JSX.Element {
     // Initialize Apollo Client (Backend)
     let isRefreshing = false;
-    let pendingRequests: any[] = [];
+    let pendingRequests: any[] = []; // eslint-disable-line
 
     const resolvePendingRequests = () => {
         pendingRequests.map((callback) => callback());
@@ -50,9 +51,9 @@ export default function ApolloConnection(props: Props) {
 
     // https://able.bio/AnasT/apollo-graphql-async-access-token-refresh--470t1c8
     const errorLink: ApolloLink = onError(
-        ({ graphQLErrors, networkError, operation, forward }) => {
+        ({ graphQLErrors, operation, forward }) => {
             if (graphQLErrors) {
-                for (let err of graphQLErrors) {
+                for (const err of graphQLErrors) {
                     console.error(err);
                     switch (err.extensions?.code) {
                         case "UNAUTHENTICATED":
@@ -79,14 +80,13 @@ export default function ApolloConnection(props: Props) {
                                             return forward(operation);
                                         })
                                         .catch((error) => {
-                                            console.log("could not refresh");
+                                            console.error(error);
                                             pendingRequests = [];
                                             // Handle token refresh errors e.g clear stored tokens, redirect to login
                                             SecureStore.deleteItemAsync(
                                                 SecureStorageItems.ACCESS_TOKEN
                                             );
                                             props.navigationFn("Login", {});
-                                            return;
                                         })
                                         .finally(() => {
                                             isRefreshing = false;
@@ -100,6 +100,9 @@ export default function ApolloConnection(props: Props) {
                                     })
                                 );
                             }
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -117,13 +120,12 @@ export default function ApolloConnection(props: Props) {
                     authorization: token ? `Bearer ${token}` : "",
                 },
             };
-        } else {
-            return {
-                headers: {
-                    ...headers,
-                },
-            };
         }
+        return {
+            headers: {
+                ...headers,
+            },
+        };
     });
 
     const client = new ApolloClient({

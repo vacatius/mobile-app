@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button, Icon, Input, Overlay, Text } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SvgLogo from "../../components/SvgLogo";
 import { useTranslation } from "react-i18next";
-import { useCreateUserMutation } from "./types/registerMutation";
 import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { TFunction } from "i18next";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useCreateUserMutation } from "./types/registerMutation";
+import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
@@ -55,7 +55,7 @@ export default function Register(props: Props) {
                     displayName: values.displayName,
                     password: values.password,
                     email: values.email,
-                    captchaToken: "todo", //TODO
+                    captchaToken: "todo", // TODO
                 },
             },
         })
@@ -189,7 +189,7 @@ export default function Register(props: Props) {
                                     />
                                 }
                                 value={values.password}
-                                secureTextEntry={true}
+                                secureTextEntry
                                 onChangeText={handleChange("password")}
                                 onBlur={handleBlur("password")}
                                 errorMessage={
@@ -212,7 +212,7 @@ export default function Register(props: Props) {
                                     />
                                 }
                                 value={values.password2}
-                                secureTextEntry={true}
+                                secureTextEntry
                                 onChangeText={handleChange("password2")}
                                 onBlur={handleBlur("password2")}
                                 errorMessage={
@@ -254,7 +254,7 @@ export default function Register(props: Props) {
                                         type="font-awesome-5"
                                     />
                                 }
-                                iconRight={true}
+                                iconRight
                                 loading={loading}
                                 onPress={() => handleSubmit()}
                             />
@@ -266,8 +266,8 @@ export default function Register(props: Props) {
     );
 }
 
-const validationSchema = (t: TFunction): object => {
-    return Yup.object().shape({
+const validationSchema = (t: TFunction): object => // eslint-disable-line
+    Yup.object().shape({
         email: Yup.string()
             .required(t("validation.emailRequired"))
             .email(t("validation.emailRequired")),
@@ -283,7 +283,6 @@ const validationSchema = (t: TFunction): object => {
                 t("validation.password.match")
             ),
     });
-};
 
 const styles = StyleSheet.create({
     container: {
