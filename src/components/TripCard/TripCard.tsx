@@ -24,19 +24,29 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => (
             <View style={styles.tripCardContent}>
                 <View style={styles.tripCardLeftContent}>
                     <Card.FeaturedTitle style={styles.tripCardDate}>
-                        {props.trip.startDate && props.trip.endDate ? (
-                            <View>
-                                {new Date(
-                                    props.trip.startDate
-                                ).toLocaleDateString()}
-                                {" - "}
-                                {new Date(
-                                    props.trip.endDate
-                                ).toLocaleDateString()}
-                            </View>
-                        ) : (
+                        {!props.trip.startDate && !props.trip.endDate && (
                             <View>
                                 <Text h4>No date.</Text>
+                            </View>
+                        )}
+                        {props.trip.startDate && (
+                            <View>
+                                <Text>
+                                    {new Date(
+                                        props.trip.startDate
+                                    ).toLocaleDateString()}
+                                </Text>
+                            </View>
+                        )}
+                        {props.trip.startDate && (
+                            <View>
+                                <Text>
+                                    {" "}
+                                    -
+                                    {new Date(
+                                        props.trip.endDate
+                                    ).toLocaleDateString()}
+                                </Text>
                             </View>
                         )}
                     </Card.FeaturedTitle>
