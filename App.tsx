@@ -24,6 +24,7 @@ const Stack = createStackNavigator();
 export default function App(): JSX.Element {
     const { t } = useTranslation();
     const navigationRef = useRef<NavigationContainerRef>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const replace = (name: string, params: any) => {
         //eslint-disable-line
         navigationRef.current?.dispatch(StackActions.replace(name, params));
@@ -68,7 +69,7 @@ export default function App(): JSX.Element {
                                 name="TripItinerary"
                                 component={TripItinerary}
                                 options={({ route }) => {
-                                    let params = route.params as {
+                                    const params = route.params as {
                                         tripName: string;
                                     };
                                     return {
