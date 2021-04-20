@@ -42,7 +42,7 @@ export default function TripItinerary(props: Props) {
                             <Icon
                                 style={styles.iconButton}
                                 name="plus"
-                                size={15}
+                                size={25}
                                 color="black"
                                 type="font-awesome-5"
                             />
