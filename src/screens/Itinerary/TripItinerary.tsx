@@ -1,7 +1,9 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text } from "react-native";
+import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActivityGroup from "../../components/ActivityGroup";
 import RootStackParamList from "../../types/RootStackParamList";
@@ -20,6 +22,8 @@ type Props = {
 };
 
 export default function TripItinerary(props: Props) {
+    const { t } = useTranslation();
+
     const { data, error, loading } = useGetTripQuery({
         variables: { tripId: props.route.params.tripId },
     });
@@ -29,6 +33,23 @@ export default function TripItinerary(props: Props) {
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
                     {loading && <Text>loading...</Text>}
+                    <Button
+                        containerStyle={styles.buttonContainer}
+                        buttonStyle={styles.buttonLogin}
+                        title={t("screens.itinerary.add")}
+                        titleStyle={{ color: "black", fontSize: 25 }}
+                        icon={
+                            <Icon
+                                style={styles.iconButton}
+                                name="plus"
+                                size={15}
+                                color="black"
+                                type="font-awesome-5"
+                            />
+                        }
+                        iconRight
+                        onPress={() => console.log("add group")}
+                    />
                     {data.node.itinerary.map((i) => (
                         <ActivityGroup key={i.id} activityGroupData={i} />
                     ))}
@@ -46,5 +67,14 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         padding: 20,
+    },
+    iconButton: {
+        marginLeft: 10,
+    },
+    buttonContainer: {
+        marginBottom: 20,
+    },
+    buttonLogin: {
+        backgroundColor: "#BCE1B0",
     },
 });

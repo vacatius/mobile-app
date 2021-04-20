@@ -87,6 +87,9 @@ export const resources = {
                         noTripsFound: "No past trips found.",
                     },
                 },
+                itinerary: {
+                    add: "Add Group",
+                },
             },
         },
     },
@@ -151,6 +154,9 @@ export const resources = {
                     errors: {
                         noTripsFound: "Keine Reisen gefunden.",
                     },
+                },
+                itinerary: {
+                    add: " Gruppe Hinzufügen",
                 },
             },
         },
