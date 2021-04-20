@@ -20,10 +20,10 @@ import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 i18n;
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App(): JSX.Element {
     const { t } = useTranslation();
     const navigationRef = useRef<NavigationContainerRef>(null);
-    const replace = (name: string, params: any) => {
+    const replace = (name: string, params: any) => { //eslint-disable-line
         navigationRef.current?.dispatch(StackActions.replace(name, params));
     };
     const { getCurrentUser } = useCurrentAuthUser();
