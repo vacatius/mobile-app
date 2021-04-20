@@ -1,53 +1,60 @@
 query getTrip($tripId: ID!) {
-    node(id: $tripId) {
+  node(id: $tripId) {
+    id
+    __typename
+    ... on Trip {
+      createdAt
+      name
+      description
+      admin {
         id
-        __typename
-        ... on Trip {
-            createdAt
-            name
-            description
-            admin {
-                id
-                displayName
-                username
-            }
-            members {
-                role
-                color
-                user {
-                    id
-                    displayName
-                    username
-                }
-            }
-            itinerary {
-                id
-                latitude
-                longitude
-                name
-                previousTripRoutePoint {
-                    name
-                }
-                nextTripRoutePoint {
-                    name
-                }
-                activities {
-                    id
-                    routePoint {
-                        id
-                        name
-                    }
-                    name
-                    description
-                    addedByUser {
-                        id
-                        username
-                        displayName
-                    }
-                    startDate
-                    endDate
-                }
-            }
+        displayName
+        username
+      }
+      members {
+        role
+        color
+        user {
+          id
+          displayName
+          username
         }
+      }
+      itinerary {
+        id
+        latitude
+        longitude
+        name
+        previousTripRoutePoint {
+          name
+        }
+        nextTripRoutePoint {
+          name
+        }
+        activities {
+          id
+          routePoint {
+            id
+            name
+          }
+          name
+          description
+          addedByUser {
+            id
+            username
+            displayName
+          }
+          startDate
+          endDate
+          activityReactions {
+            id
+            activityReactionType
+            addedByUser {
+              id
+            }
+          }
+        }
+      }
     }
+  }
 }

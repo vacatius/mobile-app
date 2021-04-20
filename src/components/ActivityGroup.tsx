@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import * as Types from "../types";
+import { StyleSheet, View } from "react-native";
+import * as Types from "./../types";
 import ActivityCard from "./ActivityCard";
 import ActivityGroupHeader from "./ActivityGroupHeader";
 
@@ -20,6 +20,11 @@ export interface ActivityGroupProps {
             endDate?: Types.Maybe<string>;
             routePoint: { id: string; name?: Types.Maybe<string> };
             addedByUser: { id: string; username: string; displayName: string };
+            activityReactions: Array<{
+                id: string;
+                activityReactionType: Types.ActivityReactionType;
+                addedByUser: { id: string };
+            }>;
         }>;
     };
 }
@@ -48,31 +53,27 @@ export default function ActivityGroup(props: ActivityGroupProps) {
             />
             <View style={styles.activity}>
                 {isOpen &&
-                    props.activityGroupData.activities.map((a) => {
+                    props.activityGroupData.activities.map((a) => (
                         <ActivityCard
                             key={a.id}
                             date={a.startDate}
-                            dislikes={2}
-                            likes={3}
+                            dislikes={
+                                a.activityReactions.filter(
+                                    (r) =>
+                                        r.activityReactionType ===
+                                        Types.ActivityReactionType.Dislike
+                                ).length
+                            }
+                            likes={
+                                a.activityReactions.filter(
+                                    (r) =>
+                                        r.activityReactionType ===
+                                        Types.ActivityReactionType.Like
+                                ).length
+                            }
                             name={a.name}
-                        />;
-                    })}
-                {isOpen && (
-                    <>
-                        <ActivityCard
-                            date="2019-12-03T09:54:33Z"
-                            dislikes={2}
-                            likes={100}
-                            name="Hardcoded Card with very long test text, very long"
                         />
-                        <ActivityCard
-                            date="2019-12-03T09:54:33Z"
-                            dislikes={2}
-                            likes={100}
-                            name="Hardcoded Card with very long test text, very long"
-                        />
-                    </>
-                )}
+                    ))}
             </View>
         </View>
     );
