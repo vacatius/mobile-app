@@ -50,11 +50,9 @@ export const resources = {
                     "Awesome Roadtrip",
                     "Iceland again",
                     "Sun'n'Fun",
-                    "Up to Scandinavia"
+                    "Up to Scandinavia",
                 ],
-                description: [
-                    "Awesome trip with my friends"
-                ]
+                description: ["Awesome trip with my friends"],
             },
             validation: {
                 emailRequired: "Please enter a valid Email address!",
@@ -67,7 +65,8 @@ export const resources = {
                     match: "Passwords must match",
                 },
                 tripNameRequired: "Please enter a name for this trip!",
-                descriptionRequired: "Please enter a description for this trip."
+                descriptionRequired:
+                    "Please enter a description for this trip.",
             },
             screens: {
                 register: {
@@ -76,8 +75,8 @@ export const resources = {
                 add_trip: {
                     trip_name: "Give your trip a name",
                     stay_home: "Stay home",
-                    submit_add_trip: "Let's go!"
-                }
+                    submit_add_trip: "Let's go!",
+                },
             },
             screen_header_trip_dashBoard: "Dashboard",
             screen_header_add_trip: "Add Trip",

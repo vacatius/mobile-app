@@ -3,19 +3,23 @@ import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, Text, View, StyleSheet } from "react-native";
+import { SafeAreaView, Text, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
+import { Trip } from "../../types";
+import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateTripMutation } from "./types/add-trip.mutation";
 
-export type Props = {};
-export const AddTrip = (props: Props) => {
+export type Props = {
+    editTrip?: Trip;
+};
+export const AddTrip = (props: Props): JSX.Element => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const [execute, { error, loading }] = useCreateTripMutation();
-    const [placeholder, setPlaceholder] = useState({
+    const [placeholder] = useState({
         tripName: t("placeholder.tripName", { returnObjects: true })[
             Math.floor(
                 Math.random() *
@@ -43,14 +47,11 @@ export const AddTrip = (props: Props) => {
                     description: values.description,
                 },
             },
+            refetchQueries: [refetchTripsQuery()],
         })
-            .then((res) => {
+            .then(() => {
                 console.log("Successfully created this trip");
-                navigation.dispatch(
-                    StackActions.replace("Dashboard", {
-                        refetchNecessary: true,
-                    })
-                );
+                navigation.dispatch(StackActions.replace("Dashboard"));
             })
             .catch((e) => {
                 console.log(e);
@@ -75,8 +76,6 @@ export const AddTrip = (props: Props) => {
                         values,
                         handleSubmit,
                         errors,
-                        isValid,
-                        isSubmitting,
                         touched,
                         handleBlur,
                     }) => (
@@ -168,6 +167,7 @@ export const AddTrip = (props: Props) => {
         </ScrollView>
     );
 };
+// eslint-disable-next-line
 const validationSchema = (t: TFunction): object => {
     return Yup.object().shape({
         tripName: Yup.string()
