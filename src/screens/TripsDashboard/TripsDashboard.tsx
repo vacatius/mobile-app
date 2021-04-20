@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import { Button, Text, Divider } from "react-native-elements";
+import { Button, Text } from "react-native-elements";
 import ScreenHeader from "../../components/ScreenHeader";
 import SvgLogo from "../../components/SvgLogo";
 import TripCard from "../../components/TripCard/TripCard";
@@ -26,9 +26,9 @@ type Props = {
     route: TripsDashboardScreenRouteProp;
 };
 
-export default function TripsDashboard(props: Props) {
+export default function TripsDashboard(props: Props): JSX.Element {
     const { t } = useTranslation();
-    const { data: tripsData, error, loading, refetch } = useTripsQuery();
+    const { data: tripsData, error, loading } = useTripsQuery();
     const [currentTrips, setCurrentTrips] = useState<TripsQuery["trips"]>([]);
     const [pastTrips, setPastTrips] = useState<TripsQuery["trips"]>([]);
     const nav = useNavigation();
@@ -64,16 +64,8 @@ export default function TripsDashboard(props: Props) {
             </View>
         );
     }
-
-    if (props.route && props?.route?.params?.refetchNecessary === true) {
-        console.log("Refetch necessary");
-        refetch();
-        props.navigation.setParams({
-            refetchNecessary: false,
-        });
-    }
     const openTripDetails = (trip: TripsQuery["trips"][0]) => {
-        console.log("Opening trip details");
+        console.log("Opening trip details for tripId: " + trip.id);
     };
     const addTrip = () => {
         console.log("Add trip button pressed");
