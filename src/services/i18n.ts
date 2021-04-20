@@ -92,7 +92,7 @@ export const resources = {
             username: "Benutzername",
             description: "Beschreibung",
             displayName: "Anzeige Name",
-            tripName: "Trip Name",
+            tripName: "Reisename",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",
