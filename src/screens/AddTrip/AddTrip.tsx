@@ -51,7 +51,11 @@ export const AddTrip = (props: Props): JSX.Element => {
         })
             .then(() => {
                 console.log("Successfully created this trip");
-                navigation.dispatch(StackActions.replace("Dashboard"));
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: "Dashboard" }],
+                });
+                // navigation.dispatch(StackActions.replace("Dashboard"));
             })
             .catch((e) => {
                 console.log(e);
@@ -120,6 +124,7 @@ export const AddTrip = (props: Props): JSX.Element => {
                                         type="font-awesome-5"
                                     />
                                 }
+                                leftIconContainerStyle={styles.leftIcon}
                                 value={values.description}
                                 onChangeText={handleChange("description")}
                                 onBlur={handleBlur("description")}
@@ -192,6 +197,11 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight: 10,
+    },
+    leftIcon: {
+        // no better solution known by now
+        position: "relative",
+        top: -50,
     },
     iconButton: {
         marginLeft: 10,
