@@ -80,6 +80,7 @@ export const resources = {
                     submit_add_trip: "Let's go!",
                 },
                 dashboard: {
+                    title: "Dashboard",
                     currentTrips: "Current Trips",
                     pastTrips: "Past Trips",
                     errors: {
@@ -87,7 +88,6 @@ export const resources = {
                     },
                 },
             },
-            screen_header_trip_dashBoard: "Dashboard",
         },
     },
     de: {
@@ -145,6 +145,7 @@ export const resources = {
                     submit_add_trip: "Los geht's!",
                 },
                 dashboard: {
+                    title: "Dashboard",
                     currentJourneys: "Aktuelle Reisen",
                     pastTrips: "Vergangene Reisen",
                     errors: {

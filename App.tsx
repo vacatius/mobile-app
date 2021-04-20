@@ -59,7 +59,7 @@ export default function App(): JSX.Element {
                                 name="Dashboard"
                                 component={TripsDashboard}
                                 options={{
-                                    title: t("screen_header_trip_dashBoard"),
+                                    title: t("screens.dashboard.title"),
                                 }}
                             />
                             <Stack.Screen
