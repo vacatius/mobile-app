@@ -1,8 +1,7 @@
 import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { Card, Icon } from "react-native-elements";
+import { Card, Icon, Text } from "react-native-elements";
 import { TripsQuery } from "../../screens/TripsDashboard/types/trip-dashboard.query";
-import { TripUserRole } from "../../types.d";
 import AvatarList from "./AvatarList";
 
 export interface TripCardProps {
@@ -25,8 +24,21 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => (
             <View style={styles.tripCardContent}>
                 <View style={styles.tripCardLeftContent}>
                     <Card.FeaturedTitle style={styles.tripCardDate}>
-                        {new Date(props.trip.startDate).toLocaleDateString()} -{" "}
-                        {new Date(props.trip.endDate).toLocaleDateString()}
+                        {props.trip.startDate && props.trip.endDate ? (
+                            <View>
+                                {new Date(
+                                    props.trip.startDate
+                                ).toLocaleDateString()}
+                                {" - "}
+                                {new Date(
+                                    props.trip.endDate
+                                ).toLocaleDateString()}
+                            </View>
+                        ) : (
+                            <View>
+                                <Text h4>No date.</Text>
+                            </View>
+                        )}
                     </Card.FeaturedTitle>
                     <AvatarList tripMembers={props.trip.members} />
                 </View>
