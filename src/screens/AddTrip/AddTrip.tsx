@@ -199,9 +199,9 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     leftIcon: {
-        // no better solution known by now
-        position: "relative",
-        top: -50,
+        height: "100%",
+        textAlignVertical: "top",
+        justifyContent: "flex-start",
     },
     iconButton: {
         marginLeft: 10,
