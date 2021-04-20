@@ -86,6 +86,11 @@ export const resources = {
                     errors: {
                         noTripsFound: "No past trips found.",
                     },
+                shareTrip: {
+                    title: "Share a Trip",
+                    share: "Share with Friends",
+                    planTrip: "Plan Trip",
+                    backToDashboard: "Back to Dashboard",
                 },
             },
         },
@@ -151,6 +156,11 @@ export const resources = {
                     errors: {
                         noTripsFound: "Keine Reisen gefunden.",
                     },
+                shareTrip: {
+                    title: "Reise teilen",
+                    share: "Mit Freunden teilen",
+                    planTrip: "Reise planen",
+                    backToDashboard: "Zurück zum Dashboard",
                 },
             },
         },
