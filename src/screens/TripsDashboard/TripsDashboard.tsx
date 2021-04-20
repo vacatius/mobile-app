@@ -79,7 +79,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
                 style={styles.scrollView}
             >
                 <Text h3 style={styles.headlines}>
-                    Current Trips
+                    {t("screens.dashboard.currentTrips")}
                 </Text>
                 {currentTrips &&
                     currentTrips?.map((trip) => (
@@ -91,11 +91,11 @@ export default function TripsDashboard(props: Props): JSX.Element {
                     ))}
                 {(!currentTrips || currentTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
-                        No current trips found.
+                        {t("screens.dashboard.errors.noTripsFound")}
                     </Text>
                 )}
                 <Text h3 style={styles.headlines}>
-                    Past Trips
+                    {t("screens.dashboard.pastTrips")}
                 </Text>
                 {pastTrips &&
                     pastTrips?.map((trip) => (
@@ -107,7 +107,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
                     ))}
                 {(!pastTrips || pastTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
-                        No past trips found.
+                        {t("screens.dashboard.errors.noTripsFound")}
                     </Text>
                 )}
             </ScrollView>
@@ -120,7 +120,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
                         <SvgLogo style={styles.logo} width={40} height={40} />
                     }
                     iconRight
-                    title="Create Trip"
+                    title={t("screens.add_trip.title")}
                     titleStyle={{
                         color: "white",
                         fontSize: 24,

@@ -20,6 +20,7 @@ export const resources = {
                 credentials: "Invalid Credentials",
                 username: "Invalid Username",
                 password: "Invalid Password",
+                noDate: "No date.",
                 takenEmailUsername:
                     "The Email or Username is already taken, please choose another one",
             },
@@ -73,10 +74,17 @@ export const resources = {
                     welcome: "Welcome {{displayName}} 🎉",
                 },
                 add_trip: {
-                    title: "Neuer Trip",
+                    title: "Create Trip",
                     trip_name: "Give your trip a name",
                     stay_home: "Stay home",
                     submit_add_trip: "Let's go!",
+                },
+                dashboard: {
+                    currentTrips: "Current Trips",
+                    pastTrips: "Past Trips",
+                    errors: {
+                        noTripsFound: "No past trips found.",
+                    },
                 },
             },
             screen_header_trip_dashBoard: "Dashboard",
@@ -101,6 +109,7 @@ export const resources = {
                 password: "Falsches Passwort",
                 takenEmailUsername:
                     "Die Email Adresse oder der Benutzername sind schon vergeben",
+                noDate: "Noch kein Datum bekannt.",
             },
             validation: {
                 emailRequired: "Bitte gib eine gültige E-Mail Adresse ein!",
@@ -120,9 +129,9 @@ export const resources = {
                     "Ab nach Skandinavien!",
                 ],
                 description: ["Cooler roadtrip meinen Freunden"],
-                tripNameRequired: "Bitte gib einen Namen für diesen Trip ein!",
+                tripNameRequired: "Bitte gib einen Namen für diese Reise ein!",
                 descriptionRequired:
-                    "Bitte gib eine Beschreibung für diesen Trip ein!",
+                    "Bitte gib eine Beschreibung für diese Reise ein!",
             },
             screens: {
                 register: {
@@ -130,10 +139,17 @@ export const resources = {
                         "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
                 },
                 add_trip: {
-                    title: "Neuer Trip",
-                    trip_name: "Gib deinen Trip einen Namen",
+                    title: "Neue Reise",
+                    trip_name: "Gib deinen Reise einen Namen",
                     stay_home: "Zuhause bleiben",
                     submit_add_trip: "Los geht's!",
+                },
+                dashboard: {
+                    currentJourneys: "Aktuelle Reisen",
+                    pastTrips: "Vergangene Reisen",
+                    errors: {
+                        noTripsFound: "Keine Reisen gefunden.",
+                    },
                 },
             },
         },

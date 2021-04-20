@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Card, Icon, Text } from "react-native-elements";
 import { TripsQuery } from "../../screens/TripsDashboard/types/trip-dashboard.query";
@@ -9,59 +10,62 @@ export interface TripCardProps {
     openTripDetails: (trip: TripsQuery["trips"][0]) => void;
 }
 
-const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => (
-    <Pressable
-        onPress={() => {
-            props.openTripDetails(props.trip);
-        }}
-    >
-        <Card containerStyle={styles.tripCard}>
-            <Card.Title h4 style={styles.tripCardTitle}>
-                {props.trip.name}
-            </Card.Title>
-            <Card.Divider />
+const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
+    const { t } = useTranslation();
+    return (
+        <Pressable
+            onPress={() => {
+                props.openTripDetails(props.trip);
+            }}
+        >
+            <Card containerStyle={styles.tripCard}>
+                <Card.Title h4 style={styles.tripCardTitle}>
+                    {props.trip.name}
+                </Card.Title>
+                <Card.Divider />
 
-            <View style={styles.tripCardContent}>
-                <View style={styles.tripCardLeftContent}>
-                    <Card.FeaturedTitle style={styles.tripCardDate}>
-                        {!props.trip.startDate && !props.trip.endDate && (
-                            <View>
-                                <Text h4>No date.</Text>
-                            </View>
-                        )}
-                        {props.trip.startDate && (
-                            <View>
-                                <Text>
-                                    {new Date(
-                                        props.trip.startDate
-                                    ).toLocaleDateString()}
-                                </Text>
-                            </View>
-                        )}
-                        {props.trip.startDate && (
-                            <View>
-                                <Text>
-                                    {" "}
-                                    -
-                                    {new Date(
-                                        props.trip.endDate
-                                    ).toLocaleDateString()}
-                                </Text>
-                            </View>
-                        )}
-                    </Card.FeaturedTitle>
-                    <AvatarList tripMembers={props.trip.members} />
+                <View style={styles.tripCardContent}>
+                    <View style={styles.tripCardLeftContent}>
+                        <Card.FeaturedTitle style={styles.tripCardDate}>
+                            {!props.trip.startDate && !props.trip.endDate && (
+                                <View>
+                                    <Text h4>{t("error.noDate")}</Text>
+                                </View>
+                            )}
+                            {props.trip.startDate && (
+                                <View>
+                                    <Text h4>
+                                        {new Date(
+                                            props.trip.startDate
+                                        ).toLocaleDateString()}
+                                    </Text>
+                                </View>
+                            )}
+                            {props.trip.startDate && (
+                                <View>
+                                    <Text h4>
+                                        {" "}
+                                        -
+                                        {new Date(
+                                            props.trip.endDate
+                                        ).toLocaleDateString()}
+                                    </Text>
+                                </View>
+                            )}
+                        </Card.FeaturedTitle>
+                        <AvatarList tripMembers={props.trip.members} />
+                    </View>
+                    <Icon
+                        size={64}
+                        name="calendar"
+                        type="material-community"
+                        style={styles.tripCardIcon}
+                    />
                 </View>
-                <Icon
-                    size={64}
-                    name="calendar"
-                    type="material-community"
-                    style={styles.tripCardIcon}
-                />
-            </View>
-        </Card>
-    </Pressable>
-);
+            </Card>
+        </Pressable>
+    );
+};
 
 export default TripCard;
 

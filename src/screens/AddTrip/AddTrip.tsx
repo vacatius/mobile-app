@@ -1,9 +1,9 @@
-import { StackActions, useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
 import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, Text, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Yup from "yup";
