@@ -55,7 +55,6 @@ export const AddTrip = (props: Props): JSX.Element => {
                     index: 0,
                     routes: [{ name: "Dashboard" }],
                 });
-                // navigation.dispatch(StackActions.replace("Dashboard"));
             })
             .catch((e) => {
                 console.log(e);
@@ -69,7 +68,7 @@ export const AddTrip = (props: Props): JSX.Element => {
         >
             <SafeAreaView style={styles.container}>
                 <SvgLogo style={styles.logo} width={75} height={75} />
-                <Text style={styles.text}>{t("screen_header_add_trip")}</Text>
+                <Text style={styles.text}>{t("screens.add_trip.title")}</Text>
                 <Formik
                     initialValues={{ tripName: "", description: "" }}
                     onSubmit={handleSubmit}

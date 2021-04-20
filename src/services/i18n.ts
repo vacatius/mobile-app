@@ -73,13 +73,13 @@ export const resources = {
                     welcome: "Welcome {{displayName}} 🎉",
                 },
                 add_trip: {
+                    title: "Neuer Trip",
                     trip_name: "Give your trip a name",
                     stay_home: "Stay home",
                     submit_add_trip: "Let's go!",
                 },
             },
             screen_header_trip_dashBoard: "Dashboard",
-            screen_header_add_trip: "Add Trip",
         },
     },
     de: {
@@ -130,12 +130,12 @@ export const resources = {
                         "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
                 },
                 add_trip: {
+                    title: "Neuer Trip",
                     trip_name: "Gib deinen Trip einen Namen",
                     stay_home: "Zuhause bleiben",
                     submit_add_trip: "Los geht's!",
                 },
             },
-            screen_header_add_trip: "Neuer Trip",
         },
     },
 };

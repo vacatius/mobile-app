@@ -66,7 +66,7 @@ export default function App() {
                                 name="AddTrip"
                                 component={AddTrip}
                                 options={{
-                                    title: t("screen_header_add_trip"),
+                                    title: t("screens.add_trip.title"),
                                 }}
                             />
                         </Stack.Navigator>
