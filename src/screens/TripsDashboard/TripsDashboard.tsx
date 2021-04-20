@@ -36,7 +36,6 @@ export default function TripsDashboard(props: Props): JSX.Element {
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
         const currentTripsFiltered = tripsData?.trips.filter((trip) => {
-            console.log(trip)
             return (
                 (trip.startDate === null && trip.endDate === null) ||
                 new Date(trip.endDate).getTime() >= new Date().getTime()
