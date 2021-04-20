@@ -90,7 +90,9 @@ export const resources = {
             password: "Passwort",
             repeatPassword: "Passwort Wiederholen",
             username: "Benutzername",
+            description: "Beschreibung",
             displayName: "Anzeige Name",
+            tripName: "Trip Name",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",
@@ -110,11 +112,27 @@ export const resources = {
                         "Das Passwort muss mindestens {{amount}} Zeichen besitzten",
                     match: "Die Passwörter müssen übereinstimmen!",
                 },
+                tripName: [
+                    "Roadtrip 2022",
+                    "Toller Roadtrip",
+                    "Iceland wieder einmal",
+                    "Sun'n'Fun",
+                    "Ab nach Skandinavien!",
+                ],
+                description: ["Cooler roadtrip meinen Freunden"],
+                tripNameRequired: "Bitte gib einen Namen für diesen Trip ein!",
+                descriptionRequired:
+                    "Bitte gib eine Beschreibung für diesen Trip ein!",
             },
             screens: {
                 register: {
                     welcome:
                         "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
+                },
+                add_trip: {
+                    trip_name: "Gib deinen Trip einen Namen",
+                    stay_home: "Zuhause bleiben",
+                    submit_add_trip: "Los geht's!",
                 },
             },
             screen_header_add_trip: "Neuer Trip",
