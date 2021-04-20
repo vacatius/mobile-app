@@ -16,14 +16,16 @@ import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 import i18n from "./src/services/i18n";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
 import SvgLogo from "./src/components/SvgLogo";
+import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
 
-export default function App() {
+export default function App(): JSX.Element {
     const { t } = useTranslation();
     const navigationRef = useRef<NavigationContainerRef>(null);
     const replace = (name: string, params: any) => {
+        //eslint-disable-line
         navigationRef.current?.dispatch(StackActions.replace(name, params));
     };
     const { getCurrentUser } = useCurrentAuthUser();
@@ -59,7 +61,7 @@ export default function App() {
                                 name="Dashboard"
                                 component={TripsDashboard}
                                 options={{
-                                    title: t("screens.dashboard.dashboard"),
+                                    title: t("screens.dashboard.title"),
                                 }}
                             />
                             <Stack.Screen
@@ -72,6 +74,13 @@ export default function App() {
                                     return {
                                         title: params.tripName,
                                     };
+                                }}
+                            />
+                            <Stack.Screen
+                                name="AddTrip"
+                                component={AddTrip}
+                                options={{
+                                    title: t("screens.add_trip.title"),
                                 }}
                             />
                         </Stack.Navigator>

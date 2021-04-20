@@ -1,8 +1,8 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, View } from "react-native";
-import { Card, Icon } from "react-native-elements";
+import { Card, Icon, Text } from "react-native-elements";
 import { TripsQuery } from "../../screens/TripsDashboard/types/trip-dashboard.query";
-import { TripUserRole } from "../../types.d";
 import AvatarList from "./AvatarList";
 
 export interface TripCardProps {
@@ -11,6 +11,7 @@ export interface TripCardProps {
 }
 
 const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
+    const { t } = useTranslation();
     return (
         <Pressable
             onPress={() => {
@@ -26,11 +27,31 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
                 <View style={styles.tripCardContent}>
                     <View style={styles.tripCardLeftContent}>
                         <Card.FeaturedTitle style={styles.tripCardDate}>
-                            {new Date(
-                                props.trip.startDate
-                            ).toLocaleDateString()}{" "}
-                            -{" "}
-                            {new Date(props.trip.endDate).toLocaleDateString()}
+                            {!props.trip.startDate && !props.trip.endDate && (
+                                <View>
+                                    <Text h4>{t("error.noDate")}</Text>
+                                </View>
+                            )}
+                            {props.trip.startDate && (
+                                <View>
+                                    <Text h4>
+                                        {new Date(
+                                            props.trip.startDate
+                                        ).toLocaleDateString()}
+                                    </Text>
+                                </View>
+                            )}
+                            {props.trip.startDate && (
+                                <View>
+                                    <Text h4>
+                                        {" "}
+                                        -
+                                        {new Date(
+                                            props.trip.endDate
+                                        ).toLocaleDateString()}
+                                    </Text>
+                                </View>
+                            )}
                         </Card.FeaturedTitle>
                         <AvatarList tripMembers={props.trip.members} />
                     </View>
@@ -53,6 +74,7 @@ const styles = StyleSheet.create({
         borderColor: "grey",
         borderRadius: 3,
         margin: 0,
+        marginBottom: 10,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

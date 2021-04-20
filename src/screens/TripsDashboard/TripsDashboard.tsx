@@ -1,3 +1,4 @@
+import { RouteProp, useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,24 +20,33 @@ type TripsDashboardScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
     "Dashboard"
 >;
-
+type TripsDashboardScreenRouteProp = RouteProp<RootStackParamList, "Dashboard">;
 type Props = {
     navigation: TripsDashboardScreenNavigationProp;
+    route: TripsDashboardScreenRouteProp;
 };
 
-export default function TripsDashboard(props: Props) {
+export default function TripsDashboard(props: Props): JSX.Element {
     const { t } = useTranslation();
     const { data: tripsData, error, loading } = useTripsQuery();
     const [currentTrips, setCurrentTrips] = useState<TripsQuery["trips"]>([]);
     const [pastTrips, setPastTrips] = useState<TripsQuery["trips"]>([]);
+    const nav = useNavigation();
 
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
         const currentTripsFiltered = tripsData?.trips.filter((trip) => {
-            return new Date(trip.endDate).getTime() >= new Date().getTime();
+            return (
+                (trip.startDate === null && trip.endDate === null) ||
+                new Date(trip.endDate).getTime() >= new Date().getTime()
+            );
         });
         const pastTripsFiltered = tripsData?.trips.filter((trip) => {
-            return new Date(trip.endDate).getTime() < new Date().getTime();
+            return (
+                trip.startDate !== null &&
+                trip.endDate !== null &&
+                new Date(trip.endDate).getTime() < new Date().getTime()
+            );
         });
 
         setCurrentTrips(currentTripsFiltered || []);
@@ -60,49 +70,49 @@ export default function TripsDashboard(props: Props) {
             tripName: trip.name,
         });
         console.log("Opening trip details");
+        console.log("Opening trip details for tripId: " + trip.id);
     };
-
+    const addTrip = () => {
+        console.log("Add trip button pressed");
+        nav.navigate("AddTrip");
+    };
     return (
         <>
-            <ScreenHeader screenTitle={t("screens.dashboard.dashboard")} />
+            <ScreenHeader screenTitle={t("screens.dashboard.title")} />
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 style={styles.scrollView}
             >
                 <Text h3 style={styles.headlines}>
-                    Current Trips
+                    {t("screens.dashboard.currentTrips")}
                 </Text>
                 {currentTrips &&
-                    currentTrips?.map((trip) => {
-                        return (
-                            <TripCard
-                                key={trip.id}
-                                trip={trip}
-                                openTripDetails={openTripDetails}
-                            />
-                        );
-                    })}
+                    currentTrips?.map((trip) => (
+                        <TripCard
+                            key={trip.id}
+                            trip={trip}
+                            openTripDetails={openTripDetails}
+                        />
+                    ))}
                 {(!currentTrips || currentTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
-                        No current trips found.
+                        {t("screens.dashboard.errors.noTripsFound")}
                     </Text>
                 )}
                 <Text h3 style={styles.headlines}>
-                    Past Trips
+                    {t("screens.dashboard.pastTrips")}
                 </Text>
                 {pastTrips &&
-                    pastTrips?.map((trip) => {
-                        return (
-                            <TripCard
-                                key={trip.id}
-                                trip={trip}
-                                openTripDetails={openTripDetails}
-                            />
-                        );
-                    })}
+                    pastTrips?.map((trip) => (
+                        <TripCard
+                            key={trip.id}
+                            trip={trip}
+                            openTripDetails={openTripDetails}
+                        />
+                    ))}
                 {(!pastTrips || pastTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
-                        No past trips found.
+                        {t("screens.dashboard.errors.noTripsFound")}
                     </Text>
                 )}
             </ScrollView>
@@ -115,12 +125,13 @@ export default function TripsDashboard(props: Props) {
                         <SvgLogo style={styles.logo} width={40} height={40} />
                     }
                     iconRight
-                    title="Create Trip"
+                    title={t("screens.add_trip.title")}
                     titleStyle={{
                         color: "white",
                         fontSize: 24,
                     }}
                     buttonStyle={styles.floatingButton}
+                    onPress={addTrip}
                 />
             </TouchableOpacity>
         </>

@@ -11,13 +11,16 @@ export const resources = {
             password: "Password",
             repeatPassword: "Repeat Password",
             username: "Username",
+            description: "Description",
             startJourney: ["Start Journey", "Lets go"],
             displayName: "Display Name",
+            tripName: "Trip Name",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
                 username: "Invalid Username",
                 password: "Invalid Password",
+                noDate: "No date.",
                 takenEmailUsername:
                     "The Email or Username is already taken, please choose another one",
             },
@@ -43,6 +46,14 @@ export const resources = {
                     "contact@vacatius.com",
                     "TheLegend27@mail.com",
                 ],
+                tripName: [
+                    "Roadtrip 2022",
+                    "Awesome Roadtrip",
+                    "Iceland again",
+                    "Sun'n'Fun",
+                    "Up to Scandinavia",
+                ],
+                description: ["Awesome trip with my friends"],
             },
             validation: {
                 emailRequired: "Please enter a valid Email address!",
@@ -54,16 +65,27 @@ export const resources = {
                         "The password must have at least {{amount}} characters",
                     match: "Passwords must match",
                 },
+                tripNameRequired: "Please enter a name for this trip!",
+                descriptionRequired:
+                    "Please enter a description for this trip.",
             },
             screens: {
                 register: {
                     welcome: "Welcome {{displayName}} 🎉",
                 },
-                dashboard: {
-                    dashboard: "Dashboard",
+                add_trip: {
+                    title: "Create Trip",
+                    trip_name: "Give your trip a name",
+                    stay_home: "Stay home",
+                    submit_add_trip: "Let's go!",
                 },
-                tripItinerary: {
-                    tripItinerary: "Itinerary",
+                dashboard: {
+                    title: "Dashboard",
+                    currentTrips: "Current Trips",
+                    pastTrips: "Past Trips",
+                    errors: {
+                        noTripsFound: "No past trips found.",
+                    },
                 },
             },
         },
@@ -76,7 +98,9 @@ export const resources = {
             password: "Passwort",
             repeatPassword: "Passwort Wiederholen",
             username: "Benutzername",
+            description: "Beschreibung",
             displayName: "Anzeige Name",
+            tripName: "Reisename",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",
@@ -85,6 +109,7 @@ export const resources = {
                 password: "Falsches Passwort",
                 takenEmailUsername:
                     "Die Email Adresse oder der Benutzername sind schon vergeben",
+                noDate: "Noch kein Datum bekannt.",
             },
             validation: {
                 emailRequired: "Bitte gib eine gültige E-Mail Adresse ein!",
@@ -96,17 +121,36 @@ export const resources = {
                         "Das Passwort muss mindestens {{amount}} Zeichen besitzten",
                     match: "Die Passwörter müssen übereinstimmen!",
                 },
+                tripName: [
+                    "Roadtrip 2022",
+                    "Toller Roadtrip",
+                    "Iceland wieder einmal",
+                    "Sun'n'Fun",
+                    "Ab nach Skandinavien!",
+                ],
+                description: ["Cooler roadtrip meinen Freunden"],
+                tripNameRequired: "Bitte gib einen Namen für diese Reise ein!",
+                descriptionRequired:
+                    "Bitte gib eine Beschreibung für diese Reise ein!",
             },
             screens: {
                 register: {
                     welcome:
                         "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
                 },
-                dashboard: {
-                    dashboard: "Dashboard",
+                add_trip: {
+                    title: "Neue Reise",
+                    trip_name: "Gib deiner Reise einen Namen",
+                    stay_home: "Zuhause bleiben",
+                    submit_add_trip: "Los geht's!",
                 },
-                tripItinerary: {
-                    tripItinerary: "Reiseroute",
+                dashboard: {
+                    title: "Dashboard",
+                    currentJourneys: "Aktuelle Reisen",
+                    pastTrips: "Vergangene Reisen",
+                    errors: {
+                        noTripsFound: "Keine Reisen gefunden.",
+                    },
                 },
             },
         },
