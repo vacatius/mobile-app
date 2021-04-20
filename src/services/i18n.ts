@@ -140,7 +140,7 @@ export const resources = {
                 },
                 add_trip: {
                     title: "Neue Reise",
-                    trip_name: "Gib deinen Reise einen Namen",
+                    trip_name: "Gib deiner Reise einen Namen",
                     stay_home: "Zuhause bleiben",
                     submit_add_trip: "Los geht's!",
                 },
