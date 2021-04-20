@@ -14,7 +14,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
             placement="left"
             leftComponent={<Text h1>{props.screenTitle}</Text>}
             rightComponent={
-                <TouchableOpacity>
+                <TouchableOpacity style={styles.avatarContainer}>
                     <Avatar
                         rounded
                         title="V"
@@ -30,8 +30,13 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: "transparent",
+        backgroundColor: "grey",
         color: "black",
+        textAlignVertical: "top",
+    },
+    avatarContainer: {
+        flex: 1,
+        justifyContent: "center",
     },
     avatar: {
         backgroundColor: "red",
@@ -39,4 +44,5 @@ const styles = StyleSheet.create({
     },
 });
 
+ScreenHeader.displayName = "ScreenHeader";
 export default ScreenHeader;

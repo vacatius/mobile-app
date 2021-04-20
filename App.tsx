@@ -9,6 +9,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
+import ScreenHeader from "./src/components/ScreenHeader";
 import SvgLogo from "./src/components/SvgLogo";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
@@ -64,7 +65,19 @@ export default function App(): JSX.Element {
                                 name={Routes.DASHBOARD}
                                 component={TripsDashboard}
                                 options={{
-                                    title: t("screens.dashboard.title"),
+                                    // eslint-disable-next-line react/display-name
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t(
+                                                "screens.dashboard.title"
+                                            )}
+                                            {...props}
+                                        />
+                                    ),
+                                    headerStyle: {
+                                        height: 90,
+                                        display: "flex",
+                                    },
                                 }}
                             />
                             <Stack.Screen
