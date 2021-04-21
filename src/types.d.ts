@@ -28,7 +28,25 @@ export type Activity = Node & {
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   deletedAt: Scalars['DateTime'];
+  activityReactions: Array<ActivityReaction>;
 };
+
+export type ActivityReaction = Node & {
+  __typename?: 'ActivityReaction';
+  /** ID of the activity reaction */
+  id: Scalars['ID'];
+  activityReactionType: ActivityReactionType;
+  activity: Activity;
+  addedByUser: User;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  deletedAt: Scalars['DateTime'];
+};
+
+export enum ActivityReactionType {
+  Like = 'LIKE',
+  Dislike = 'DISLIKE'
+}
 
 export type CreateActivityInput = {
   routePointId: Scalars['String'];
@@ -37,6 +55,11 @@ export type CreateActivityInput = {
   linkToDetails?: Maybe<Scalars['String']>;
   startDate?: Maybe<Scalars['String']>;
   endDate?: Maybe<Scalars['String']>;
+};
+
+export type CreateActivityReactionInput = {
+  activityId: Scalars['String'];
+  activityReactionType: ActivityReactionType;
 };
 
 export type CreateInvitationInput = {
@@ -132,6 +155,9 @@ export type Mutation = {
   createActivity: Activity;
   updateActivity: Activity;
   removeActivity: MutationResult;
+  createActivityReaction: ActivityReaction;
+  updateActivityReaction: ActivityReaction;
+  removeActivityReaction: ActivityReaction;
   createInvitation: Invitation;
   updateInvitation: Invitation;
 };
@@ -212,6 +238,21 @@ export type MutationRemoveActivityArgs = {
 };
 
 
+export type MutationCreateActivityReactionArgs = {
+  data: CreateActivityReactionInput;
+};
+
+
+export type MutationUpdateActivityReactionArgs = {
+  data: UpdateActivityReactionInput;
+};
+
+
+export type MutationRemoveActivityReactionArgs = {
+  activityReactionId: Scalars['String'];
+};
+
+
 export type MutationCreateInvitationArgs = {
   data: CreateInvitationInput;
 };
@@ -238,6 +279,7 @@ export type Query = {
   tripRoutePoint: TripRoutePoint;
   user: User;
   activities: Array<Activity>;
+  activityReactions: Array<ActivityReaction>;
   invitation: Invitation;
   node?: Maybe<Node>;
 };
@@ -255,6 +297,11 @@ export type QueryTripRoutePointArgs = {
 
 export type QueryActivitiesArgs = {
   tripId: Scalars['String'];
+};
+
+
+export type QueryActivityReactionsArgs = {
+  activityId: Scalars['String'];
 };
 
 
@@ -362,6 +409,11 @@ export type UpdateActivityInput = {
   startDate?: Maybe<Scalars['String']>;
   endDate?: Maybe<Scalars['String']>;
   activityId: Scalars['String'];
+};
+
+export type UpdateActivityReactionInput = {
+  activityReactionType: ActivityReactionType;
+  activityReactionId: Scalars['String'];
 };
 
 export type UpdateInvitationInput = {

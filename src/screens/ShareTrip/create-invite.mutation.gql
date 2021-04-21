@@ -1,0 +1,11 @@
+mutation createInvitation($input: CreateInvitationInput!) {
+    createInvitation(data: $input) {
+        id
+        status
+        createdByUser {
+            displayName
+        }
+        acceptedUsersCount
+        tripId
+    }
+}
