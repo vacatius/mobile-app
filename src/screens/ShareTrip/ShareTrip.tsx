@@ -1,7 +1,6 @@
 import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
-import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import {
     Platform,
@@ -43,9 +42,12 @@ export default function ShareTrip(props: Props): JSX.Element {
             },
         })
             .then((result) => {
-                handleSystemShareSheet(
-                    invitationBaseUrl + result.data?.createInvitation.id
-                );
+                if (result.data?.createInvitation.id) {
+                    handleSystemShareSheet(
+                        invitationBaseUrl +
+                            encodeURIComponent(result.data?.createInvitation.id)
+                    );
+                }
             })
             .catch((error) => console.error(error)); // TODO - Notify user with error modal
     };
