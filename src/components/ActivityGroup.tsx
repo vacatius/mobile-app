@@ -57,20 +57,7 @@ export default function ActivityGroup(props: ActivityGroupProps) {
                         <ActivityCard
                             key={a.id}
                             date={a.startDate}
-                            dislikes={
-                                a.activityReactions.filter(
-                                    (r) =>
-                                        r.activityReactionType ===
-                                        Types.ActivityReactionType.Dislike
-                                ).length
-                            }
-                            likes={
-                                a.activityReactions.filter(
-                                    (r) =>
-                                        r.activityReactionType ===
-                                        Types.ActivityReactionType.Like
-                                ).length
-                            }
+                            activityReactions={a.activityReactions}
                             name={a.name}
                         />
                     ))}

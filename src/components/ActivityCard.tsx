@@ -1,17 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, StyleSheet, Pressable } from "react-native";
 import { Badge, Icon } from "react-native-elements";
-import { Maybe } from "../types";
+import useCurrentAuthUser from "../hooks/useCurrentAuthUser";
+import * as Types from "../types.d";
 
 export interface ActivityCardProps {
     name: string;
-    date: Maybe<string> | undefined;
-    likes: number;
-    dislikes: number;
+    date: Types.Maybe<string> | undefined;
+    activityReactions: Array<{
+        id: string;
+        activityReactionType: Types.ActivityReactionType;
+        addedByUser: { id: string };
+    }>;
 }
 
 export default function ActivityCard(props: ActivityCardProps) {
+    const { getCurrentUser } = useCurrentAuthUser();
+    const [userLiked, setUserLiked] = useState(false);
+    const [userDisliked, setUserDisliked] = useState(false);
+
     const date: Date = new Date(Date.parse(props.date || ""));
+
+    getCurrentUser().then((user) => {
+        if (user == null) {
+            return;
+        }
+
+        setUserLiked(
+            props.activityReactions.filter(
+                (r) =>
+                    r.activityReactionType ===
+                        Types.ActivityReactionType.Like &&
+                    r.addedByUser.id === user.id
+            ).length > 0
+        );
+
+        setUserDisliked(
+            props.activityReactions.filter(
+                (r) =>
+                    r.activityReactionType ===
+                        Types.ActivityReactionType.Dislike &&
+                    r.addedByUser.id === user.id
+            ).length > 0
+        );
+    });
+
     return (
         <View style={styles.container}>
             <Pressable onPress={() => console.log("press activity")}>
@@ -41,31 +74,65 @@ export default function ActivityCard(props: ActivityCardProps) {
                 <Badge
                     onPress={() => console.log("like")}
                     badgeStyle={styles.badge}
-                    status="success"
                     value={
                         <View style={styles.badgeBody}>
                             <Icon
                                 name="thumbs-up"
                                 size={15}
                                 type="font-awesome-5"
+                                color={userLiked ? styles.likeColor.color : ""}
                             />
-                            <Text style={styles.badgeText}>{props.likes}</Text>
+                            <Text
+                                style={
+                                    userLiked
+                                        ? StyleSheet.compose(
+                                              styles.badgeText,
+                                              styles.likeColor
+                                          )
+                                        : styles.badgeText
+                                }
+                            >
+                                {
+                                    props.activityReactions.filter(
+                                        (r) =>
+                                            r.activityReactionType ===
+                                            Types.ActivityReactionType.Like
+                                    ).length
+                                }
+                            </Text>
                         </View>
                     }
                 />
                 <Badge
                     onPress={() => console.log("dislike")}
                     badgeStyle={styles.badge}
-                    status="error"
                     value={
                         <View style={styles.badgeBody}>
                             <Icon
                                 name="thumbs-down"
                                 size={15}
                                 type="font-awesome-5"
+                                color={
+                                    userDisliked ? styles.likeColor.color : ""
+                                }
                             />
-                            <Text style={styles.badgeText}>
-                                {props.dislikes}
+                            <Text
+                                style={
+                                    userDisliked
+                                        ? StyleSheet.compose(
+                                              styles.badgeText,
+                                              styles.likeColor
+                                          )
+                                        : styles.badgeText
+                                }
+                            >
+                                {
+                                    props.activityReactions.filter(
+                                        (r) =>
+                                            r.activityReactionType ===
+                                            Types.ActivityReactionType.Dislike
+                                    ).length
+                                }
                             </Text>
                         </View>
                     }
@@ -97,6 +164,10 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginLeft: 3,
         marginTop: -15,
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#444",
     },
     badgeBody: {
         flex: 1,
@@ -106,6 +177,7 @@ const styles = StyleSheet.create({
     badgeText: {
         fontSize: 16,
         marginLeft: 3,
+        color: "black",
     },
     badgeRow: {
         flex: 1,
@@ -133,5 +205,8 @@ const styles = StyleSheet.create({
     },
     extraIcon: {
         marginLeft: 10,
+    },
+    likeColor: {
+        color: "#007AFF",
     },
 });
