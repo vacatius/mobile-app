@@ -8,10 +8,8 @@ const useCurrentAuthUser = () => {
             SecureStorageItems.CURRENT_USER
         );
         if (currentUser === null) {
-            console.log("no current user found");
             return undefined;
         }
-        console.log("Found a current user");
         return JSON.parse(currentUser);
     };
 
