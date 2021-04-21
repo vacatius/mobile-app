@@ -27,6 +27,7 @@ export interface ActivityGroupProps {
             }>;
         }>;
     };
+    tripId: string;
 }
 
 export default function ActivityGroup(props: ActivityGroupProps) {
@@ -56,6 +57,7 @@ export default function ActivityGroup(props: ActivityGroupProps) {
                     props.activityGroupData.activities.map((a) => (
                         <ActivityCard
                             key={a.id}
+                            tripId={props.tripId}
                             id={a.id}
                             date={a.startDate}
                             activityReactions={a.activityReactions}

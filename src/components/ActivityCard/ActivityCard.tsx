@@ -16,6 +16,7 @@ export interface ActivityCardProps {
         activityReactionType: Types.ActivityReactionType;
         addedByUser: { id: string };
     }>;
+    tripId: string;
 }
 
 export default function ActivityCard(props: ActivityCardProps) {
@@ -62,7 +63,11 @@ export default function ActivityCard(props: ActivityCardProps) {
                             (r) => r.addedByUser.id === userId
                         )?.id || "",
                 },
-                refetchQueries: [refetchGetTripQuery()],
+                refetchQueries: [
+                    refetchGetTripQuery({
+                        tripId: props.tripId,
+                    }),
+                ],
             }).catch((e) => console.log(e)); // TODO error handling
         };
 
@@ -74,7 +79,11 @@ export default function ActivityCard(props: ActivityCardProps) {
                         activityReactionType: activityReactionType,
                     },
                 },
-                refetchQueries: [refetchGetTripQuery()],
+                refetchQueries: [
+                    refetchGetTripQuery({
+                        tripId: props.tripId,
+                    }),
+                ],
             }).catch((e) => console.log(e)); // TODO error handling
         };
         if (userLiked) {

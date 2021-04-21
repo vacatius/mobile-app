@@ -51,7 +51,11 @@ export default function TripItinerary(props: Props) {
                         onPress={() => console.log("add group")}
                     />
                     {data.node.itinerary.map((i) => (
-                        <ActivityGroup key={i.id} activityGroupData={i} />
+                        <ActivityGroup
+                            key={i.id}
+                            activityGroupData={i}
+                            tripId={props.route.params.tripId}
+                        />
                     ))}
                 </SafeAreaView>
             </ScrollView>
