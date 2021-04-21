@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import * as Types from "./../types";
+import * as Types from "./../types.d";
 import ActivityCard from "./ActivityCard";
 import ActivityGroupHeader from "./ActivityGroupHeader";
 
