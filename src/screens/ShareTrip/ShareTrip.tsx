@@ -2,10 +2,17 @@ import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, Share, StyleSheet } from "react-native";
+import {
+    Platform,
+    ScrollView,
+    Share,
+    ShareContent,
+    StyleSheet,
+} from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
+import { useCreateInvitationMutation } from "./types/create-invite.mutation";
 
 type ShareTripScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -20,16 +27,42 @@ type Props = {
 
 export default function ShareTrip(props: Props): JSX.Element {
     const { t } = useTranslation();
-    const trip = props.route.params.trip;
 
-    const handleSystemShare = async () => {
+    const trip = props.route.params.trip;
+    const [execute, { error, loading }] = useCreateInvitationMutation();
+
+    const invitationBaseUrl = "https://vacatius.com/invite/";
+
+    const handleShare = () => {
+        execute({
+            variables: {
+                input: {
+                    tripId: trip.id,
+                },
+            },
+        })
+            .then((result) => {
+                handleSystemShareSheet(
+                    invitationBaseUrl + result.data?.createInvitation.id
+                );
+            })
+            .catch((error) => console.error(error)); // TODO - Notify user with error modal
+    };
+
+    const handleSystemShareSheet = async (invitationLink: string) => {
         try {
-            await Share.share({
-                message:
-                    trip.name +
-                    (trip.description ? "\n" + trip.description : ""),
-                url: "https://example.com",
-            });
+            let shareObject: ShareContent = {
+                title: t("androidShareSheetTitle"),
+                message: invitationLink,
+            };
+            // Only use url to properly display shareable content in iOS share sheet
+            if (Platform.OS === "ios") {
+                shareObject = {
+                    url: invitationLink,
+                };
+            }
+
+            await Share.share({ ...shareObject });
         } catch (error) {
             // TODO - Notify user with error modal
             console.error(error.message);
@@ -63,7 +96,8 @@ export default function ShareTrip(props: Props): JSX.Element {
                     buttonStyle={styles.shareBtn}
                     title={t("screens.shareTrip.share")}
                     titleStyle={styles.btnTextStyle}
-                    onPress={() => handleSystemShare()}
+                    onPress={() => handleShare()}
+                    loading={loading}
                 />
                 <Button
                     containerStyle={styles.btnContainer}
