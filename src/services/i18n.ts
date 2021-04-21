@@ -86,6 +86,7 @@ export const resources = {
                     errors: {
                         noTripsFound: "No past trips found.",
                     },
+                },
                 shareTrip: {
                     title: "Share a Trip",
                     share: "Share with Friends",
@@ -156,6 +157,7 @@ export const resources = {
                     errors: {
                         noTripsFound: "Keine Reisen gefunden.",
                     },
+                },
                 shareTrip: {
                     title: "Reise teilen",
                     share: "Mit Freunden teilen",
