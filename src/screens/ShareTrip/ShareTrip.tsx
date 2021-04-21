@@ -1,6 +1,7 @@
 import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
+import { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import {
     Platform,
@@ -52,7 +53,7 @@ export default function ShareTrip(props: Props): JSX.Element {
     const handleSystemShareSheet = async (invitationLink: string) => {
         try {
             let shareObject: ShareContent = {
-                title: t("androidShareSheetTitle").toString(),
+                title: t("screens.shareTrip.androidShareSheetTitle"),
                 message: invitationLink,
             };
             // Only use url to properly display shareable content in iOS share sheet
