@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
+import { getEnvironment } from "../../get-environment";
 import RootStackParamList from "../../types/RootStackParamList";
 import { useCreateInvitationMutation } from "./types/create-invite.mutation";
 
@@ -31,8 +32,6 @@ export default function ShareTrip(props: Props): JSX.Element {
     const trip = props.route.params.trip;
     const [execute, { error, loading }] = useCreateInvitationMutation();
 
-    const invitationBaseUrl = "https://vacatius.com/invite/";
-
     const handleShare = () => {
         execute({
             variables: {
@@ -44,7 +43,7 @@ export default function ShareTrip(props: Props): JSX.Element {
             .then((result) => {
                 if (result.data?.createInvitation.id) {
                     handleSystemShareSheet(
-                        invitationBaseUrl +
+                        getEnvironment()?.invitationBaseUrl +
                             encodeURIComponent(result.data?.createInvitation.id)
                     );
                 }
