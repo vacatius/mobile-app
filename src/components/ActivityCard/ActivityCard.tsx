@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Pressable } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Badge, Icon } from "react-native-elements";
-import useCurrentAuthUser from "../hooks/useCurrentAuthUser";
-import * as Types from "../types.d";
+import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
+import { refetchGetTripQuery } from "../../screens/Itinerary/types/getTripQuery";
+import * as Types from "../../types.d";
+import { useCreateActivityReactionMutation } from "./types/CreateActivityReactionMutation";
+import { useRemoveActivityReactionMutation } from "./types/RemoveActivityReactionMutation";
 
 export interface ActivityCardProps {
+    id: string;
     name: string;
     date: Types.Maybe<string> | undefined;
     activityReactions: Array<{
@@ -18,6 +22,9 @@ export default function ActivityCard(props: ActivityCardProps) {
     const { getCurrentUser } = useCurrentAuthUser();
     const [userLiked, setUserLiked] = useState(false);
     const [userDisliked, setUserDisliked] = useState(false);
+    const [userId, setUserId] = useState("");
+    const [executeCreate] = useCreateActivityReactionMutation();
+    const [executeRemove] = useRemoveActivityReactionMutation();
 
     const date: Date = new Date(Date.parse(props.date || ""));
 
@@ -25,6 +32,7 @@ export default function ActivityCard(props: ActivityCardProps) {
         if (user == null) {
             return;
         }
+        setUserId(user.id);
 
         setUserLiked(
             props.activityReactions.filter(
@@ -44,6 +52,47 @@ export default function ActivityCard(props: ActivityCardProps) {
             ).length > 0
         );
     });
+
+    const handleReactionType = (reactionType: Types.ActivityReactionType) => {
+        const remove = () => {
+            executeRemove({
+                variables: {
+                    input:
+                        props.activityReactions.find(
+                            (r) => r.addedByUser.id === userId
+                        )?.id || "",
+                },
+                refetchQueries: [refetchGetTripQuery()],
+            }).catch((e) => console.log(e)); // TODO error handling
+        };
+
+        const create = (activityReactionType: Types.ActivityReactionType) => {
+            executeCreate({
+                variables: {
+                    input: {
+                        activityId: props.id,
+                        activityReactionType: activityReactionType,
+                    },
+                },
+                refetchQueries: [refetchGetTripQuery()],
+            }).catch((e) => console.log(e)); // TODO error handling
+        };
+        if (userLiked) {
+            // check if user has already liked activity
+            remove();
+            if (reactionType === Types.ActivityReactionType.Dislike) {
+                create(Types.ActivityReactionType.Dislike);
+            }
+        } else if (userDisliked) {
+            // check if user has already disliked activity
+            remove();
+            if (reactionType === Types.ActivityReactionType.Like) {
+                create(Types.ActivityReactionType.Like);
+            }
+        } else {
+            create(reactionType);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -72,7 +121,9 @@ export default function ActivityCard(props: ActivityCardProps) {
             </Pressable>
             <View style={styles.badgeRow}>
                 <Badge
-                    onPress={() => console.log("like")}
+                    onPress={() =>
+                        handleReactionType(Types.ActivityReactionType.Like)
+                    }
                     badgeStyle={styles.badge}
                     value={
                         <View style={styles.badgeBody}>
@@ -104,7 +155,9 @@ export default function ActivityCard(props: ActivityCardProps) {
                     }
                 />
                 <Badge
-                    onPress={() => console.log("dislike")}
+                    onPress={() =>
+                        handleReactionType(Types.ActivityReactionType.Dislike)
+                    }
                     badgeStyle={styles.badge}
                     value={
                         <View style={styles.badgeBody}>

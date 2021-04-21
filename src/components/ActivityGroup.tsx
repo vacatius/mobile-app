@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import * as Types from "./../types.d";
-import ActivityCard from "./ActivityCard";
+import ActivityCard from "./ActivityCard/ActivityCard";
 import ActivityGroupHeader from "./ActivityGroupHeader";
 
 export interface ActivityGroupProps {
@@ -56,6 +56,7 @@ export default function ActivityGroup(props: ActivityGroupProps) {
                     props.activityGroupData.activities.map((a) => (
                         <ActivityCard
                             key={a.id}
+                            id={a.id}
                             date={a.startDate}
                             activityReactions={a.activityReactions}
                             name={a.name}
