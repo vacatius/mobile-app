@@ -52,7 +52,7 @@ export default function ShareTrip(props: Props): JSX.Element {
     const handleSystemShareSheet = async (invitationLink: string) => {
         try {
             let shareObject: ShareContent = {
-                title: t("androidShareSheetTitle"),
+                title: t("androidShareSheetTitle").toString(),
                 message: invitationLink,
             };
             // Only use url to properly display shareable content in iOS share sheet
@@ -77,7 +77,6 @@ export default function ShareTrip(props: Props): JSX.Element {
                 leftComponent={<Text h2>{trip.name}</Text>}
                 rightComponent={
                     <Avatar
-                        // TODO - Add proper icon once backend provides one
                         rounded
                         size="medium"
                         icon={{
@@ -85,7 +84,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                             type: "font-awesome-5",
                         }}
                         containerStyle={{ backgroundColor: "black" }}
-                    />
+                    /> // TODO - Add proper icon once backend provides one
                 }
             />
             <ScrollView style={styles.scrollView}>
