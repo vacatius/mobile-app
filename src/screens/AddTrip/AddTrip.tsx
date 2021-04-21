@@ -49,11 +49,18 @@ export const AddTrip = (props: Props): JSX.Element => {
             },
             refetchQueries: [refetchTripsQuery()],
         })
-            .then(() => {
+            .then((result) => {
                 console.log("Successfully created this trip");
                 navigation.reset({
                     index: 0,
-                    routes: [{ name: "Dashboard" }],
+                    routes: [
+                        {
+                            name: "ShareTrip",
+                            params: {
+                                trip: result.data?.createTrip,
+                            },
+                        },
+                    ],
                 });
             })
             .catch((e) => {

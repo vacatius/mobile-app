@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 export default function App(): JSX.Element {
     const { t } = useTranslation();
     const navigationRef = useRef<NavigationContainerRef>(null);
-    const replace = (name: string, params: any) => { //eslint-disable-line
+    const replace = (name: string, params: any) => {
         navigationRef.current?.dispatch(StackActions.replace(name, params));
     };
     const { getCurrentUser } = useCurrentAuthUser();

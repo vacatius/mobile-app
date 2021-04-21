@@ -1,3 +1,4 @@
+import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -6,22 +7,27 @@ import { Avatar, Button, Header, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
 
-type TripsDashboardScreenNavigationProp = StackNavigationProp<
+type ShareTripScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
     "ShareTrip"
 >;
+type ShareTripScreenRouteProp = RouteProp<RootStackParamList, "ShareTrip">;
 
 type Props = {
-    navigation: TripsDashboardScreenNavigationProp;
+    navigation: ShareTripScreenNavigationProp;
+    route: ShareTripScreenRouteProp;
 };
 
-export default function ShareTrip(props: Props) {
+export default function ShareTrip(props: Props): JSX.Element {
     const { t } = useTranslation();
+    const trip = props.route.params.trip;
 
     const handleSystemShare = async () => {
         try {
             await Share.share({
-                message: "Test \nTest",
+                message:
+                    trip.name +
+                    (trip.description ? "\n" + trip.description : ""),
                 url: "https://example.com",
             });
         } catch (error) {
@@ -35,25 +41,22 @@ export default function ShareTrip(props: Props) {
             <Header
                 placement={"left"}
                 containerStyle={styles.header}
-                leftComponent={<Text h2>Roadtrip 2021</Text>}
+                leftComponent={<Text h2>{trip.name}</Text>}
                 rightComponent={
                     <Avatar
+                        // TODO - Add proper icon once backend provides one
                         rounded
                         size="medium"
                         icon={{
-                            // TODO - Replace
                             name: "umbrella-beach",
                             type: "font-awesome-5",
                         }}
-                        containerStyle={{ backgroundColor: "black" }} // TODO - Replace
+                        containerStyle={{ backgroundColor: "black" }}
                     />
                 }
             />
             <ScrollView style={styles.scrollView}>
-                <Text h4>
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod tempor invidunt ut
-                </Text>
+                {trip.description && <Text h4>{trip.description}</Text>}
                 <SvgLogo style={styles.logo} height={150} width={150} />
                 <Button
                     containerStyle={styles.btnContainer}
@@ -68,7 +71,11 @@ export default function ShareTrip(props: Props) {
                     title={t("screens.shareTrip.planTrip")}
                     titleStyle={styles.btnTextStyle}
                     // TODO - Redirect to trip itinerary screen
-                    onPress={() => console.log("TODO - Missing redirect")}
+                    onPress={() =>
+                        console.log(
+                            "TODO - Missing redirect to trip details screen"
+                        )
+                    }
                 />
                 <Button
                     containerStyle={{ marginTop: -10 }}
