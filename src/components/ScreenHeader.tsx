@@ -12,7 +12,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
     <View>
         <Header
             placement="left"
-            centerComponent={<Text h1>{props.screenTitle}</Text>}
+            leftComponent={<Text h1>{props.screenTitle}</Text>}
             rightComponent={
                 <TouchableOpacity>
                     <Avatar
@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
     header: {
         backgroundColor: "transparent",
         color: "black",
-        marginLeft: -15, // TODO - Find a way how to not hard code this value
     },
     avatar: {
         backgroundColor: "red",

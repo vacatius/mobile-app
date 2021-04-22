@@ -1,15 +1,17 @@
+import { BACKEND_URL, INVITATION_BASE_URL } from "@env";
 import Constants from "expo-constants";
-import { BACKEND_URL } from "@env";
 
 export function getEnvironment() {
     const { releaseChannel } = Constants.manifest;
     const develop = {
         envName: "DEVELOPMENT",
         backendUrl: BACKEND_URL,
+        invitationBaseUrl: INVITATION_BASE_URL,
     };
     const production = {
         envName: "PRODUCTION",
         backendUrl: BACKEND_URL,
+        invitationBaseUrl: INVITATION_BASE_URL,
     };
 
     if (releaseChannel === undefined) {

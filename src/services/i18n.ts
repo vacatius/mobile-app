@@ -87,6 +87,13 @@ export const resources = {
                         noTripsFound: "No past trips found.",
                     },
                 },
+                shareTrip: {
+                    title: "Share a Trip",
+                    share: "Share with Friends",
+                    planTrip: "Plan Trip",
+                    backToDashboard: "Back to Dashboard",
+                    androidShareSheetTitle: "Share your Trip with Friends",
+                },
                 itinerary: {
                     add: "Add Group",
                 },
@@ -154,6 +161,13 @@ export const resources = {
                     errors: {
                         noTripsFound: "Keine Reisen gefunden.",
                     },
+                },
+                shareTrip: {
+                    title: "Reise teilen",
+                    share: "Mit Freunden teilen",
+                    planTrip: "Reise planen",
+                    backToDashboard: "Zurück zum Dashboard",
+                    androidShareSheetTitle: "Teile deine Reise mit Freunden",
                 },
                 itinerary: {
                     add: " Gruppe Hinzufügen",
