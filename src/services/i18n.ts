@@ -24,6 +24,7 @@ export const resources = {
                 noDate: "No date.",
                 takenEmailUsername:
                     "The Email or Username is already taken, please choose another one",
+                generic: "An error occurred",
             },
             placeholder: {
                 username: [
@@ -122,6 +123,7 @@ export const resources = {
                 takenEmailUsername:
                     "Die Email Adresse oder der Benutzername sind schon vergeben",
                 noDate: "Noch kein Datum bekannt.",
+                generic: "Ein Fehler ist aufgetreten",
             },
             validation: {
                 emailRequired: "Bitte gib eine gültige E-Mail Adresse ein!",

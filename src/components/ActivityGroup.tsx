@@ -30,7 +30,7 @@ export interface ActivityGroupProps {
     tripId: string;
 }
 
-export default function ActivityGroup(props: ActivityGroupProps) {
+export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
     const [isOpen, setOpen] = useState(false);
 
     const onEdit = () => {
