@@ -56,8 +56,10 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         );
     });
 
-    const handleReactionType = (reactionType: Types.ActivityReactionType) => {
-        const remove = () => {
+    const handleReactionType = (
+        reactionType: Types.ActivityReactionType
+    ): void => {
+        const remove = (): void => {
             const activityReactionId =
                 props.activityReactions.find((r) => r.addedByUser.id === userId)
                     ?.id || "";
@@ -75,7 +77,9 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
             }
         };
 
-        const create = (activityReactionType: Types.ActivityReactionType) => {
+        const create = (
+            activityReactionType: Types.ActivityReactionType
+        ): void => {
             executeCreate({
                 variables: {
                     input: {
@@ -91,7 +95,9 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
             }).catch((e) => console.log(e)); // TODO error handling
         };
 
-        const update = (activityReactionType: Types.ActivityReactionType) => {
+        const update = (
+            activityReactionType: Types.ActivityReactionType
+        ): void => {
             const activityReactionId =
                 props.activityReactions.find((r) => r.addedByUser.id === userId)
                     ?.id || "";
@@ -134,7 +140,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         }
     };
 
-    const getTime = (date: Date) => {
+    const getTime = (date: Date): string => {
         const hours = date.getHours();
         const minutes = date.getMinutes();
 

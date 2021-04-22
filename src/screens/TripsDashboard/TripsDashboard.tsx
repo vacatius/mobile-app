@@ -68,14 +68,14 @@ export default function TripsDashboard(props: Props): JSX.Element {
             </View>
         );
     }
-    const openTripDetails = (trip: TripsQuery["trips"][0]) => {
+    const openTripDetails = (trip: TripsQuery["trips"][0]): void => {
         props.navigation.navigate(Routes.ITINERARY, {
             tripId: trip.id,
             tripName: trip.name,
         });
         console.log("Opening trip details for tripId: " + trip.id);
     };
-    const addTrip = () => {
+    const addTrip = (): void => {
         console.log("Add trip button pressed");
         nav.navigate(Routes.ADD_TRIP);
     };

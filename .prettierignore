@@ -3,3 +3,9 @@
 .github
 .vscode
 node_modules
+*.d.ts
+*.query.ts
+*.mutation.ts
+*.schema.json
+*Query*
+*Mutation*

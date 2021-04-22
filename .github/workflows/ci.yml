@@ -16,5 +16,5 @@ jobs:
       - name: Compile project
         run: tsc --noEmit
 
-      - name: Check eslint
+      - name: Check ESlint
         run: npm run lint

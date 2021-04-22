@@ -19,6 +19,12 @@ module.exports = {
     },
     plugins: ["react", "react-hooks", "@typescript-eslint", "prettier"],
     rules: {
+        "@typescript-eslint/explicit-function-return-type": [
+            "error",
+            {
+                allowExpressions: true,
+            },
+        ],
         "prettier/prettier": "error",
         "no-console": "off",
     },
@@ -26,6 +32,7 @@ module.exports = {
         "*.d.ts",
         "*.query.ts",
         "*.mutation.ts",
+        "*.schema.json",
         "*Query*",
         "*Mutation*",
     ],

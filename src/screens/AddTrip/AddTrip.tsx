@@ -13,9 +13,12 @@ import { Routes } from "../../types/Routes";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateTripMutation } from "./types/add-trip.mutation";
 
-export type Props = {
+type Props = {
     editTrip?: Trip;
 };
+
+// TODO - Use prop or remove
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const AddTrip = (props: Props): JSX.Element => {
     const { t } = useTranslation();
     const navigation = useNavigation();
@@ -39,7 +42,7 @@ export const AddTrip = (props: Props): JSX.Element => {
         ],
     });
 
-    const handleSubmit = (values: FormikValues) => {
+    const handleSubmit = (values: FormikValues): void => {
         console.log("add trip pressed");
         execute({
             variables: {
