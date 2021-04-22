@@ -53,9 +53,10 @@ export default function TripItinerary(props: Props): JSX.Element {
                         iconRight
                         onPress={() => console.log("add group")}
                     />
-                    {data.node.itinerary.map((i) => (
+                    {data.node.itinerary.map((i, position) => (
                         <ActivityGroup
                             key={i.id}
+                            position={position}
                             activityGroupData={i}
                             tripId={props.route.params.tripId}
                         />
