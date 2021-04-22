@@ -6,6 +6,7 @@ import { refetchGetTripQuery } from "../../screens/Itinerary/types/getTripQuery"
 import * as Types from "../../types.d";
 import { useCreateActivityReactionMutation } from "./types/CreateActivityReactionMutation";
 import { useRemoveActivityReactionMutation } from "./types/RemoveActivityReactionMutation";
+import { useUpdateActivityReactionMutation } from "./types/UpdateActivityReactionMutation";
 
 export interface ActivityCardProps {
     id: string;
@@ -26,6 +27,7 @@ export default function ActivityCard(props: ActivityCardProps) {
     const [userId, setUserId] = useState("");
     const [executeCreate] = useCreateActivityReactionMutation();
     const [executeRemove] = useRemoveActivityReactionMutation();
+    const [executeUpdate] = useUpdateActivityReactionMutation();
 
     const date: Date = new Date(Date.parse(props.date || ""));
 
@@ -86,17 +88,38 @@ export default function ActivityCard(props: ActivityCardProps) {
                 ],
             }).catch((e) => console.log(e)); // TODO error handling
         };
+
+        const update = (activityReactionType: Types.ActivityReactionType) => {
+            executeUpdate({
+                variables: {
+                    input: {
+                        activityReactionType: activityReactionType,
+                        activityReactionId:
+                            props.activityReactions.find(
+                                (r) => r.addedByUser.id === userId
+                            )?.id || "",
+                    },
+                },
+                refetchQueries: [
+                    refetchGetTripQuery({
+                        tripId: props.tripId,
+                    }),
+                ],
+            }).catch((e) => console.log(e)); // TODO error handling
+        };
         if (userLiked) {
             // check if user has already liked activity
-            remove();
-            if (reactionType === Types.ActivityReactionType.Dislike) {
-                create(Types.ActivityReactionType.Dislike);
+            if (reactionType === Types.ActivityReactionType.Like) {
+                remove();
+            } else {
+                update(Types.ActivityReactionType.Dislike);
             }
         } else if (userDisliked) {
             // check if user has already disliked activity
-            remove();
-            if (reactionType === Types.ActivityReactionType.Like) {
-                create(Types.ActivityReactionType.Like);
+            if (reactionType === Types.ActivityReactionType.Dislike) {
+                remove();
+            } else {
+                update(Types.ActivityReactionType.Like);
             }
         } else {
             create(reactionType);
