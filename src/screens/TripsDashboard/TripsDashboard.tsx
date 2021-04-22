@@ -69,7 +69,6 @@ export default function TripsDashboard(props: Props): JSX.Element {
             tripId: trip.id,
             tripName: trip.name,
         });
-        console.log("Opening trip details");
         console.log("Opening trip details for tripId: " + trip.id);
     };
     const addTrip = () => {

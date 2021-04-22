@@ -21,7 +21,7 @@ type Props = {
     route: TripItineraryRouteProp;
 };
 
-export default function TripItinerary(props: Props) {
+export default function TripItinerary(props: Props): JSX.Element {
     const { t } = useTranslation();
 
     const { data, error, loading } = useGetTripQuery({
@@ -32,7 +32,7 @@ export default function TripItinerary(props: Props) {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
-                    {loading && <Text>loading...</Text>}
+                    {loading && <Text>{t("loading")}</Text>}
                     <Text numberOfLines={2} style={styles.descriptionText}>
                         {data.node.description}
                     </Text>
