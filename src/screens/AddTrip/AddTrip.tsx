@@ -53,8 +53,11 @@ export const AddTrip = (props: Props): JSX.Element => {
             .then((result) => {
                 console.log("Successfully created this trip");
                 navigation.reset({
-                    index: 0,
+                    index: 1,
                     routes: [
+                        {
+                            name: "Dashboard",
+                        },
                         {
                             name: "ShareTrip",
                             params: {
@@ -64,9 +67,7 @@ export const AddTrip = (props: Props): JSX.Element => {
                     ],
                 });
             })
-            .catch((e) => {
-                console.log(e);
-            });
+            .catch((e) => console.error(e)); // TODO - Notify user
     };
     return (
         <ScrollView

@@ -22,7 +22,13 @@ module.exports = {
         "prettier/prettier": "error",
         "no-console": "off",
     },
-    ignorePatterns: ["*.d.ts", "*.query.ts", "*.mutation.ts"],
+    ignorePatterns: [
+        "*.d.ts",
+        "*.query.ts",
+        "*.mutation.ts",
+        "*Query*",
+        "*Mutation*",
+    ],
     settings: {
         react: {
             version: "detect",

@@ -1,6 +1,6 @@
-import * as Localization from "expo-localization";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import * as Localization from "expo-localization";
 
 export const resources = {
     en: {
@@ -15,6 +15,7 @@ export const resources = {
             startJourney: ["Start Journey", "Lets go"],
             displayName: "Display Name",
             tripName: "Trip Name",
+            loading: "Loading",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
@@ -23,6 +24,7 @@ export const resources = {
                 noDate: "No date.",
                 takenEmailUsername:
                     "The Email or Username is already taken, please choose another one",
+                generic: "An error occurred",
             },
             placeholder: {
                 username: [
@@ -91,8 +93,11 @@ export const resources = {
                     title: "Share a Trip",
                     share: "Share with Friends",
                     planTrip: "Plan Trip",
-                    backToDashboard: "Back to Dashboard",
+                    goToDashboard: "Go to Dashboard",
                     androidShareSheetTitle: "Share your Trip with Friends",
+                },
+                itinerary: {
+                    add: "Add Group",
                 },
             },
         },
@@ -108,6 +113,7 @@ export const resources = {
             description: "Beschreibung",
             displayName: "Anzeige Name",
             tripName: "Reisename",
+            loading: "Wird Geladen",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",
@@ -117,6 +123,7 @@ export const resources = {
                 takenEmailUsername:
                     "Die Email Adresse oder der Benutzername sind schon vergeben",
                 noDate: "Noch kein Datum bekannt.",
+                generic: "Ein Fehler ist aufgetreten",
             },
             validation: {
                 emailRequired: "Bitte gib eine gültige E-Mail Adresse ein!",
@@ -163,8 +170,11 @@ export const resources = {
                     title: "Reise teilen",
                     share: "Mit Freunden teilen",
                     planTrip: "Reise planen",
-                    backToDashboard: "Zurück zum Dashboard",
+                    goToDashboard: "Zum Dashboard",
                     androidShareSheetTitle: "Teile deine Reise mit Freunden",
+                },
+                itinerary: {
+                    add: " Gruppe Hinzufügen",
                 },
             },
         },
