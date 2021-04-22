@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: "#444",
         marginBottom: 10,
-        backgroundColor: "yellow",
     },
     activity: {
         padding: 10,
