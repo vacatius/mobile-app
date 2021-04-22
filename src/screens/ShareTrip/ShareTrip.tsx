@@ -107,9 +107,21 @@ export default function ShareTrip(props: Props): JSX.Element {
                     titleStyle={styles.btnTextStyle}
                     // TODO - Redirect to trip itinerary screen
                     onPress={() =>
-                        console.log(
-                            "TODO - Missing redirect to trip details screen"
-                        )
+                        props.navigation.reset({
+                            index: 1,
+                            routes: [
+                                {
+                                    name: "Dashboard",
+                                },
+                                {
+                                    name: "TripItinerary",
+                                    params: {
+                                        tripId: props.route.params.trip.id,
+                                        tripName: props.route.params.trip.name,
+                                    },
+                                },
+                            ],
+                        })
                     }
                 />
                 <Button
