@@ -33,6 +33,9 @@ export default function TripItinerary(props: Props) {
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
                     {loading && <Text>loading...</Text>}
+                    <Text numberOfLines={2} style={styles.descriptionText}>
+                        {data.node.description}
+                    </Text>
                     <Button
                         containerStyle={styles.buttonContainer}
                         buttonStyle={styles.buttonLogin}
@@ -80,5 +83,9 @@ const styles = StyleSheet.create({
     },
     buttonLogin: {
         backgroundColor: "#BCE1B0",
+    },
+    descriptionText: {
+        fontSize: 18,
+        marginBottom: 20,
     },
 });
