@@ -13,6 +13,7 @@ import { Avatar, Button, Header, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
 import { getEnvironment } from "../../get-environment";
 import RootStackParamList from "../../types/RootStackParamList";
+import { Routes } from "../../types/Routes";
 import { useCreateInvitationMutation } from "./types/create-invite.mutation";
 
 type ShareTripScreenNavigationProp = StackNavigationProp<
@@ -117,7 +118,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                     buttonStyle={styles.backToDashboardBtn}
                     title={t("screens.shareTrip.backToDashboard")}
                     titleStyle={{ color: "black", fontSize: 20 }}
-                    onPress={() => props.navigation.replace("Dashboard")}
+                    onPress={() => props.navigation.replace(Routes.DASHBOARD)}
                 />
             </ScrollView>
         </>

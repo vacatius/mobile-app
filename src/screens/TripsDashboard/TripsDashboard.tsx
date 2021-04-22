@@ -14,13 +14,17 @@ import ScreenHeader from "../../components/ScreenHeader";
 import SvgLogo from "../../components/SvgLogo";
 import TripCard from "../../components/TripCard/TripCard";
 import RootStackParamList from "../../types/RootStackParamList";
+import { Routes } from "../../types/Routes";
 import { TripsQuery, useTripsQuery } from "./types/trip-dashboard.query";
 
 type TripsDashboardScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    "Dashboard"
+    Routes.DASHBOARD
 >;
-type TripsDashboardScreenRouteProp = RouteProp<RootStackParamList, "Dashboard">;
+type TripsDashboardScreenRouteProp = RouteProp<
+    RootStackParamList,
+    Routes.DASHBOARD
+>;
 type Props = {
     navigation: TripsDashboardScreenNavigationProp;
     route: TripsDashboardScreenRouteProp;
@@ -69,7 +73,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
     };
     const addTrip = () => {
         console.log("Add trip button pressed");
-        nav.navigate("AddTrip");
+        nav.navigate(Routes.ADD_TRIP);
     };
     return (
         <>
