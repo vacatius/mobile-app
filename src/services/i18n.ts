@@ -15,6 +15,7 @@ export const resources = {
             startJourney: ["Start Journey", "Lets go"],
             displayName: "Display Name",
             tripName: "Trip Name",
+            loading: "Loading",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
@@ -111,6 +112,7 @@ export const resources = {
             description: "Beschreibung",
             displayName: "Anzeige Name",
             tripName: "Reisename",
+            loading: "Wird Geladen",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",

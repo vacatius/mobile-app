@@ -19,7 +19,7 @@ export interface ActivityCardProps {
     tripId: string;
 }
 
-export default function ActivityCard(props: ActivityCardProps) {
+export default function ActivityCard(props: ActivityCardProps): JSX.Element {
     const { getCurrentUser } = useCurrentAuthUser();
     const [userLiked, setUserLiked] = useState(false);
     const [userDisliked, setUserDisliked] = useState(false);
