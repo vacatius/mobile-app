@@ -31,7 +31,7 @@ export interface ActivityGroupProps {
     position: number;
 }
 
-export default function ActivityGroup(props: ActivityGroupProps) {
+export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
     const [isOpen, setOpen] = useState(props.position === 0);
 
     const onEdit = () => {

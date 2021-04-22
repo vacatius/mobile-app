@@ -65,7 +65,7 @@ export default function TripItinerary(props: Props): JSX.Element {
             </ScrollView>
         );
     } else {
-        return <></>;
+        return <Text>{t("error.generic")}</Text>;
     }
 }
 
