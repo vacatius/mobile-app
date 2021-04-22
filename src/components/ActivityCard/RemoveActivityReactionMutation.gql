@@ -1,0 +1,5 @@
+mutation removeActivityReaction($input: String!) {
+    removeActivityReaction(activityReactionId: $input) {
+        id
+    }
+}

@@ -1,0 +1,5 @@
+mutation updateActivityReaction($input: UpdateActivityReactionInput!) {
+    updateActivityReaction(data: $input) {
+        id
+    }
+}

@@ -1,0 +1,5 @@
+mutation createActivityReaction($input: CreateActivityReactionInput!) {
+    createActivityReaction(data: $input) {
+        id
+    }
+}

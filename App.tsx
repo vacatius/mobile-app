@@ -9,13 +9,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
-import SvgLogo from "./src/components/SvgLogo";
-import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
+import TripItinerary from "./src/screens/Itinerary/TripItinerary";
 import Login from "./src/screens/Login/Login";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 import i18n from "./src/services/i18n";
+import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
+import SvgLogo from "./src/components/SvgLogo";
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 //init i18n
 i18n;
@@ -24,7 +25,9 @@ const Stack = createStackNavigator();
 export default function App(): JSX.Element {
     const { t } = useTranslation();
     const navigationRef = useRef<NavigationContainerRef>(null);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const replace = (name: string, params: any) => {
+
         navigationRef.current?.dispatch(StackActions.replace(name, params));
     };
     const { getCurrentUser } = useCurrentAuthUser();
@@ -62,6 +65,18 @@ export default function App(): JSX.Element {
                                 component={TripsDashboard}
                                 options={{
                                     title: t("screens.dashboard.title"),
+                                }}
+                            />
+                            <Stack.Screen
+                                name="TripItinerary"
+                                component={TripItinerary}
+                                options={({ route }) => {
+                                    const params = route.params as {
+                                        tripName: string;
+                                    };
+                                    return {
+                                        title: params.tripName,
+                                    };
                                 }}
                             />
                             <Stack.Screen
