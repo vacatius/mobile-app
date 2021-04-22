@@ -1,18 +1,18 @@
-import React from "react";
 import {
     ApolloClient,
-    ApolloProvider,
     ApolloLink,
+    ApolloProvider,
     createHttpLink,
-    InMemoryCache,
     fromPromise,
+    InMemoryCache,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import * as SecureStore from "expo-secure-store";
 import { onError } from "@apollo/client/link/error";
+import * as SecureStore from "expo-secure-store";
+import React from "react";
 import { getEnvironment } from "../../get-environment";
-import { REFRESH_TOKEN_MUTATION } from "./refresh-token.mutation";
 import SecureStorageItems from "../../types/SecureStorageItems";
+import { REFRESH_TOKEN_MUTATION } from "./refresh-token.mutation";
 
 export type Props = {
     children: JSX.Element;
@@ -23,7 +23,7 @@ export default function ApolloConnection(props: Props): JSX.Element {
     let isRefreshing = false;
     let pendingRequests: any[] = []; // eslint-disable-line
 
-    const resolvePendingRequests = () => {
+    const resolvePendingRequests = (): void => {
         pendingRequests.map((callback) => callback());
         pendingRequests = [];
     };
@@ -32,7 +32,7 @@ export default function ApolloConnection(props: Props): JSX.Element {
         uri: getEnvironment()?.backendUrl,
         credentials: "include",
     });
-    const getNewToken = () => {
+    const getNewToken = (): Promise<string> => {
         console.log("get new token");
 
         return client

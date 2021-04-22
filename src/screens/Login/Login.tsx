@@ -1,18 +1,18 @@
+import { StackNavigationProp } from "@react-navigation/stack";
+import * as SecureStore from "expo-secure-store";
+import { Formik, FormikValues } from "formik";
+import { TFunction } from "i18next";
 import React, { useState } from "react";
-import { StyleSheet, Text, ScrollView } from "react-native";
+import { useTranslation } from "react-i18next";
+import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTranslation } from "react-i18next";
-import * as SecureStore from "expo-secure-store";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
-import { TFunction } from "i18next";
-import { useLoginMutation } from "./types/loginMutation";
 import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
-import SecureStorageItems from "../../types/SecureStorageItems";
 import { Routes } from "../../types/Routes";
+import SecureStorageItems from "../../types/SecureStorageItems";
+import { useLoginMutation } from "./types/loginMutation";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -23,13 +23,13 @@ type Props = {
     navigation: ProfileScreenNavigationProp;
 };
 
-async function saveInSecureStore(key: string, value: string) {
+async function saveInSecureStore(key: string, value: string): Promise<void> {
     await SecureStore.setItemAsync(key, value);
 }
 
-export default function Login(props: Props) {
+export default function Login(props: Props): JSX.Element {
     const { t } = useTranslation();
-    const [placeholder, setPlaceholder] = useState({
+    const [placeholder] = useState({
         username: t("placeholder.username", { returnObjects: true })[
             Math.floor(
                 Math.random() *
@@ -49,7 +49,7 @@ export default function Login(props: Props) {
     });
     const [execute, { error, loading }] = useLoginMutation();
 
-    const handleLogin = (values: FormikValues) => {
+    const handleLogin = (values: FormikValues): void => {
         execute({
             variables: {
                 input: { password: values.password, username: values.username },
@@ -90,8 +90,6 @@ export default function Login(props: Props) {
                         values,
                         handleSubmit,
                         errors,
-                        isValid,
-                        isSubmitting,
                         touched,
                         handleBlur,
                     }) => (

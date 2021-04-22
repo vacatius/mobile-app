@@ -34,9 +34,9 @@ export default function ShareTrip(props: Props): JSX.Element {
     const { t } = useTranslation();
 
     const trip = props.route.params.trip;
-    const [execute, { error, loading }] = useCreateInvitationMutation();
+    const [execute, { loading }] = useCreateInvitationMutation();
 
-    const handleShare = () => {
+    const handleShare = (): void => {
         execute({
             variables: {
                 input: {
@@ -55,7 +55,9 @@ export default function ShareTrip(props: Props): JSX.Element {
             .catch((error) => console.error(error)); // TODO - Notify user with error modal
     };
 
-    const handleSystemShareSheet = async (invitationLink: string) => {
+    const handleSystemShareSheet = async (
+        invitationLink: string
+    ): Promise<void> => {
         try {
             let shareObject: ShareContent = {
                 title: t("screens.shareTrip.androidShareSheetTitle"),

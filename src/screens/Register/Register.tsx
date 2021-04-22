@@ -1,16 +1,16 @@
+import { StackNavigationProp } from "@react-navigation/stack";
+import { Formik, FormikValues } from "formik";
+import { TFunction } from "i18next";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button, Icon, Input, Overlay, Text } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useTranslation } from "react-i18next";
-import { Formik, FormikValues } from "formik";
 import * as Yup from "yup";
-import { TFunction } from "i18next";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { useCreateUserMutation } from "./types/registerMutation";
 import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
+import { useCreateUserMutation } from "./types/registerMutation";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -21,7 +21,7 @@ type Props = {
     navigation: ProfileScreenNavigationProp;
 };
 
-export default function Register(props: Props) {
+export default function Register(props: Props): JSX.Element {
     const { t } = useTranslation();
     const [execute, { error, loading }] = useCreateUserMutation();
     const [signInOverlay, setSignInOverlay] = useState("");
@@ -48,7 +48,7 @@ export default function Register(props: Props) {
         ],
     });
 
-    const handleRegister = (values: FormikValues) => {
+    const handleRegister = (values: FormikValues): void => {
         execute({
             variables: {
                 input: {
@@ -60,12 +60,8 @@ export default function Register(props: Props) {
                 },
             },
         })
-            .then((data) => {
-                setSignInOverlay(values.displayName);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
+            .then(() => setSignInOverlay(values.displayName))
+            .catch((e) => console.log(e));
         console.log(`register with user ${values.username}`);
     };
 
@@ -267,7 +263,9 @@ export default function Register(props: Props) {
     );
 }
 
-const validationSchema = (t: TFunction): object => // eslint-disable-line
+const validationSchema = (
+    t: TFunction
+): object => // eslint-disable-line
     Yup.object().shape({
         email: Yup.string()
             .required(t("validation.emailRequired"))

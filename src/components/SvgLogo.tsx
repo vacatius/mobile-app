@@ -1,9 +1,10 @@
 import * as React from "react";
-import Svg, { SvgProps, Path, Ellipse } from "react-native-svg";
+import Svg, { Ellipse, Path, SvgProps } from "react-native-svg";
 /* SVGR has dropped some elements not supported by react-native-svg: title */
+
 /* created using: https://react-svgr.com/playground/?native=true&typescript=true */
 
-function SvgLogo(props: SvgProps) {
+function SvgLogo(props: SvgProps): JSX.Element {
     return (
         <Svg
             data-name="Layer 1"

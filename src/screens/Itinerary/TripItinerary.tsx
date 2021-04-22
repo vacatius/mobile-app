@@ -25,7 +25,7 @@ type Props = {
 export default function TripItinerary(props: Props): JSX.Element {
     const { t } = useTranslation();
 
-    const { data, error, loading } = useGetTripQuery({
+    const { data, loading } = useGetTripQuery({
         variables: { tripId: props.route.params.tripId },
     });
 

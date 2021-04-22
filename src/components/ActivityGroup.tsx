@@ -34,12 +34,12 @@ export interface ActivityGroupProps {
 export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
     const [isOpen, setOpen] = useState(props.position === 0);
 
-    const onEdit = () => {
+    const onEdit = (): void => {
         // TODO execute properly
         console.log("edit");
     };
 
-    const onAdd = () => {
+    const onAdd = (): void => {
         // TODO execute properly
         console.log("add");
     };
