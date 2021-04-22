@@ -52,7 +52,16 @@ export default function ActivityGroup(props: ActivityGroupProps) {
                 onOpen={() => setOpen(!isOpen)}
                 isOpen={isOpen}
             />
-            <View style={styles.activity}>
+            <View
+                style={
+                    isOpen
+                        ? styles.activity
+                        : {
+                              ...styles.activity,
+                              ...{ padding: 0 },
+                          }
+                }
+            >
                 {isOpen &&
                     props.activityGroupData.activities.map((a) => (
                         <ActivityCard
@@ -75,6 +84,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: "#444",
         marginBottom: 10,
+        backgroundColor: "yellow",
     },
     activity: {
         padding: 10,
