@@ -117,7 +117,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                     buttonStyle={styles.backToDashboardBtn}
                     title={t("screens.shareTrip.goToDashboard")}
                     titleStyle={{ color: "black", fontSize: 20 }}
-                    onPress={() => props.navigation.replace("Dashboard")}
+                    onPress={() => props.navigation.popToTop()}
                 />
             </ScrollView>
         </>
