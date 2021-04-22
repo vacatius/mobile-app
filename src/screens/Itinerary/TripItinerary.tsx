@@ -7,14 +7,15 @@ import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActivityGroup from "../../components/ActivityGroup";
 import RootStackParamList from "../../types/RootStackParamList";
+import { Routes } from "../../types/Routes";
 import { useGetTripQuery } from "./types/getTripQuery";
 
 type TripItineraryScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    "TripItinerary"
+    Routes.ITINERARY
 >;
 
-type TripItineraryRouteProp = RouteProp<RootStackParamList, "TripItinerary">;
+type TripItineraryRouteProp = RouteProp<RootStackParamList, Routes.ITINERARY>;
 
 type Props = {
     navigation: TripItineraryScreenNavigationProp;

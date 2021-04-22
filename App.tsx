@@ -18,6 +18,7 @@ import i18n from "./src/services/i18n";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
 import SvgLogo from "./src/components/SvgLogo";
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
+import { Routes } from "./src/types/Routes";
 //init i18n
 i18n;
 const Stack = createStackNavigator();
@@ -36,7 +37,7 @@ export default function App(): JSX.Element {
     useEffect(() => {
         async function loadInitialRoute() {
             const result = await getCurrentUser();
-            const route = result != null ? "Dashboard" : "Login";
+            const route = result != null ? Routes.DASHBOARD : Routes.LOGIN;
             console.log("Initial route? " + route);
             setInitialRoute(route);
         }
@@ -51,24 +52,24 @@ export default function App(): JSX.Element {
                     <ApolloConnection navigationFn={replace}>
                         <Stack.Navigator initialRouteName={initialRoute}>
                             <Stack.Screen
-                                name="Login"
+                                name={Routes.LOGIN}
                                 component={Login}
                                 options={{ title: t("login") }}
                             />
                             <Stack.Screen
-                                name="Register"
+                                name={Routes.REGISTER}
                                 component={Register}
                                 options={{ title: t("register") }}
                             />
                             <Stack.Screen
-                                name="Dashboard"
+                                name={Routes.DASHBOARD}
                                 component={TripsDashboard}
                                 options={{
                                     title: t("screens.dashboard.title"),
                                 }}
                             />
                             <Stack.Screen
-                                name="TripItinerary"
+                                name={Routes.ITINERARY}
                                 component={TripItinerary}
                                 options={({ route }) => {
                                     const params = route.params as {
@@ -80,14 +81,14 @@ export default function App(): JSX.Element {
                                 }}
                             />
                             <Stack.Screen
-                                name="AddTrip"
+                                name={Routes.ADD_TRIP}
                                 component={AddTrip}
                                 options={{
                                     title: t("screens.add_trip.title"),
                                 }}
                             />
                             <Stack.Screen
-                                name="ShareTrip"
+                                name={Routes.SHARE_TRIP}
                                 component={ShareTrip}
                                 options={{
                                     title: t("screens.shareTrip.title"),

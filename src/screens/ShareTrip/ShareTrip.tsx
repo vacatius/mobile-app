@@ -13,13 +13,17 @@ import { Avatar, Button, Header, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
 import { getEnvironment } from "../../get-environment";
 import RootStackParamList from "../../types/RootStackParamList";
+import { Routes } from "../../types/Routes";
 import { useCreateInvitationMutation } from "./types/create-invite.mutation";
 
 type ShareTripScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    "ShareTrip"
+    Routes.SHARE_TRIP
 >;
-type ShareTripScreenRouteProp = RouteProp<RootStackParamList, "ShareTrip">;
+type ShareTripScreenRouteProp = RouteProp<
+    RootStackParamList,
+    Routes.SHARE_TRIP
+>;
 
 type Props = {
     navigation: ShareTripScreenNavigationProp;
@@ -111,10 +115,10 @@ export default function ShareTrip(props: Props): JSX.Element {
                             index: 1,
                             routes: [
                                 {
-                                    name: "Dashboard",
+                                    name: Routes.DASHBOARD,
                                 },
                                 {
-                                    name: "TripItinerary",
+                                    name: Routes.ITINERARY,
                                     params: {
                                         tripId: props.route.params.trip.id,
                                         tripName: props.route.params.trip.name,

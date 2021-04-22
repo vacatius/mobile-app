@@ -9,6 +9,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
 import { Trip } from "../../types";
+import { Routes } from "../../types/Routes";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateTripMutation } from "./types/add-trip.mutation";
 
@@ -55,10 +56,10 @@ export const AddTrip = (props: Props): JSX.Element => {
                     index: 1,
                     routes: [
                         {
-                            name: "Dashboard",
+                            name: Routes.DASHBOARD,
                         },
                         {
-                            name: "ShareTrip",
+                            name: Routes.SHARE_TRIP,
                             params: {
                                 trip: result.data?.createTrip,
                             },
@@ -173,7 +174,7 @@ export const AddTrip = (props: Props): JSX.Element => {
                     type="clear"
                     title={t("screens.add_trip.stay_home")}
                     titleStyle={{ color: "darkslategray" }}
-                    onPress={() => navigation.navigate("Dashboard")}
+                    onPress={() => navigation.navigate(Routes.DASHBOARD)}
                 />
             </SafeAreaView>
         </ScrollView>

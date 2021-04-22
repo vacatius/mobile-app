@@ -10,10 +10,11 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useCreateUserMutation } from "./types/registerMutation";
 import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
+import { Routes } from "../../types/Routes";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    "Register"
+    Routes.REGISTER
 >;
 
 type Props = {
@@ -82,7 +83,7 @@ export default function Register(props: Props) {
                         })}
                     </Text>
                     <Button
-                        onPress={() => props.navigation.navigate("Login")}
+                        onPress={() => props.navigation.navigate(Routes.LOGIN)}
                         title={t("login")}
                         buttonStyle={styles.buttonRegister}
                         containerStyle={styles.buttonContainerWelcome}

@@ -12,10 +12,11 @@ import { useLoginMutation } from "./types/loginMutation";
 import SvgLogo from "../../components/SvgLogo";
 import RootStackParamList from "../../types/RootStackParamList";
 import SecureStorageItems from "../../types/SecureStorageItems";
+import { Routes } from "../../types/Routes";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    "Login"
+    Routes.LOGIN
 >;
 
 type Props = {
@@ -67,7 +68,7 @@ export default function Login(props: Props) {
                         JSON.stringify(res.data?.login.user)
                     ).catch((e) => console.log(e));
                 }
-                props.navigation.replace("Dashboard");
+                props.navigation.replace(Routes.DASHBOARD);
             })
             .catch((e) => {
                 console.log(e);
@@ -175,14 +176,16 @@ export default function Login(props: Props) {
                     type="clear"
                     title={t("register")}
                     titleStyle={{ color: "darkslategray" }}
-                    onPress={() => props.navigation.navigate("Register")}
+                    onPress={() => props.navigation.navigate(Routes.REGISTER)}
                 />
             </SafeAreaView>
         </ScrollView>
     );
 }
 
-const validationSchema = (t: TFunction): object => //eslint-disable-line
+const validationSchema = (
+    t: TFunction
+): object => //eslint-disable-line
     Yup.object().shape({
         username: Yup.string()
             .min(1)
