@@ -115,7 +115,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                 <Button
                     containerStyle={{ marginTop: -10 }}
                     buttonStyle={styles.backToDashboardBtn}
-                    title={t("screens.shareTrip.backToDashboard")}
+                    title={t("screens.shareTrip.goToDashboard")}
                     titleStyle={{ color: "black", fontSize: 20 }}
                     onPress={() => props.navigation.replace("Dashboard")}
                 />

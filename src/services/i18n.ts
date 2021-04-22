@@ -91,7 +91,7 @@ export const resources = {
                     title: "Share a Trip",
                     share: "Share with Friends",
                     planTrip: "Plan Trip",
-                    backToDashboard: "Back to Dashboard",
+                    goToDashboard: "Go to Dashboard",
                     androidShareSheetTitle: "Share your Trip with Friends",
                 },
                 itinerary: {
@@ -166,7 +166,7 @@ export const resources = {
                     title: "Reise teilen",
                     share: "Mit Freunden teilen",
                     planTrip: "Reise planen",
-                    backToDashboard: "Zurück zum Dashboard",
+                    goToDashboard: "Zum Dashboard",
                     androidShareSheetTitle: "Teile deine Reise mit Freunden",
                 },
                 itinerary: {
