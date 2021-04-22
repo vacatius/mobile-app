@@ -28,10 +28,11 @@ export interface ActivityGroupProps {
         }>;
     };
     tripId: string;
+    position: number;
 }
 
 export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
-    const [isOpen, setOpen] = useState(false);
+    const [isOpen, setOpen] = useState(props.position === 0);
 
     const onEdit = () => {
         // TODO execute properly
