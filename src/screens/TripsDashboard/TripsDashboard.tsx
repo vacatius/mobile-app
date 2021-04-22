@@ -10,7 +10,6 @@ import {
     View,
 } from "react-native";
 import { Button, Text } from "react-native-elements";
-import ScreenHeader from "../../components/ScreenHeader";
 import SvgLogo from "../../components/SvgLogo";
 import TripCard from "../../components/TripCard/TripCard";
 import RootStackParamList from "../../types/RootStackParamList";

@@ -65,7 +65,6 @@ export default function App(): JSX.Element {
                                 name={Routes.DASHBOARD}
                                 component={TripsDashboard}
                                 options={{
-                                    // eslint-disable-next-line react/display-name
                                     headerTitle: (props) => (
                                         <ScreenHeader
                                             screenTitle={t(
