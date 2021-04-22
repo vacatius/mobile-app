@@ -56,10 +56,10 @@ export const AddTrip = (props: Props): JSX.Element => {
                     index: 1,
                     routes: [
                         {
-                            name: "Dashboard",
+                            name: Routes.DASHBOARD,
                         },
                         {
-                            name: "ShareTrip",
+                            name: Routes.SHARE_TRIP,
                             params: {
                                 trip: result.data?.createTrip,
                             },
