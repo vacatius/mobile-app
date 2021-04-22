@@ -8,10 +8,6 @@
 1. react-native-svg
     - [documentation](https://docs.expo.io/versions/latest/sdk/svg/)
     - license: MIT
-1. accordion-collapse-react-native
-    - [documentation](https://www.npmjs.com/package/accordion-collapse-react-native)
-    - license: MIT
-   
 #### Forms and Validation
 1. formik
     - [documentation](https://formik.org/docs/overview)
