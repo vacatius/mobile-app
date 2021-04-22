@@ -103,6 +103,15 @@ export default function ActivityCard(props: ActivityCardProps) {
         }
     };
 
+    const getTime = (date: Date) => {
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+
+        return `${hours < 10 ? "0" + hours : hours}:${
+            minutes < 10 ? "0" + minutes : minutes
+        }`;
+    };
+
     return (
         <View style={styles.container}>
             <Pressable onPress={() => console.log("press activity")}>
@@ -115,9 +124,7 @@ export default function ActivityCard(props: ActivityCardProps) {
                             <Text style={styles.cardDate}>
                                 {date.toLocaleDateString()}
                             </Text>
-                            <Text style={styles.cardDate}>
-                                {date.toLocaleTimeString()}
-                            </Text>
+                            <Text style={styles.cardDate}>{getTime(date)}</Text>
                         </View>
                         <Icon
                             name="chevron-right"
