@@ -16,7 +16,7 @@ import { Routes } from "../../types/Routes";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    "Login"
+    Routes.LOGIN
 >;
 
 type Props = {
@@ -183,7 +183,9 @@ export default function Login(props: Props) {
     );
 }
 
-const validationSchema = (t: TFunction): object => //eslint-disable-line
+const validationSchema = (
+    t: TFunction
+): object => //eslint-disable-line
     Yup.object().shape({
         username: Yup.string()
             .min(1)

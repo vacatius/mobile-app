@@ -14,7 +14,7 @@ import { Routes } from "../../types/Routes";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    "Register"
+    Routes.REGISTER
 >;
 
 type Props = {
