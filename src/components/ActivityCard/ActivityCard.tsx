@@ -58,19 +58,21 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
 
     const handleReactionType = (reactionType: Types.ActivityReactionType) => {
         const remove = () => {
-            executeRemove({
-                variables: {
-                    input:
-                        props.activityReactions.find(
-                            (r) => r.addedByUser.id === userId
-                        )?.id || "",
-                },
-                refetchQueries: [
-                    refetchGetTripQuery({
-                        tripId: props.tripId,
-                    }),
-                ],
-            }).catch((e) => console.log(e)); // TODO error handling
+            const activityReactionId =
+                props.activityReactions.find((r) => r.addedByUser.id === userId)
+                    ?.id || "";
+            if (activityReactionId.length > 0) {
+                executeRemove({
+                    variables: {
+                        input: activityReactionId,
+                    },
+                    refetchQueries: [
+                        refetchGetTripQuery({
+                            tripId: props.tripId,
+                        }),
+                    ],
+                }).catch((e) => console.log(e)); // TODO error handling
+            }
         };
 
         const create = (activityReactionType: Types.ActivityReactionType) => {
@@ -90,22 +92,28 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         };
 
         const update = (activityReactionType: Types.ActivityReactionType) => {
-            executeUpdate({
-                variables: {
-                    input: {
-                        activityReactionType: activityReactionType,
-                        activityReactionId:
-                            props.activityReactions.find(
-                                (r) => r.addedByUser.id === userId
-                            )?.id || "",
+            const activityReactionId =
+                props.activityReactions.find((r) => r.addedByUser.id === userId)
+                    ?.id || "";
+            if (activityReactionId.length > 0) {
+                executeUpdate({
+                    variables: {
+                        input: {
+                            activityReactionType: activityReactionType,
+                            activityReactionId: activityReactionId,
+                        },
                     },
-                },
-                refetchQueries: [
-                    refetchGetTripQuery({
-                        tripId: props.tripId,
-                    }),
-                ],
-            }).catch((e) => console.log(e)); // TODO error handling
+                    refetchQueries: [
+                        refetchGetTripQuery({
+                            tripId: props.tripId,
+                        }),
+                    ],
+                }).catch((e) => console.log(e)); // TODO error handling
+            } else {
+                // should a user for whatever unknown reason not have an active
+                // like/dislike anymore
+                create(activityReactionType);
+            }
         };
         if (userLiked) {
             // check if user has already liked activity
