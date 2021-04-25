@@ -28,7 +28,13 @@ export default function TripItinerary(props: Props): JSX.Element {
     const { data, loading } = useGetTripQuery({
         variables: { tripId: props.route.params.tripId },
     });
-
+    const addUpdateActivityGroup = (): void => {
+        console.log(props.route.params.tripId);
+        props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_Group, {
+            tripId: props.route.params.tripId,
+        });
+        console.log("Add activity group button pressed");
+    };
     if (data?.node?.__typename === "Trip") {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
@@ -52,7 +58,7 @@ export default function TripItinerary(props: Props): JSX.Element {
                             />
                         }
                         iconRight
-                        onPress={() => console.log("add group")}
+                        onPress={() => addUpdateActivityGroup()}
                     />
                     {data.node.itinerary.map((i, position) => (
                         <ActivityGroup

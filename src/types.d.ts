@@ -83,6 +83,7 @@ export type CreateTripRoutePointInput = {
   linkToMap?: Maybe<Scalars['String']>;
   tripId: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
 };
 
 export type CreateUserInput = {
@@ -440,6 +441,7 @@ export type UpdateTripRoutePointInput = {
   longitude?: Maybe<Scalars['Float']>;
   linkToMap?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   routePointId: Scalars['String'];
 };
 

@@ -16,6 +16,8 @@ export const resources = {
             displayName: "Display Name",
             tripName: "Trip Name",
             loading: "Loading",
+            save: "Save",
+            name: "Name",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
@@ -55,6 +57,25 @@ export const resources = {
                     "Sun'n'Fun",
                     "Up to Scandinavia",
                 ],
+                activityGroupName: [
+                    "Berlin",
+                    "Munich",
+                    "Los Angeles",
+                    "Amsterdam",
+                    "Vancouver",
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+                ],
+                activityGroupDescription: [
+                    "Monday in Vienna",
+                    "Visit all parks",
+                    "Sightseeing",
+                ],
                 description: ["Awesome trip with my friends"],
             },
             validation: {
@@ -67,9 +88,8 @@ export const resources = {
                         "The password must have at least {{amount}} characters",
                     match: "Passwords must match",
                 },
-                tripNameRequired: "Please enter a name for this trip!",
-                descriptionRequired:
-                    "Please enter a description for this trip.",
+                nameRequired: "Please enter a name.",
+                descriptionRequired: "Please enter a description.",
             },
             screens: {
                 register: {
@@ -99,6 +119,15 @@ export const resources = {
                 itinerary: {
                     add: "Add Group",
                 },
+                addEditActivityGroup: {
+                    titleCreate: "Add Activity Group",
+                    titleUpdate: "Update Activity Group",
+                    groupYourActivities: "Group your activities!😀",
+                    explaination:
+                        "This could be cities 🏙️ that you visit in a road trip 🚗 or weekdays if you stay in one city, just to name some examples.",
+                    submitCreate: "Create Group",
+                    submitUpdate: "Update Group",
+                },
             },
         },
     },
@@ -114,6 +143,8 @@ export const resources = {
             displayName: "Anzeige Name",
             tripName: "Reisename",
             loading: "Wird Geladen",
+            save: "Speichern",
+            name: "Name",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",
@@ -142,10 +173,28 @@ export const resources = {
                     "Sun'n'Fun",
                     "Ab nach Skandinavien!",
                 ],
+                activityGroupName: [
+                    "Berlin",
+                    "München",
+                    "Los Angeles",
+                    "Amsterdam",
+                    "Vancouver",
+                    "Montag",
+                    "Dienstag",
+                    "Mittwoch",
+                    "Donnerstag",
+                    "Freitag",
+                    "Samstag",
+                    "Sonntag",
+                ],
+                activityGroupDescription: [
+                    "Montag in Wien",
+                    "Alle Parks besuchen",
+                    "Sightseeing",
+                ],
                 description: ["Cooler roadtrip meinen Freunden"],
-                tripNameRequired: "Bitte gib einen Namen für diese Reise ein!",
-                descriptionRequired:
-                    "Bitte gib eine Beschreibung für diese Reise ein!",
+                nameRequired: "Bitte gib einen Namen ein!",
+                descriptionRequired: "Bitte gib eine Beschreibung Reise ein!",
             },
             screens: {
                 register: {
@@ -175,6 +224,15 @@ export const resources = {
                 },
                 itinerary: {
                     add: " Gruppe Hinzufügen",
+                },
+                addEditActivityGroup: {
+                    titleCreate: "Aktivitätsgruppe hinzufügen",
+                    titleUpdate: "Aktivitätsgruppe aktualisieren",
+                    groupYourActivities: "Gruppiere deine Aktivitäten!😀",
+                    explaination:
+                        "Das könnten beispielsweise Städte 🏙️ eines Roadtrips 🚗 sein oder Wochentage wenn du in einer Stadt bleibst.",
+                    submitCreate: "Gruppe erstellen",
+                    submitUpdate: "Gruppe aktualisieren",
                 },
             },
         },

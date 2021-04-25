@@ -189,7 +189,7 @@ const validationSchema = (t: TFunction): object => {
         tripName: Yup.string()
             .min(1)
             .max(30)
-            .required(t("validation.tripNameRequired")),
+            .required(t("validation.nameRequired")),
         description: Yup.string()
             .min(1)
             .max(200)
