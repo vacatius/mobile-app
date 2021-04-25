@@ -3,6 +3,7 @@ import { FlatList, Text, View } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Tooltip } from "react-native-elements/dist/tooltip/Tooltip";
 import { TripsQuery } from "../../screens/TripsDashboard/types/trip-dashboard.query";
+import stc from "string-to-color";
 
 export interface AvatarListProps {
     tripMembers: TripsQuery["trips"][0]["members"];
@@ -19,7 +20,7 @@ const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => (
                     <Avatar
                         rounded
                         containerStyle={{
-                            backgroundColor: member.color,
+                            backgroundColor: stc(member.user.id),
                             marginRight: 5,
                         }}
                         size="medium"
