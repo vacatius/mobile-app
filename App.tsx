@@ -17,6 +17,7 @@ import Login from "./src/screens/Login/Login";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
+import ViewEditActivity from "./src/screens/ViewEditActivity/ViewEditActivity";
 import i18n from "./src/services/i18n";
 import { Routes } from "./src/types/Routes";
 //init i18n
@@ -91,6 +92,18 @@ export default function App(): JSX.Element {
                                 component={ShareTrip}
                                 options={{
                                     title: t("screens.shareTrip.title"),
+                                }}
+                            />
+                            <Stack.Screen
+                                name={Routes.VIEW_EDIT_ACTIVITY}
+                                component={ViewEditActivity}
+                                options={({ route }) => {
+                                    const params = route.params as {
+                                        name: string;
+                                    };
+                                    return {
+                                        title: params.name,
+                                    };
                                 }}
                             />
                         </Stack.Navigator>
