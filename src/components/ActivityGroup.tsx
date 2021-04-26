@@ -3,40 +3,42 @@ import { StyleSheet, View } from "react-native";
 import * as Types from "./../types.d";
 import ActivityCard from "./ActivityCard/ActivityCard";
 import ActivityGroupHeader from "./ActivityGroupHeader";
-
-export interface ActivityGroupProps {
-    activityGroupData: {
+export type ActivityGroupData = {
+    id: string;
+    latitude?: Types.Maybe<number>;
+    longitude?: Types.Maybe<number>;
+    name?: Types.Maybe<string>;
+    description?: Types.Maybe<string>;
+    previousTripRoutePoint?: Types.Maybe<{ name?: Types.Maybe<string> }>;
+    nextTripRoutePoint?: Types.Maybe<{ name?: Types.Maybe<string> }>;
+    activities: Array<{
         id: string;
-        latitude?: Types.Maybe<number>;
-        longitude?: Types.Maybe<number>;
-        name?: Types.Maybe<string>;
-        previousTripRoutePoint?: Types.Maybe<{ name?: Types.Maybe<string> }>;
-        nextTripRoutePoint?: Types.Maybe<{ name?: Types.Maybe<string> }>;
-        activities: Array<{
+        name: string;
+        description?: Types.Maybe<string>;
+        startDate?: Types.Maybe<string>;
+        endDate?: Types.Maybe<string>;
+        routePoint: { id: string; name?: Types.Maybe<string> };
+        addedByUser: { id: string; username: string; displayName: string };
+        activityReactions: Array<{
             id: string;
-            name: string;
-            description?: Types.Maybe<string>;
-            startDate?: Types.Maybe<string>;
-            endDate?: Types.Maybe<string>;
-            routePoint: { id: string; name?: Types.Maybe<string> };
-            addedByUser: { id: string; username: string; displayName: string };
-            activityReactions: Array<{
-                id: string;
-                activityReactionType: Types.ActivityReactionType;
-                addedByUser: { id: string };
-            }>;
+            activityReactionType: Types.ActivityReactionType;
+            addedByUser: { id: string };
         }>;
-    };
+    }>;
+};
+export interface ActivityGroupProps {
+    activityGroupData: ActivityGroupData;
     tripId: string;
     position: number;
+    onEditActivityGroup: (data: ActivityGroupData) => void;
 }
 
 export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
     const [isOpen, setOpen] = useState(props.position === 0);
 
     const onEdit = (): void => {
-        // TODO execute properly
-        console.log("edit");
+        console.log("edit activity group");
+        props.onEditActivityGroup(props.activityGroupData);
     };
 
     const onAdd = (): void => {

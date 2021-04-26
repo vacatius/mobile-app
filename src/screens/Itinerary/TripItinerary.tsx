@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ActivityGroup from "../../components/ActivityGroup";
+import ActivityGroup, {
+    ActivityGroupData,
+} from "../../components/ActivityGroup";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { useGetTripQuery } from "./types/getTripQuery";
@@ -28,11 +30,20 @@ export default function TripItinerary(props: Props): JSX.Element {
     const { data, loading } = useGetTripQuery({
         variables: { tripId: props.route.params.tripId },
     });
-    const addUpdateActivityGroup = (): void => {
+    const onEditActivityGroup = (data?: ActivityGroupData): void => {
         console.log(props.route.params.tripId);
-        props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_GROUP, {
+        let routeOpts: RootStackParamList["AddEditActivityGroup"] = {
             tripId: props.route.params.tripId,
-        });
+        };
+        if (data !== undefined) {
+            console.log("is edit mode");
+            routeOpts = {
+                ...routeOpts,
+                tripRoutePointToEdit: data,
+            };
+        }
+        console.log(routeOpts);
+        props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_GROUP, routeOpts);
         console.log("Add activity group button pressed");
     };
     if (data?.node?.__typename === "Trip") {
@@ -58,7 +69,7 @@ export default function TripItinerary(props: Props): JSX.Element {
                             />
                         }
                         iconRight
-                        onPress={() => addUpdateActivityGroup()}
+                        onPress={() => onEditActivityGroup()}
                     />
                     {data.node.itinerary.map((i, position) => (
                         <ActivityGroup
@@ -66,6 +77,7 @@ export default function TripItinerary(props: Props): JSX.Element {
                             position={position}
                             activityGroupData={i}
                             tripId={props.route.params.tripId}
+                            onEditActivityGroup={onEditActivityGroup}
                         />
                     ))}
                 </SafeAreaView>

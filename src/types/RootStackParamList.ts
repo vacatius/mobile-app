@@ -1,5 +1,5 @@
+import { ActivityGroupData } from "../components/ActivityGroup";
 import { CreateTripMutation } from "../screens/AddTrip/types/add-trip.mutation";
-import { TripRoutePoint } from "../types";
 
 type RootStackParamList = {
     Login: undefined;
@@ -8,7 +8,7 @@ type RootStackParamList = {
     TripItinerary: { tripId: string; tripName: string };
     ShareTrip: { trip: CreateTripMutation["createTrip"] };
     AddEditActivityGroup: {
-        tripRoutePointToEdit?: TripRoutePoint;
+        tripRoutePointToEdit?: ActivityGroupData;
         tripId: string;
     };
 };

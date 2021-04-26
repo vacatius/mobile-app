@@ -125,7 +125,7 @@ export const resources = {
                     groupYourActivities: "Group your activities!😀",
                     explaination:
                         "This could be cities 🏙️ that you visit in a road trip 🚗 or weekdays if you stay in one city, just to name some examples.",
-                    submitCreate: "Create Group",
+                    submitCreate: "Add Group",
                     submitUpdate: "Update Group",
                 },
             },

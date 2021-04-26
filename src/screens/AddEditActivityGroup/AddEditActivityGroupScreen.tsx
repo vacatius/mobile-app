@@ -27,7 +27,6 @@ type AddEditActivityGroupScreenRouteProp = RouteProp<
 >;
 
 type Props = {
-    tripRoutePointToEdit?: TripRoutePoint;
     route: AddEditActivityGroupScreenRouteProp;
     navigation: AddEditActivityGroupScreenNavigationProp;
 };
@@ -67,7 +66,8 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
 
     const handleSubmit = (values: FormikValues): void => {
         console.log("Add activity group button pressed");
-        if (props.tripRoutePointToEdit === undefined) {
+        if (props.route.params.tripRoutePointToEdit === undefined) {
+            console.log("Executing an activity group create");
             executeCreate({
                 variables: {
                     input: {
@@ -88,7 +88,16 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                 })
                 .catch((e) => console.error(e)); // TODO - Notify user
         } else {
+            console.log("Executing an activity group update");
             executeUpdate({
+                variables: {
+                    input: {
+                        routePointId:
+                            props.route.params.tripRoutePointToEdit.id,
+                        name: values.name,
+                        description: values.description,
+                    },
+                },
                 refetchQueries: [
                     refetchGetTripQuery({
                         tripId: props.route.params.tripId,
@@ -97,14 +106,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
             })
                 .then(() => {
                     console.log("Successfully updated activity group");
-                    props.navigation.reset({
-                        index: 0,
-                        routes: [
-                            {
-                                name: Routes.ITINERARY,
-                            },
-                        ],
-                    });
+                    props.navigation.goBack();
                 })
                 .catch((e) => console.error(e)); // TODO - Notify user
         }
@@ -126,7 +128,21 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                     {t("screens.addEditActivityGroup.explaination")}
                 </Text>
                 <Formik
-                    initialValues={{ name: "", description: "" }}
+                    initialValues={
+                        props.route.params.tripRoutePointToEdit
+                            ? {
+                                  name:
+                                      props.route.params.tripRoutePointToEdit
+                                          .name ?? "",
+                                  description:
+                                      props.route.params.tripRoutePointToEdit
+                                          .description ?? "",
+                              }
+                            : {
+                                  name: "",
+                                  description: "",
+                              }
+                    }
                     onSubmit={handleSubmit}
                     validationSchema={validationSchema(t)}
                 >
@@ -179,7 +195,8 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                 containerStyle={styles.buttonContainer}
                                 buttonStyle={styles.submitButton}
                                 title={
-                                    props.tripRoutePointToEdit === undefined
+                                    props.route.params.tripRoutePointToEdit ===
+                                    undefined
                                         ? t(
                                               "screens.addEditActivityGroup.submitCreate"
                                           )
