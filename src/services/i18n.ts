@@ -125,7 +125,7 @@ export const resources = {
                     titleCreate: "Add Activity Group",
                     titleUpdate: "Update Activity Group",
                     groupYourActivities: "Group your activities!😀",
-                    explaination:
+                    explanation:
                         "This could be cities 🏙️ that you visit in a road trip 🚗 or weekdays if you stay in one city.",
                     submitCreate: "Add Group",
                     submitUpdate: "Update Group",
@@ -239,7 +239,7 @@ export const resources = {
                     titleCreate: "Aktivitätsgruppe hinzufügen",
                     titleUpdate: "Aktivitätsgruppe aktualisieren",
                     groupYourActivities: "Gruppiere deine Aktivitäten!😀",
-                    explaination:
+                    explanation:
                         "Das könnten beispielsweise Städte 🏙️ eines Roadtrips 🚗 sein oder Wochentage wenn du in einer Stadt bleibst.",
                     submitCreate: "Gruppe erstellen",
                     submitUpdate: "Gruppe aktualisieren",

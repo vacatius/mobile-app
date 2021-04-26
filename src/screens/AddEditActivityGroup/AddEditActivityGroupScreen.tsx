@@ -171,7 +171,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                         {t("screens.addEditActivityGroup.groupYourActivities")}
                     </Text>
                     <Text h4 style={styles.text}>
-                        {t("screens.addEditActivityGroup.explaination")}
+                        {t("screens.addEditActivityGroup.explanation")}
                     </Text>
                     <Formik
                         initialValues={
