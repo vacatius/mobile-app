@@ -68,6 +68,7 @@ export const resources = {
                     match: "Passwords must match",
                 },
                 tripNameRequired: "Please enter a name for this trip!",
+                activityNameRequired: "Please enter a name for this activity!",
                 descriptionRequired:
                     "Please enter a description for this trip.",
             },
@@ -98,6 +99,9 @@ export const resources = {
                 },
                 itinerary: {
                     add: "Add Group",
+                },
+                viewEditActivity: {
+                    activityName: "activity name",
                 },
             },
         },
@@ -144,6 +148,8 @@ export const resources = {
                 ],
                 description: ["Cooler roadtrip meinen Freunden"],
                 tripNameRequired: "Bitte gib einen Namen für diese Reise ein!",
+                activityNameRequired:
+                    "Bitte gib einen Namen für diese Aktivität ein!",
                 descriptionRequired:
                     "Bitte gib eine Beschreibung für diese Reise ein!",
             },
@@ -175,6 +181,9 @@ export const resources = {
                 },
                 itinerary: {
                     add: " Gruppe Hinzufügen",
+                },
+                viewEditActivity: {
+                    activityName: "Aktivitätsname",
                 },
             },
         },
