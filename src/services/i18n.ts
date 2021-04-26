@@ -127,6 +127,8 @@ export const resources = {
                         "This could be cities 🏙️ that you visit in a road trip 🚗 or weekdays if you stay in one city, just to name some examples.",
                     submitCreate: "Add Group",
                     submitUpdate: "Update Group",
+                    activityGroupName: "Give your activity group a name",
+                    activityGroupDescription: "Add a short description",
                 },
             },
         },
@@ -233,6 +235,9 @@ export const resources = {
                         "Das könnten beispielsweise Städte 🏙️ eines Roadtrips 🚗 sein oder Wochentage wenn du in einer Stadt bleibst.",
                     submitCreate: "Gruppe erstellen",
                     submitUpdate: "Gruppe aktualisieren",
+                    activityGroupName: "Gib deiner Gruppe einen Namen",
+                    activityGroupDescription:
+                        "Füge eine kurze Beschreibung hinzu",
                 },
             },
         },

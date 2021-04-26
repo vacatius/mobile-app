@@ -156,7 +156,9 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                     }) => (
                         <>
                             <Input
-                                label={t("name")}
+                                label={t(
+                                    "screens.addEditActivityGroup.activityGroupName"
+                                )}
                                 errorMessage={
                                     errors.name && touched.name
                                         ? errors.name
@@ -169,7 +171,9 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                 onBlur={handleBlur("name")}
                             />
                             <Input
-                                label={t("description")}
+                                label={t(
+                                    "screens.addEditActivityGroup.activityGroupDescription"
+                                )}
                                 errorMessage={
                                     errors.description && touched.description
                                         ? errors.description
