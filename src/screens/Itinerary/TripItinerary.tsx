@@ -30,7 +30,7 @@ export default function TripItinerary(props: Props): JSX.Element {
     });
     const addUpdateActivityGroup = (): void => {
         console.log(props.route.params.tripId);
-        props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_Group, {
+        props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_GROUP, {
             tripId: props.route.params.tripId,
         });
         console.log("Add activity group button pressed");

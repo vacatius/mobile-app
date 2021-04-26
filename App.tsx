@@ -96,7 +96,7 @@ export default function App(): JSX.Element {
                                 }}
                             />
                             <Stack.Screen
-                                name={Routes.ADD_EDIT_ACTIVITY_Group}
+                                name={Routes.ADD_EDIT_ACTIVITY_GROUP}
                                 component={AddEditActivityGroupScreen}
                                 options={({ route }) => {
                                     const params = route.params as {
