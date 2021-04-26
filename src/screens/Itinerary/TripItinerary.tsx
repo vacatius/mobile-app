@@ -31,18 +31,15 @@ export default function TripItinerary(props: Props): JSX.Element {
         variables: { tripId: props.route.params.tripId },
     });
     const onEditActivityGroup = (data?: ActivityGroupData): void => {
-        console.log(props.route.params.tripId);
         let routeOpts: RootStackParamList["AddEditActivityGroup"] = {
             tripId: props.route.params.tripId,
         };
         if (data !== undefined) {
-            console.log("is edit mode");
             routeOpts = {
                 ...routeOpts,
                 tripRoutePointToEdit: data,
             };
         }
-        console.log(routeOpts);
         props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_GROUP, routeOpts);
         console.log("Add activity group button pressed");
     };

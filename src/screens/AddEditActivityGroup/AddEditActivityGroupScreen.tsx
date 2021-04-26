@@ -4,7 +4,7 @@ import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import { Button, Icon, Input, Text } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
@@ -73,7 +73,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                     input: {
                         tripId: props.route.params.tripId,
                         name: values.name,
-                        description: values.description,
+                        description: values.description ?? "",
                     },
                 },
                 refetchQueries: [
@@ -95,7 +95,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                         routePointId:
                             props.route.params.tripRoutePointToEdit.id,
                         name: values.name,
-                        description: values.description,
+                        description: values.description ?? "",
                     },
                 },
                 refetchQueries: [
@@ -113,123 +113,127 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
     };
 
     return (
-        <KeyboardAwareScrollView>
-            <View style={styles.inner}>
-                {/* Undraw.co: travel plans */}
-                <SvgTravelPlan
-                    style={styles.travelPlan}
-                    width={150}
-                    height={150}
-                />
-                <Text h3 style={styles.textHeading}>
-                    {t("screens.addEditActivityGroup.groupYourActivities")}
-                </Text>
-                <Text h4 style={styles.text}>
-                    {t("screens.addEditActivityGroup.explaination")}
-                </Text>
-                <Formik
-                    initialValues={
-                        props.route.params.tripRoutePointToEdit
-                            ? {
-                                  name:
-                                      props.route.params.tripRoutePointToEdit
-                                          .name ?? "",
-                                  description:
-                                      props.route.params.tripRoutePointToEdit
-                                          .description ?? "",
-                              }
-                            : {
-                                  name: "",
-                                  description: "",
-                              }
-                    }
-                    onSubmit={handleSubmit}
-                    validationSchema={validationSchema(t)}
-                >
-                    {({
-                        handleChange,
-                        values,
-                        handleSubmit,
-                        errors,
-                        touched,
-                        handleBlur,
-                    }) => (
-                        <>
-                            <Input
-                                label={t(
-                                    "screens.addEditActivityGroup.activityGroupName"
+        <SafeAreaView>
+            <KeyboardAwareScrollView>
+                <View style={styles.inner}>
+                    {/* Undraw.co: travel plans */}
+                    <SvgTravelPlan
+                        style={styles.travelPlan}
+                        width={150}
+                        height={150}
+                    />
+                    <Text h3 style={styles.textHeading}>
+                        {t("screens.addEditActivityGroup.groupYourActivities")}
+                    </Text>
+                    <Text h4 style={styles.text}>
+                        {t("screens.addEditActivityGroup.explaination")}
+                    </Text>
+                    <Formik
+                        initialValues={
+                            props.route.params.tripRoutePointToEdit
+                                ? {
+                                      name:
+                                          props.route.params
+                                              .tripRoutePointToEdit.name ?? "",
+                                      description:
+                                          props.route.params
+                                              .tripRoutePointToEdit
+                                              .description ?? "",
+                                  }
+                                : {
+                                      name: "",
+                                      description: "",
+                                  }
+                        }
+                        onSubmit={handleSubmit}
+                        validationSchema={validationSchema(t)}
+                    >
+                        {({
+                            handleChange,
+                            values,
+                            handleSubmit,
+                            errors,
+                            touched,
+                            handleBlur,
+                        }) => (
+                            <>
+                                <Input
+                                    label={t(
+                                        "screens.addEditActivityGroup.activityGroupName"
+                                    )}
+                                    errorMessage={
+                                        errors.name && touched.name
+                                            ? errors.name
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                    placeholder={placeholder.tripName}
+                                    value={values.name}
+                                    onChangeText={handleChange("name")}
+                                    onBlur={handleBlur("name")}
+                                />
+                                <Input
+                                    label={t(
+                                        "screens.addEditActivityGroup.activityGroupDescription"
+                                    )}
+                                    errorMessage={
+                                        errors.description &&
+                                        touched.description
+                                            ? errors.description
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                    placeholder={placeholder.description}
+                                    value={values.description}
+                                    onChangeText={handleChange("description")}
+                                    onBlur={handleBlur("description")}
+                                />
+                                {errorCreate && (
+                                    <Text style={styles.errorText}>
+                                        {errorCreate.message}
+                                    </Text>
                                 )}
-                                errorMessage={
-                                    errors.name && touched.name
-                                        ? errors.name
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                                placeholder={placeholder.tripName}
-                                value={values.name}
-                                onChangeText={handleChange("name")}
-                                onBlur={handleBlur("name")}
-                            />
-                            <Input
-                                label={t(
-                                    "screens.addEditActivityGroup.activityGroupDescription"
+                                {errorUpdate && (
+                                    <Text style={styles.errorText}>
+                                        {errorUpdate.message}
+                                    </Text>
                                 )}
-                                errorMessage={
-                                    errors.description && touched.description
-                                        ? errors.description
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                                placeholder={placeholder.description}
-                                value={values.description}
-                                onChangeText={handleChange("description")}
-                                onBlur={handleBlur("description")}
-                            />
-                            {errorCreate && (
-                                <Text style={styles.errorText}>
-                                    {errorCreate.message}
-                                </Text>
-                            )}
-                            {errorUpdate && (
-                                <Text style={styles.errorText}>
-                                    {errorUpdate.message}
-                                </Text>
-                            )}
-                            <Button
-                                containerStyle={styles.buttonContainer}
-                                buttonStyle={styles.submitButton}
-                                title={
-                                    props.route.params.tripRoutePointToEdit ===
-                                    undefined
-                                        ? t(
-                                              "screens.addEditActivityGroup.submitCreate"
-                                          )
-                                        : t(
-                                              "screens.addEditActivityGroup.submitUpdate"
-                                          )
-                                }
-                                titleStyle={{
-                                    color: "black",
-                                    fontSize: 25,
-                                }}
-                                icon={
-                                    <Icon
-                                        style={styles.iconButton}
-                                        name="arrow-right"
-                                        size={15}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                iconRight={true}
-                                onPress={() => handleSubmit()}
-                                loading={loadingCreate || loadingUpdate}
-                            />
-                        </>
-                    )}
-                </Formik>
-            </View>
-        </KeyboardAwareScrollView>
+                                <Button
+                                    containerStyle={styles.buttonContainer}
+                                    buttonStyle={styles.submitButton}
+                                    title={
+                                        props.route.params
+                                            .tripRoutePointToEdit === undefined
+                                            ? t(
+                                                  "screens.addEditActivityGroup.submitCreate"
+                                              )
+                                            : t(
+                                                  "screens.addEditActivityGroup.submitUpdate"
+                                              )
+                                    }
+                                    titleStyle={{
+                                        color: "black",
+                                        fontSize: 25,
+                                    }}
+                                    icon={
+                                        <Icon
+                                            style={styles.iconButton}
+                                            name="arrow-right"
+                                            size={15}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    iconRight={true}
+                                    onPress={() => handleSubmit()}
+                                    loading={loadingCreate || loadingUpdate}
+                                />
+                            </>
+                        )}
+                    </Formik>
+                </View>
+            </KeyboardAwareScrollView>
+        </SafeAreaView>
     );
 };
 
@@ -239,10 +243,7 @@ const validationSchema = (t: TFunction): any => {
             .min(1)
             .max(30)
             .required(t("validation.nameRequired")),
-        description: Yup.string()
-            .min(1)
-            .max(200)
-            .required(t("validation.descriptionRequired")),
+        description: Yup.string().min(1).max(200),
     });
 };
 

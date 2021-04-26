@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
 import { Trip } from "../../types";
@@ -73,114 +74,121 @@ export const AddTrip = (props: Props): JSX.Element => {
             .catch((e) => console.error(e)); // TODO - Notify user
     };
     return (
-        <ScrollView
-            keyboardShouldPersistTaps="handled"
-            bounces={true}
-            contentContainerStyle={styles.scrollView}
-        >
-            <SafeAreaView style={styles.container}>
-                <SvgLogo style={styles.logo} width={75} height={75} />
-                <Text style={styles.text}>{t("screens.add_trip.title")}</Text>
-                <Formik
-                    initialValues={{ tripName: "", description: "" }}
-                    onSubmit={handleSubmit}
-                    validationSchema={validationSchema(t)}
-                >
-                    {({
-                        handleChange,
-                        values,
-                        handleSubmit,
-                        errors,
-                        touched,
-                        handleBlur,
-                    }) => (
-                        <>
-                            <Input
-                                label={t("screens.add_trip.trip_name")}
-                                errorMessage={
-                                    errors.tripName && touched.tripName
-                                        ? errors.tripName
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                                placeholder={placeholder.tripName}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="suitcase"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.tripName}
-                                onChangeText={handleChange("tripName")}
-                                onBlur={handleBlur("tripName")}
-                            />
-                            <Input
-                                label={t("description")}
-                                errorMessage={
-                                    errors.description && touched.description
-                                        ? errors.description
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                                placeholder={placeholder.description}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="comment"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                leftIconContainerStyle={styles.leftIcon}
-                                value={values.description}
-                                onChangeText={handleChange("description")}
-                                onBlur={handleBlur("description")}
-                                multiline={true}
-                                numberOfLines={4}
-                                style={styles.textArea}
-                            />
-                            {error && (
-                                <Text style={styles.errorText}>
-                                    {error.message}
-                                </Text>
-                            )}
-                            <Button
-                                containerStyle={styles.buttonContainer}
-                                buttonStyle={styles.submitButton}
-                                title={t("screens.add_trip.submit_add_trip")}
-                                titleStyle={{
-                                    color: "black",
-                                    fontSize: 25,
-                                }}
-                                icon={
-                                    <Icon
-                                        style={styles.iconButton}
-                                        name="arrow-right"
-                                        size={15}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                iconRight={true}
-                                onPress={() => handleSubmit()}
-                                loading={loading}
-                            />
-                        </>
-                    )}
-                </Formik>
-                <Button
-                    containerStyle={styles.buttonContainer}
-                    type="clear"
-                    title={t("screens.add_trip.stay_home")}
-                    titleStyle={{ color: "darkslategray" }}
-                    onPress={() => navigation.navigate(Routes.DASHBOARD)}
-                />
-            </SafeAreaView>
-        </ScrollView>
+        <KeyboardAwareScrollView>
+            <ScrollView
+                keyboardShouldPersistTaps="handled"
+                bounces={true}
+                contentContainerStyle={styles.scrollView}
+            >
+                <SafeAreaView style={styles.container}>
+                    <SvgLogo style={styles.logo} width={75} height={75} />
+                    <Text style={styles.text}>
+                        {t("screens.add_trip.title")}
+                    </Text>
+                    <Formik
+                        initialValues={{ tripName: "", description: "" }}
+                        onSubmit={handleSubmit}
+                        validationSchema={validationSchema(t)}
+                    >
+                        {({
+                            handleChange,
+                            values,
+                            handleSubmit,
+                            errors,
+                            touched,
+                            handleBlur,
+                        }) => (
+                            <>
+                                <Input
+                                    label={t("screens.add_trip.trip_name")}
+                                    errorMessage={
+                                        errors.tripName && touched.tripName
+                                            ? errors.tripName
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                    placeholder={placeholder.tripName}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="suitcase"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.tripName}
+                                    onChangeText={handleChange("tripName")}
+                                    onBlur={handleBlur("tripName")}
+                                />
+                                <Input
+                                    label={t("description")}
+                                    errorMessage={
+                                        errors.description &&
+                                        touched.description
+                                            ? errors.description
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                    placeholder={placeholder.description}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="comment"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    leftIconContainerStyle={styles.leftIcon}
+                                    value={values.description}
+                                    onChangeText={handleChange("description")}
+                                    onBlur={handleBlur("description")}
+                                    multiline={true}
+                                    numberOfLines={4}
+                                    style={styles.textArea}
+                                />
+                                {error && (
+                                    <Text style={styles.errorText}>
+                                        {error.message}
+                                    </Text>
+                                )}
+                                <Button
+                                    containerStyle={styles.buttonContainer}
+                                    buttonStyle={styles.submitButton}
+                                    title={t(
+                                        "screens.add_trip.submit_add_trip"
+                                    )}
+                                    titleStyle={{
+                                        color: "black",
+                                        fontSize: 25,
+                                    }}
+                                    icon={
+                                        <Icon
+                                            style={styles.iconButton}
+                                            name="arrow-right"
+                                            size={15}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    iconRight={true}
+                                    onPress={() => handleSubmit()}
+                                    loading={loading}
+                                />
+                            </>
+                        )}
+                    </Formik>
+                    <Button
+                        containerStyle={styles.buttonContainer}
+                        type="clear"
+                        title={t("screens.add_trip.stay_home")}
+                        titleStyle={{ color: "darkslategray" }}
+                        onPress={() => navigation.navigate(Routes.DASHBOARD)}
+                    />
+                </SafeAreaView>
+            </ScrollView>
+        </KeyboardAwareScrollView>
     );
 };
 // eslint-disable-next-line
