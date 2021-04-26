@@ -4,16 +4,16 @@ import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { Button, Icon, Input, Text } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
 import SvgTravelPlan from "../../components/svg/SvgTravelPlan";
-import { TripRoutePoint } from "../../types";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { refetchGetTripQuery } from "../Itinerary/types/getTripQuery";
 import { useAddActivityGroupMutation } from "./types/add-activity-group.mutation";
+import { useRemoveActivityGroupMutation } from "./types/remove-activity-group.mutation";
 import { useUpdateActivityGroupMutation } from "./types/update-activity-group.mutation";
 
 type AddEditActivityGroupScreenNavigationProp = StackNavigationProp<
@@ -42,6 +42,10 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
         executeUpdate,
         { error: errorUpdate, loading: loadingUpdate },
     ] = useUpdateActivityGroupMutation();
+    const [
+        executeRemove,
+        { error: errorRemove, loading: loadingRemove },
+    ] = useRemoveActivityGroupMutation();
 
     const [placeholder] = useState({
         tripName: t("placeholder.activityGroupName", { returnObjects: true })[
@@ -64,6 +68,47 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
         ],
     });
 
+    const handleRemove = (): void => {
+        console.log("Removing activity group");
+        Alert.alert(
+            t("screens.addEditActivityGroup.removeDialogTitle"),
+            t("screens.addEditActivityGroup.removeDialogMessage"),
+            [
+                {
+                    text: t("cancel"),
+                    style: "cancel",
+                },
+                {
+                    text: t("remove"),
+                    style: "destructive",
+                    onPress: () => {
+                        console.log("Remove Pressed");
+                        executeRemove({
+                            variables: {
+                                id:
+                                    props.route.params.tripRoutePointToEdit
+                                        ?.id ?? "",
+                            },
+                            refetchQueries: [
+                                refetchGetTripQuery({
+                                    tripId: props.route.params.tripId,
+                                }),
+                            ],
+                        })
+                            .then(() => {
+                                console.log(
+                                    "Successfully removed activity group"
+                                );
+                                props.navigation.goBack();
+                            })
+                            .catch((err) => {
+                                console.error(err);
+                            });
+                    },
+                },
+            ]
+        );
+    };
     const handleSubmit = (values: FormikValues): void => {
         console.log("Add activity group button pressed");
         if (props.route.params.tripRoutePointToEdit === undefined) {
@@ -198,6 +243,11 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                         {errorUpdate.message}
                                     </Text>
                                 )}
+                                {errorRemove && (
+                                    <Text style={styles.errorText}>
+                                        {errorRemove.message}
+                                    </Text>
+                                )}
                                 <Button
                                     containerStyle={styles.buttonContainer}
                                     buttonStyle={styles.submitButton}
@@ -228,6 +278,31 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                     onPress={() => handleSubmit()}
                                     loading={loadingCreate || loadingUpdate}
                                 />
+                                {props.route.params.tripRoutePointToEdit !==
+                                    undefined && (
+                                    <Button
+                                        containerStyle={styles.buttonContainer}
+                                        title={t(
+                                            "screens.addEditActivityGroup.removeActivityGroup"
+                                        )}
+                                        type="clear"
+                                        titleStyle={{
+                                            color: "#e03030",
+                                        }}
+                                        icon={
+                                            <Icon
+                                                style={styles.iconButton}
+                                                name="trash-alt"
+                                                size={15}
+                                                color="#e03030"
+                                                type="font-awesome-5"
+                                            />
+                                        }
+                                        iconRight={true}
+                                        onPress={() => handleRemove()}
+                                        loading={loadingRemove}
+                                    />
+                                )}
                             </>
                         )}
                     </Formik>
@@ -270,7 +345,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     buttonContainer: {
-        marginBottom: 20,
+        marginBottom: 5,
     },
     submitButton: {
         backgroundColor: "#BCE1B0",

@@ -18,6 +18,8 @@ export const resources = {
             loading: "Loading",
             save: "Save",
             name: "Name",
+            cancel: "Cancel",
+            remove: "Remove",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
@@ -124,11 +126,15 @@ export const resources = {
                     titleUpdate: "Update Activity Group",
                     groupYourActivities: "Group your activities!😀",
                     explaination:
-                        "This could be cities 🏙️ that you visit in a road trip 🚗 or weekdays if you stay in one city, just to name some examples.",
+                        "This could be cities 🏙️ that you visit in a road trip 🚗 or weekdays if you stay in one city.",
                     submitCreate: "Add Group",
                     submitUpdate: "Update Group",
                     activityGroupName: "Give your activity group a name",
                     activityGroupDescription: "Add a short description",
+                    removeActivityGroup: "Remove Group",
+                    removeDialogTitle: "Really remove activity group?",
+                    removeDialogMessage:
+                        "You will not be able to restore it afterwards. All activities inside will be deleted!",
                 },
             },
         },
@@ -147,6 +153,8 @@ export const resources = {
             loading: "Wird Geladen",
             save: "Speichern",
             name: "Name",
+            cancel: "Abbrechen",
+            remove: "Löschen",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",
@@ -238,6 +246,10 @@ export const resources = {
                     activityGroupName: "Gib deiner Gruppe einen Namen",
                     activityGroupDescription:
                         "Füge eine kurze Beschreibung hinzu",
+                    removeActivityGroup: "Gruppe löschen",
+                    removeDialogTitle: "Aktivitätsgruppe wirklich löschen?",
+                    removeDialogMessage:
+                        "Du kannst sie nicht wiederherstellen. Alle Aktivitäten darin werden gelöscht!",
                 },
             },
         },
