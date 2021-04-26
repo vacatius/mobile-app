@@ -152,7 +152,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         }`;
     };
 
-    const openActivityDetails = () => {
+    const openActivityDetails = (): void => {
         navigation.navigate(Routes.VIEW_EDIT_ACTIVITY, {
             activityId: props.id,
         });

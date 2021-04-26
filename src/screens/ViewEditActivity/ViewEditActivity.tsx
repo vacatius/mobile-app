@@ -28,7 +28,7 @@ type Props = {
     route: ViewEditActivityRouteProp;
 };
 
-const ViewEditActivity = (props: Props) => {
+const ViewEditActivity = (props: Props): JSX.Element => {
     const { t } = useTranslation();
     const [mode, setMode] = useState<Mode>("view");
 
@@ -47,7 +47,7 @@ const ViewEditActivity = (props: Props) => {
         }`;
     };
 
-    const handleEdit = (values: FormikValues) => {
+    const handleEdit = (values: FormikValues): void => {
         if (data?.node?.__typename === "Activity") {
             execute({
                 variables: {
