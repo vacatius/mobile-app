@@ -1,6 +1,6 @@
+import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Formik, FormikValues } from "formik";
-import { execute } from "graphql";
 import { TFunction } from "i18next";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -18,11 +18,17 @@ import { useUpdateActivityGroupMutation } from "./types/update-activity-group.mu
 
 type AddEditActivityGroupScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
-    Routes.ADD_EDIT_ACTIVITY_Group
+    Routes.ADD_EDIT_ACTIVITY_GROUP
+>;
+
+type AddEditActivityGroupScreenRouteProp = RouteProp<
+    RootStackParamList,
+    Routes.ADD_EDIT_ACTIVITY_GROUP
 >;
 
 type Props = {
     tripRoutePointToEdit?: TripRoutePoint;
+    route: AddEditActivityGroupScreenRouteProp;
     navigation: AddEditActivityGroupScreenNavigationProp;
 };
 
@@ -65,28 +71,29 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
             executeCreate({
                 variables: {
                     input: {
-                        tripId: "",
+                        tripId: props.route.params.tripId,
                         name: values.name,
                         description: values.description,
                     },
                 },
-                refetchQueries: [refetchGetTripQuery()],
+                refetchQueries: [
+                    refetchGetTripQuery({
+                        tripId: props.route.params.tripId,
+                    }),
+                ],
             })
                 .then(() => {
                     console.log("Successfully created activity group");
-                    props.navigation.reset({
-                        index: 0,
-                        routes: [
-                            {
-                                name: Routes.ITINERARY,
-                            },
-                        ],
-                    });
+                    props.navigation.goBack();
                 })
                 .catch((e) => console.error(e)); // TODO - Notify user
         } else {
             executeUpdate({
-                refetchQueries: [refetchGetTripQuery()],
+                refetchQueries: [
+                    refetchGetTripQuery({
+                        tripId: props.route.params.tripId,
+                    }),
+                ],
             })
                 .then(() => {
                     console.log("Successfully updated activity group");

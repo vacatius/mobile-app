@@ -7,9 +7,10 @@ type RootStackParamList = {
     Dashboard: undefined;
     TripItinerary: { tripId: string; tripName: string };
     ShareTrip: { trip: CreateTripMutation["createTrip"] };
-    AddEditActivityGroup:
-        | { tripRoutePointToEdit?: TripRoutePoint; tripId: string }
-        | undefined;
+    AddEditActivityGroup: {
+        tripRoutePointToEdit?: TripRoutePoint;
+        tripId: string;
+    };
 };
 
 export default RootStackParamList;
