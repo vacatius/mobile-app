@@ -8,7 +8,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Icon } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
 import ScreenHeader from "./src/components/ScreenHeader";
@@ -63,12 +62,26 @@ export default function App(): JSX.Element {
                             <Stack.Screen
                                 name={Routes.LOGIN}
                                 component={Login}
-                                options={{ title: t("login") }}
+                                options={{
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t("login")}
+                                            {...props}
+                                        />
+                                    ),
+                                }}
                             />
                             <Stack.Screen
                                 name={Routes.REGISTER}
                                 component={Register}
-                                options={{ title: t("register") }}
+                                options={{
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t("register")}
+                                            {...props}
+                                        />
+                                    ),
+                                }}
                             />
                             <Stack.Screen
                                 name={Routes.DASHBOARD}
@@ -83,36 +96,39 @@ export default function App(): JSX.Element {
                                             {...props}
                                         />
                                     ),
-                                    headerStyle: {
-                                        height: 90,
-                                        display: "flex",
-                                    },
                                 }}
                             />
                             <Stack.Screen
                                 name={Routes.ITINERARY}
                                 component={TripItinerary}
-                                options={({ route }) => {
-                                    const params = route.params as {
-                                        tripName: string;
-                                    };
-                                    return {
-                                        title: params.tripName,
-                                    };
-                                }}
+                                //options set in screen
                             />
                             <Stack.Screen
                                 name={Routes.ADD_TRIP}
                                 component={AddTrip}
                                 options={{
-                                    title: t("screens.add_trip.title"),
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t(
+                                                "screens.add_trip.title"
+                                            )}
+                                            {...props}
+                                        />
+                                    ),
                                 }}
                             />
                             <Stack.Screen
                                 name={Routes.SHARE_TRIP}
                                 component={ShareTrip}
                                 options={{
-                                    title: t("screens.shareTrip.title"),
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t(
+                                                "screens.shareTrip.title"
+                                            )}
+                                            {...props}
+                                        />
+                                    ),
                                 }}
                             />
                             <Stack.Screen
@@ -123,15 +139,21 @@ export default function App(): JSX.Element {
                                         tripRoutePointToEdit: TripRoutePoint;
                                     };
                                     return {
-                                        title:
-                                            params.tripRoutePointToEdit ===
-                                            undefined
-                                                ? t(
-                                                      "screens.addEditActivityGroup.titleCreate"
-                                                  )
-                                                : t(
-                                                      "screens.addEditActivityGroup.titleUpdate"
-                                                  ),
+                                        headerTitle: (props) => (
+                                            <ScreenHeader
+                                                screenTitle={
+                                                    params.tripRoutePointToEdit ===
+                                                    undefined
+                                                        ? t(
+                                                              "screens.addEditActivityGroup.titleCreate"
+                                                          )
+                                                        : t(
+                                                              "screens.addEditActivityGroup.titleUpdate"
+                                                          )
+                                                }
+                                                {...props}
+                                            />
+                                        ),
                                     };
                                 }}
                             />

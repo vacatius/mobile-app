@@ -1,8 +1,9 @@
-import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Avatar, Text, Button, Icon } from "react-native-elements";
+import { Avatar, Text, Button } from "react-native-elements";
 import { LoginMutation } from "../screens/Login/types/loginMutation";
+import stc from "string-to-color";
+import { useNavigation } from "@react-navigation/core";
 
 export interface ScreenHeaderProps {
     screenTitle: string;
@@ -16,34 +17,35 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
 ) => {
     const navigation = useNavigation();
 
+    let textWidth = 70;
+    let extraSpace = 0;
+    if (props.user == undefined) {
+        extraSpace++;
+    }
+    if (props.actionIcon == undefined) {
+        extraSpace++;
+    }
+    if (!navigation.canGoBack()) {
+        extraSpace++;
+    }
+
+    textWidth += extraSpace * 10;
     return (
-        <View style={styles.container}>
-            {navigation.canGoBack() && (
-                <Button
-                    onPress={navigation.goBack}
-                    type="clear"
-                    containerStyle={{
-                        minHeight: "100%",
-                        justifyContent: "center",
-                    }}
-                    icon={
-                        <Icon
-                            name="arrow-left"
-                            size={20}
-                            color="black"
-                            type="font-awesome-5"
-                        />
-                    }
-                />
-            )}
+        <View
+            style={{
+                flex: 1,
+                flexDirection: "row",
+                overflow: "hidden",
+                alignItems: "center",
+                marginRight: -8,
+                marginLeft: navigation.canGoBack() ? -10 : 0,
+            }}
+        >
             <Text
                 numberOfLines={1}
                 style={{
-                    fontSize: 20,
-                    textAlign: "center",
-                    width: "65%",
-                    marginLeft: "auto",
-                    fontWeight: "bold",
+                    fontSize: 22,
+                    width: `${textWidth}%`,
                 }}
             >
                 {props.screenTitle}
@@ -52,11 +54,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
                 type="clear"
                 icon={props.actionIcon}
                 onPress={props.actionCallback}
-                containerStyle={{
-                    minHeight: "100%",
-                    justifyContent: "center",
-                    marginLeft: "auto",
-                }}
+                containerStyle={styles.actionButton}
             />
             {props.user !== undefined && (
                 <TouchableOpacity
@@ -67,8 +65,8 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
                 >
                     <Avatar
                         rounded
-                        title={props.user.displayName.charAt(0)}
-                        containerStyle={styles.avatar}
+                        title={props.user.displayName.charAt(0).toUpperCase()}
+                        containerStyle={{ backgroundColor: stc(props.user.id) }}
                         size="medium"
                     />
                 </TouchableOpacity>
@@ -78,16 +76,11 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
 };
 
 const styles = StyleSheet.create({
-    avatar: {
-        backgroundColor: "red",
-    },
-    container: {
-        flex: 1,
-        flexDirection: "row",
-        overflow: "hidden",
-        alignItems: "center",
-        marginLeft: -8,
-        marginRight: -8,
+    actionButton: {
+        minHeight: "100%",
+        justifyContent: "center",
+        marginLeft: "auto",
+        marginRight: 5,
     },
 });
 
