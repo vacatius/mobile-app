@@ -1,0 +1,7 @@
+mutation updateActivityGroup($input: UpdateTripRoutePointInput!) {
+  updateTripRoutePoint(data: $input) {
+    id,
+    name,
+    description,
+  }
+}

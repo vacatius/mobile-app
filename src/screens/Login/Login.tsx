@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
@@ -76,108 +77,115 @@ export default function Login(props: Props): JSX.Element {
     };
 
     return (
-        <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
-            <SafeAreaView style={styles.container}>
-                <SvgLogo style={styles.logo} width={150} height={150} />
-                <Text style={styles.text}>{t("login")}</Text>
-                <Formik
-                    initialValues={{ username: "", password: "" }}
-                    onSubmit={handleLogin}
-                    validationSchema={validationSchema(t)}
-                >
-                    {({
-                        handleChange,
-                        values,
-                        handleSubmit,
-                        errors,
-                        touched,
-                        handleBlur,
-                    }) => (
-                        <>
-                            <Input
-                                label={t("username")}
-                                errorMessage={
-                                    errors.username && touched.username
-                                        ? errors.username
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                                placeholder={placeholder.username}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="user"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.username}
-                                onChangeText={handleChange("username")}
-                                onBlur={handleBlur("username")}
-                            />
-                            <Input
-                                label={t("password")}
-                                errorMessage={
-                                    errors.password && touched.password
-                                        ? errors.password
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                                placeholder={placeholder.password}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="lock"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.password}
-                                secureTextEntry
-                                onChangeText={handleChange("password")}
-                                onBlur={handleBlur("password")}
-                            />
-                            {error && (
-                                <Text style={styles.errorText}>
-                                    {error.message.includes("credentials")
-                                        ? t("error.credentials")
-                                        : error.networkError
-                                        ? t("error.network")
-                                        : error.message}
-                                </Text>
-                            )}
-                            <Button
-                                containerStyle={styles.buttonContainer}
-                                buttonStyle={styles.buttonLogin}
-                                title={t("login")}
-                                titleStyle={{ color: "black", fontSize: 25 }}
-                                icon={
-                                    <Icon
-                                        style={styles.iconButton}
-                                        name="arrow-right"
-                                        size={15}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                iconRight
-                                onPress={() => handleSubmit()}
-                                loading={loading}
-                            />
-                        </>
-                    )}
-                </Formik>
-                <Button
-                    containerStyle={styles.buttonContainer}
-                    type="clear"
-                    title={t("register")}
-                    titleStyle={{ color: "darkslategray" }}
-                    onPress={() => props.navigation.navigate(Routes.REGISTER)}
-                />
-            </SafeAreaView>
-        </ScrollView>
+        <KeyboardAwareScrollView>
+            <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
+                <SafeAreaView style={styles.container}>
+                    <SvgLogo style={styles.logo} width={150} height={150} />
+                    <Text style={styles.text}>{t("login")}</Text>
+                    <Formik
+                        initialValues={{ username: "", password: "" }}
+                        onSubmit={handleLogin}
+                        validationSchema={validationSchema(t)}
+                    >
+                        {({
+                            handleChange,
+                            values,
+                            handleSubmit,
+                            errors,
+                            touched,
+                            handleBlur,
+                        }) => (
+                            <>
+                                <Input
+                                    label={t("username")}
+                                    errorMessage={
+                                        errors.username && touched.username
+                                            ? errors.username
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                    placeholder={placeholder.username}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="user"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.username}
+                                    onChangeText={handleChange("username")}
+                                    onBlur={handleBlur("username")}
+                                />
+                                <Input
+                                    label={t("password")}
+                                    errorMessage={
+                                        errors.password && touched.password
+                                            ? errors.password
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                    placeholder={placeholder.password}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="lock"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.password}
+                                    secureTextEntry
+                                    onChangeText={handleChange("password")}
+                                    onBlur={handleBlur("password")}
+                                />
+                                {error && (
+                                    <Text style={styles.errorText}>
+                                        {error.message.includes("credentials")
+                                            ? t("error.credentials")
+                                            : error.networkError
+                                            ? t("error.network")
+                                            : error.message}
+                                    </Text>
+                                )}
+                                <Button
+                                    containerStyle={styles.buttonContainer}
+                                    buttonStyle={styles.buttonLogin}
+                                    title={t("login")}
+                                    titleStyle={{
+                                        color: "black",
+                                        fontSize: 25,
+                                    }}
+                                    icon={
+                                        <Icon
+                                            style={styles.iconButton}
+                                            name="arrow-right"
+                                            size={15}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    iconRight
+                                    onPress={() => handleSubmit()}
+                                    loading={loading}
+                                />
+                            </>
+                        )}
+                    </Formik>
+                    <Button
+                        containerStyle={styles.buttonContainer}
+                        type="clear"
+                        title={t("register")}
+                        titleStyle={{ color: "darkslategray" }}
+                        onPress={() =>
+                            props.navigation.navigate(Routes.REGISTER)
+                        }
+                    />
+                </SafeAreaView>
+            </ScrollView>
+        </KeyboardAwareScrollView>
     );
 }
 

@@ -14,6 +14,7 @@ import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection
 import ScreenHeader from "./src/components/ScreenHeader";
 import SvgLogo from "./src/components/SvgLogo";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
+import AddEditActivityGroupScreen from "./src/screens/AddEditActivityGroup/AddEditActivityGroupScreen";
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 import TripItinerary from "./src/screens/Itinerary/TripItinerary";
 import Login from "./src/screens/Login/Login";
@@ -22,6 +23,7 @@ import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 import i18n from "./src/services/i18n";
+import { TripRoutePoint } from "./src/types";
 import { Routes } from "./src/types/Routes";
 //init i18n
 i18n;
@@ -111,6 +113,26 @@ export default function App(): JSX.Element {
                                 component={ShareTrip}
                                 options={{
                                     title: t("screens.shareTrip.title"),
+                                }}
+                            />
+                            <Stack.Screen
+                                name={Routes.ADD_EDIT_ACTIVITY_GROUP}
+                                component={AddEditActivityGroupScreen}
+                                options={({ route }) => {
+                                    const params = route.params as {
+                                        tripRoutePointToEdit: TripRoutePoint;
+                                    };
+                                    return {
+                                        title:
+                                            params.tripRoutePointToEdit ===
+                                            undefined
+                                                ? t(
+                                                      "screens.addEditActivityGroup.titleCreate"
+                                                  )
+                                                : t(
+                                                      "screens.addEditActivityGroup.titleUpdate"
+                                                  ),
+                                    };
                                 }}
                             />
                         </Stack.Navigator>

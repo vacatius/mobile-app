@@ -1,0 +1,5 @@
+mutation removeActivityGroup($id: String!) {
+  removeTripRoutePoint(id: $id) {
+    name
+  }
+}
