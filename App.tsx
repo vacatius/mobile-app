@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import {
     NavigationContainer,
     NavigationContainerRef,
@@ -7,6 +8,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Icon } from "react-native-elements";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
 import ScreenHeader from "./src/components/ScreenHeader";
@@ -15,6 +17,7 @@ import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 import TripItinerary from "./src/screens/Itinerary/TripItinerary";
 import Login from "./src/screens/Login/Login";
+import { LoginMutation } from "./src/screens/Login/types/loginMutation";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
@@ -33,10 +36,14 @@ export default function App(): JSX.Element {
     };
     const { getCurrentUser } = useCurrentAuthUser();
     const [initialRoute, setInitialRoute] = useState("");
+    const [user, setUser] = useState<
+        LoginMutation["login"]["user"] | undefined
+    >();
 
     useEffect(() => {
-        async function loadInitialRoute() {
+        async function loadInitialRoute(): Promise<void> {
             const result = await getCurrentUser();
+            setUser(result);
             const route = result != null ? Routes.DASHBOARD : Routes.LOGIN;
             console.log("Initial route? " + route);
             setInitialRoute(route);
@@ -70,6 +77,7 @@ export default function App(): JSX.Element {
                                             screenTitle={t(
                                                 "screens.dashboard.title"
                                             )}
+                                            user={user}
                                             {...props}
                                         />
                                     ),
