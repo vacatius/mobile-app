@@ -136,8 +136,14 @@ export const resources = {
                     removeDialogMessage:
                         "You will not be able to restore it afterwards. All activities inside will be deleted!",
                 },
-                viewEditActivity: {
+                viewAddEditActivity: {
                     activityName: "activity name",
+                    removeActivity: "Remove Activity",
+                    submitUpdate: "Update Activity",
+                    submitCreate: "Add Activity",
+                    removeDialogTitle: "Really remove activity?",
+                    removeDialogMessage:
+                        "You will not be able to restore it afterwards!",
                 },
             },
         },
@@ -254,8 +260,14 @@ export const resources = {
                     removeDialogMessage:
                         "Du kannst sie nicht wiederherstellen. Alle Aktivitäten darin werden gelöscht!",
                 },
-                viewEditActivity: {
+                viewAddEditActivity: {
                     activityName: "Aktivitätsname",
+                    removeActivity: "Aktivität löschen",
+                    submitUpdate: "Aktivität aktualisieren",
+                    submitCreate: "Aktivität hinzufügen",
+                    removeDialogTitle: "Aktivität wirklich löschen?",
+                    removeDialogMessage:
+                        "Du kannst sie nicht wiederherstellen.",
                 },
             },
         },
