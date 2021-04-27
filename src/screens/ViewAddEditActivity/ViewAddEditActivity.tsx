@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { TFunction } from "i18next";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
@@ -109,16 +109,33 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     };
 
     const handleRemove = (): void => {
-        executeRemove({
-            variables: { input: activityId },
-            refetchQueries: [
-                refetchGetTripQuery({
-                    tripId: props.route.params.tripId,
-                }),
-            ],
-        })
-            .then(() => props.navigation.goBack())
-            .catch((e) => console.log(e)); // TODO error handling
+        Alert.alert(
+            t("screens.viewAddEditActivity.removeDialogTitle"),
+            t("screens.viewAddEditActivity.removeDialogMessage"),
+            [
+                {
+                    text: t("cancel"),
+                    style: "cancel",
+                },
+                {
+                    text: t("remove"),
+                    style: "destructive",
+                    onPress: () => {
+                        console.log("Remove Activity Pressed");
+                        executeRemove({
+                            variables: { input: activityId },
+                            refetchQueries: [
+                                refetchGetTripQuery({
+                                    tripId: props.route.params.tripId,
+                                }),
+                            ],
+                        })
+                            .then(() => props.navigation.goBack())
+                            .catch((e) => console.log(e)); // TODO error handling
+                    },
+                },
+            ]
+        );
     };
 
     const handleAdd = (values: FormikValues): void => {
@@ -130,6 +147,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         routePointId: routePointId,
                         name: values.name,
                         description: values.description ?? "",
+                        startDate: new Date().toUTCString(),
                     },
                 },
                 refetchQueries: [
