@@ -11,6 +11,7 @@ import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { Formik, FormikValues } from "formik";
 import { refetchGetTripQuery } from "../Itinerary/types/getTripQuery";
+import { useCreateActivityMutation } from "./types/createActivityMutation";
 import { useGetActivityLazyQuery } from "./types/getActivityQuery";
 import { useRemoveActivityMutation } from "./types/removeActivityMutation";
 import { useUpdateActivityMutation } from "./types/updateActivityMutation";
@@ -55,6 +56,11 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
         { error: errorRemove, loading: loadingRemove },
     ] = useRemoveActivityMutation();
 
+    const [
+        executeCreate,
+        { error: errorCreate, loading: loadingCreate },
+    ] = useCreateActivityMutation();
+
     let tripId = "";
 
     if (mode !== "add" && !called) {
@@ -71,6 +77,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     };
 
     useEffect(() => {
+        console.log(data);
         if (data?.node?.__typename === "Activity") {
             setActivityName(data.node.name);
             if (data.node.description) {
@@ -103,7 +110,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
         }
     };
 
-    const handleRemove = () => {
+    const handleRemove = (): void => {
         executeRemove({
             variables: { input: activityId },
             refetchQueries: [
@@ -112,14 +119,37 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                 }),
             ],
         })
-            .then(() => setMode("view"))
+            .then(() => props.navigation.goBack())
             .catch((e) => console.log(e)); // TODO error handling
     };
 
-    const handleAdd = (values: FormikValues) => {
-        console.log("add");
-
-        props.navigation.goBack();
+    const handleAdd = (values: FormikValues): void => {
+        const routePointId = props.route.params.activityGroupId ?? "";
+        if (routePointId.length > 0) {
+            executeCreate({
+                variables: {
+                    input: {
+                        routePointId: routePointId,
+                        name: values.name,
+                        description: values.description ?? "",
+                    },
+                },
+                refetchQueries: [
+                    refetchGetTripQuery({
+                        tripId: props.route.params.tripId,
+                    }),
+                ],
+            })
+                .then(() => {
+                    console.log("Successfully created activity");
+                    props.navigation.goBack();
+                })
+                .catch(
+                    (e) => console.log(e) // TODO handle error
+                );
+        } else {
+            console.log("no activityGroupProvided"); // TODO handle error
+        }
     };
 
     return (

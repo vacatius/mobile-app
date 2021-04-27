@@ -14,6 +14,8 @@ type RootStackParamList = {
     };
     ViewEditActivity: {
         activityId?: string;
+        activityGroupId?: string;
+        tripId: string;
         mode: Mode;
     };
 };
