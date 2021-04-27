@@ -2,7 +2,7 @@ import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActivityGroup, {
@@ -90,6 +90,8 @@ export default function TripItinerary(props: Props): JSX.Element {
                 </SafeAreaView>
             </ScrollView>
         );
+    } else if (loading) {
+        return <ActivityIndicator size="large" />;
     } else {
         return <Text>{t("error.generic")}</Text>;
     }
