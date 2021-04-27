@@ -31,6 +31,7 @@ export interface ActivityGroupProps {
     tripId: string;
     position: number;
     onEditActivityGroup: (data: ActivityGroupData) => void;
+    onAddActivity: () => void;
 }
 
 export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
@@ -41,17 +42,12 @@ export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
         props.onEditActivityGroup(props.activityGroupData);
     };
 
-    const onAdd = (): void => {
-        // TODO execute properly
-        console.log("add");
-    };
-
     return (
         <View style={styles.activityGroup}>
             <ActivityGroupHeader
                 title={props.activityGroupData.name || "Activity"}
                 onEdit={onEdit}
-                onAdd={onAdd}
+                onAdd={props.onAddActivity}
                 onOpen={() => setOpen(!isOpen)}
                 isOpen={isOpen}
             />

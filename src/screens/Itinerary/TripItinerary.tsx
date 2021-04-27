@@ -43,6 +43,13 @@ export default function TripItinerary(props: Props): JSX.Element {
         props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_GROUP, routeOpts);
         console.log("Add activity group button pressed");
     };
+
+    const onAddActivity = (): void => {
+        props.navigation.navigate(Routes.VIEW_ADD_EDIT_ACTIVITY, {
+            mode: "add",
+        });
+    };
+
     if (data?.node?.__typename === "Trip") {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
@@ -75,6 +82,7 @@ export default function TripItinerary(props: Props): JSX.Element {
                             activityGroupData={i}
                             tripId={props.route.params.tripId}
                             onEditActivityGroup={onEditActivityGroup}
+                            onAddActivity={onAddActivity}
                         />
                     ))}
                 </SafeAreaView>

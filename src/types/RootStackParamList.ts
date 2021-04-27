@@ -1,5 +1,6 @@
 import { ActivityGroupData } from "../components/ActivityGroup";
 import { CreateTripMutation } from "../screens/AddTrip/types/add-trip.mutation";
+import { Mode } from "../screens/ViewAddEditActivity/ViewAddEditActivity";
 
 type RootStackParamList = {
     Login: undefined;
@@ -12,7 +13,8 @@ type RootStackParamList = {
         tripId: string;
     };
     ViewEditActivity: {
-        activityId: string;
+        activityId?: string;
+        mode: Mode;
     };
 };
 

@@ -18,7 +18,7 @@ import Login from "./src/screens/Login/Login";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
-import ViewEditActivity from "./src/screens/ViewEditActivity/ViewEditActivity";
+import ViewAddEditActivity from "./src/screens/ViewAddEditActivity/ViewAddEditActivity";
 import i18n from "./src/services/i18n";
 import { TripRoutePoint } from "./src/types";
 import { Routes } from "./src/types/Routes";
@@ -117,8 +117,8 @@ export default function App(): JSX.Element {
                                 }}
                             />
                             <Stack.Screen
-                                name={Routes.VIEW_EDIT_ACTIVITY}
-                                component={ViewEditActivity}
+                                name={Routes.VIEW_ADD_EDIT_ACTIVITY}
+                                component={ViewAddEditActivity}
                                 options={({ route }) => {
                                     const params = route.params as {
                                         name: string;
