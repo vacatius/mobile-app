@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { TFunction } from "i18next";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SafeAreaView, StyleSheet} from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
@@ -11,10 +11,7 @@ import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { Formik, FormikValues } from "formik";
 import { refetchGetTripQuery } from "../Itinerary/types/getTripQuery";
-import {
-    useGetActivityLazyQuery,
-
-} from "./types/getActivityQuery";
+import { useGetActivityLazyQuery } from "./types/getActivityQuery";
 import { useRemoveActivityMutation } from "./types/removeActivityMutation";
 import { useUpdateActivityMutation } from "./types/updateActivityMutation";
 
@@ -44,10 +41,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     const [activityName, setActivityName] = useState("");
     const [activityDescription, setActivityDescription] = useState("");
 
-    const [
-        useLazyQueryActivity,
-        { data, called},
-    ] = useGetActivityLazyQuery({
+    const [useLazyQueryActivity, { data, called }] = useGetActivityLazyQuery({
         variables: { activityId: activityId },
     });
 
