@@ -61,8 +61,6 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
         { error: errorCreate, loading: loadingCreate },
     ] = useCreateActivityMutation();
 
-    let tripId = "";
-
     if (mode !== "add" && !called) {
         useLazyQueryActivity();
     }
@@ -115,7 +113,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
             variables: { input: activityId },
             refetchQueries: [
                 refetchGetTripQuery({
-                    tripId: tripId,
+                    tripId: props.route.params.tripId,
                 }),
             ],
         })
