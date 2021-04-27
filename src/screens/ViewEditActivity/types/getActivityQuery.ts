@@ -8,7 +8,7 @@ export type GetActivityQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetActivityQuery = { node?: Types.Maybe<{ __typename: 'Activity', id: string, name: string, description?: Types.Maybe<string>, linkToDetails?: Types.Maybe<string>, startDate?: Types.Maybe<string>, endDate?: Types.Maybe<string>, routePoint: { id: string }, addedByUser: { id: string } } | { __typename: 'ActivityReaction', id: string } | { __typename: 'Invitation', id: string } | { __typename: 'Trip', id: string } | { __typename: 'TripMember', id: string } | { __typename: 'TripRoutePoint', id: string } | { __typename: 'User', id: string }> };
+export type GetActivityQuery = { node?: Types.Maybe<{ __typename: 'Activity', id: string, name: string, description?: Types.Maybe<string>, linkToDetails?: Types.Maybe<string>, startDate?: Types.Maybe<string>, endDate?: Types.Maybe<string>, routePoint: { id: string }, addedByUser: { id: string }, trip: { id: string } } | { __typename: 'ActivityReaction', id: string } | { __typename: 'Invitation', id: string } | { __typename: 'Trip', id: string } | { __typename: 'TripMember', id: string } | { __typename: 'TripRoutePoint', id: string } | { __typename: 'User', id: string }> };
 
 
 export const GetActivityDocument = gql`
@@ -27,6 +27,9 @@ export const GetActivityDocument = gql`
         id
       }
       addedByUser {
+        id
+      }
+      trip {
         id
       }
     }
