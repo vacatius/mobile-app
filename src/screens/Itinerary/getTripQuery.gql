@@ -25,6 +25,7 @@ query getTrip($tripId: ID!) {
         latitude
         longitude
         name
+        description
         previousTripRoutePoint {
           name
         }

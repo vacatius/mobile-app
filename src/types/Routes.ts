@@ -5,5 +5,6 @@ export enum Routes {
     ADD_TRIP = "AddTrip",
     ITINERARY = "TripItinerary",
     SHARE_TRIP = "ShareTrip",
+    ADD_EDIT_ACTIVITY_GROUP = "AddEditActivityGroup",
     VIEW_EDIT_ACTIVITY = "ViewEditActivity",
 }

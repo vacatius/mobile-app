@@ -1,0 +1,7 @@
+mutation addActivityGroup($input: CreateTripRoutePointInput!) {
+  createTripRoutePoint(data: $input) {
+    id,
+    name,
+    description,
+  }
+}

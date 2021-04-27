@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet } from "react-native";
 import { Button, Icon, Input, Overlay, Text } from "react-native-elements";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
@@ -66,200 +67,207 @@ export default function Register(props: Props): JSX.Element {
     };
 
     return (
-        <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
-            <SafeAreaView style={styles.container}>
-                <Overlay
-                    isVisible={signInOverlay.length > 0}
-                    overlayStyle={styles.overlay}
-                >
-                    <SvgLogo style={styles.logo} width={80} height={80} />
-                    <Text style={styles.welcomeText}>
-                        {t("screens.register.welcome", {
-                            displayName: signInOverlay,
-                        })}
-                    </Text>
-                    <Button
-                        onPress={() => props.navigation.navigate(Routes.LOGIN)}
-                        title={t("login")}
-                        buttonStyle={styles.buttonRegister}
-                        containerStyle={styles.buttonContainerWelcome}
-                        titleStyle={styles.buttonTitle}
-                    />
-                </Overlay>
-                <SvgLogo style={styles.logo} width={100} height={100} />
-                <Formik
-                    initialValues={{
-                        email: "",
-                        username: "",
-                        displayName: "",
-                        password: "",
-                        password2: "",
-                    }}
-                    onSubmit={(values) => handleRegister(values)}
-                    validationSchema={validationSchema(t)}
-                >
-                    {({
-                        handleChange,
-                        values,
-                        handleSubmit,
-                        errors,
-                        touched,
-                        handleBlur,
-                    }) => (
-                        <>
-                            <Input
-                                label={t("email")}
-                                placeholder={placeholder.email}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="envelope"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.email}
-                                onChangeText={handleChange("email")}
-                                onBlur={handleBlur("email")}
-                                errorMessage={
-                                    errors.email && touched.email
-                                        ? errors.email
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                            />
-                            <Input
-                                label={t("username")}
-                                placeholder={placeholder.username}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="user"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.username}
-                                onChangeText={handleChange("username")}
-                                onBlur={handleBlur("username")}
-                                errorMessage={
-                                    errors.username && touched.username
-                                        ? errors.username
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                            />
-                            <Input
-                                label={t("displayName")}
-                                placeholder={placeholder.username}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="user"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.displayName}
-                                onChangeText={handleChange("displayName")}
-                                onBlur={handleBlur("displayName")}
-                                errorMessage={
-                                    errors.displayName && touched.displayName
-                                        ? errors.displayName
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                            />
-                            <Input
-                                label={t("password")}
-                                placeholder={t("password")}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="lock"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.password}
-                                secureTextEntry
-                                onChangeText={handleChange("password")}
-                                onBlur={handleBlur("password")}
-                                errorMessage={
-                                    errors.password && touched.password
-                                        ? errors.password
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                            />
-                            <Input
-                                label={t("repeatPassword")}
-                                placeholder={t("password")}
-                                leftIcon={
-                                    <Icon
-                                        style={styles.icon}
-                                        name="lock"
-                                        size={24}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                value={values.password2}
-                                secureTextEntry
-                                onChangeText={handleChange("password2")}
-                                onBlur={handleBlur("password2")}
-                                errorMessage={
-                                    errors.password2 && touched.password2
-                                        ? errors.password2
-                                        : undefined
-                                }
-                                errorStyle={styles.errorMessage}
-                            />
-                            {error && (
-                                <Text style={styles.errorText}>
-                                    {error.message.includes("Invalid")
-                                        ? t("error.takenEmailUsername")
-                                        : error.networkError
-                                        ? t("error.network")
-                                        : error.message}
-                                </Text>
-                            )}
-                            <Button
-                                containerStyle={styles.buttonContainer}
-                                buttonStyle={styles.buttonRegister}
-                                title={
-                                    t("startJourney", { returnObjects: true })[
-                                        Math.floor(
-                                            Math.random() *
-                                                t("startJourney", {
-                                                    returnObjects: true,
-                                                }).length
-                                        )
-                                    ]
-                                }
-                                titleStyle={styles.buttonTitle}
-                                icon={
-                                    <Icon
-                                        style={styles.iconButton}
-                                        name="umbrella-beach"
-                                        size={15}
-                                        color="black"
-                                        type="font-awesome-5"
-                                    />
-                                }
-                                iconRight
-                                loading={loading}
-                                onPress={() => handleSubmit()}
-                            />
-                        </>
-                    )}
-                </Formik>
-            </SafeAreaView>
-        </ScrollView>
+        <KeyboardAwareScrollView>
+            <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
+                <SafeAreaView style={styles.container}>
+                    <Overlay
+                        isVisible={signInOverlay.length > 0}
+                        overlayStyle={styles.overlay}
+                    >
+                        <SvgLogo style={styles.logo} width={80} height={80} />
+                        <Text style={styles.welcomeText}>
+                            {t("screens.register.welcome", {
+                                displayName: signInOverlay,
+                            })}
+                        </Text>
+                        <Button
+                            onPress={() =>
+                                props.navigation.navigate(Routes.LOGIN)
+                            }
+                            title={t("login")}
+                            buttonStyle={styles.buttonRegister}
+                            containerStyle={styles.buttonContainerWelcome}
+                            titleStyle={styles.buttonTitle}
+                        />
+                    </Overlay>
+                    <SvgLogo style={styles.logo} width={100} height={100} />
+                    <Formik
+                        initialValues={{
+                            email: "",
+                            username: "",
+                            displayName: "",
+                            password: "",
+                            password2: "",
+                        }}
+                        onSubmit={(values) => handleRegister(values)}
+                        validationSchema={validationSchema(t)}
+                    >
+                        {({
+                            handleChange,
+                            values,
+                            handleSubmit,
+                            errors,
+                            touched,
+                            handleBlur,
+                        }) => (
+                            <>
+                                <Input
+                                    label={t("email")}
+                                    placeholder={placeholder.email}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="envelope"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.email}
+                                    onChangeText={handleChange("email")}
+                                    onBlur={handleBlur("email")}
+                                    errorMessage={
+                                        errors.email && touched.email
+                                            ? errors.email
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                />
+                                <Input
+                                    label={t("username")}
+                                    placeholder={placeholder.username}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="user"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.username}
+                                    onChangeText={handleChange("username")}
+                                    onBlur={handleBlur("username")}
+                                    errorMessage={
+                                        errors.username && touched.username
+                                            ? errors.username
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                />
+                                <Input
+                                    label={t("displayName")}
+                                    placeholder={placeholder.username}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="user"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.displayName}
+                                    onChangeText={handleChange("displayName")}
+                                    onBlur={handleBlur("displayName")}
+                                    errorMessage={
+                                        errors.displayName &&
+                                        touched.displayName
+                                            ? errors.displayName
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                />
+                                <Input
+                                    label={t("password")}
+                                    placeholder={t("password")}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="lock"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.password}
+                                    secureTextEntry
+                                    onChangeText={handleChange("password")}
+                                    onBlur={handleBlur("password")}
+                                    errorMessage={
+                                        errors.password && touched.password
+                                            ? errors.password
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                />
+                                <Input
+                                    label={t("repeatPassword")}
+                                    placeholder={t("password")}
+                                    leftIcon={
+                                        <Icon
+                                            style={styles.icon}
+                                            name="lock"
+                                            size={24}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    value={values.password2}
+                                    secureTextEntry
+                                    onChangeText={handleChange("password2")}
+                                    onBlur={handleBlur("password2")}
+                                    errorMessage={
+                                        errors.password2 && touched.password2
+                                            ? errors.password2
+                                            : undefined
+                                    }
+                                    errorStyle={styles.errorMessage}
+                                />
+                                {error && (
+                                    <Text style={styles.errorText}>
+                                        {error.message.includes("Invalid")
+                                            ? t("error.takenEmailUsername")
+                                            : error.networkError
+                                            ? t("error.network")
+                                            : error.message}
+                                    </Text>
+                                )}
+                                <Button
+                                    containerStyle={styles.buttonContainer}
+                                    buttonStyle={styles.buttonRegister}
+                                    title={
+                                        t("startJourney", {
+                                            returnObjects: true,
+                                        })[
+                                            Math.floor(
+                                                Math.random() *
+                                                    t("startJourney", {
+                                                        returnObjects: true,
+                                                    }).length
+                                            )
+                                        ]
+                                    }
+                                    titleStyle={styles.buttonTitle}
+                                    icon={
+                                        <Icon
+                                            style={styles.iconButton}
+                                            name="umbrella-beach"
+                                            size={15}
+                                            color="black"
+                                            type="font-awesome-5"
+                                        />
+                                    }
+                                    iconRight
+                                    loading={loading}
+                                    onPress={() => handleSubmit()}
+                                />
+                            </>
+                        )}
+                    </Formik>
+                </SafeAreaView>
+            </ScrollView>
+        </KeyboardAwareScrollView>
     );
 }
 
