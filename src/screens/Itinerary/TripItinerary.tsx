@@ -62,7 +62,7 @@ export default function TripItinerary(props: Props): JSX.Element {
                     />
                 }
                 actionCallback={() => console.log("share trip")}
-                {...props2}
+                {...headerProps}
             />
         ),
     });
