@@ -266,6 +266,7 @@ export const resources = {
                     submitUpdate: "Aktivität aktualisieren",
                     submitCreate: "Aktivität hinzufügen",
                     removeDialogTitle: "Aktivität wirklich löschen?",
+                    createActivity: "Aktivität erstellen",
                     removeDialogMessage:
                         "Du kannst sie nicht wiederherstellen.",
                 },

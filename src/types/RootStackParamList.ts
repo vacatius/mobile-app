@@ -17,6 +17,7 @@ type RootStackParamList = {
         activityGroupId?: string;
         tripId: string;
         mode: Mode;
+        activityName?: string;
     };
 };
 
