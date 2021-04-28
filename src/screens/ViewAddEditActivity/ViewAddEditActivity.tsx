@@ -326,7 +326,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         </>
                     )}
                 </Formik>
-                // TODO change Header
+                {/*TODO change Header*/}
                 <Button title="edit" onPress={() => setMode("edit")} />
             </KeyboardAwareScrollView>
         </SafeAreaView>
