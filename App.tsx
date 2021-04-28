@@ -124,11 +124,10 @@ export default function App(): JSX.Element {
                                 options={({ route }) => {
                                     const params = route.params as {
                                         activityName: string;
-                                        mode: Mode;
                                     };
                                     return {
                                         title:
-                                            params.mode === "add"
+                                            params.activityName === undefined
                                                 ? t(
                                                       "screens.viewAddEditActivity.createActivity"
                                                   )
