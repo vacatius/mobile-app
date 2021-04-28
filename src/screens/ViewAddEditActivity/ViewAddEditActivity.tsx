@@ -1,9 +1,10 @@
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { TFunction } from "i18next";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { Alert, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
@@ -41,6 +42,9 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     );
     const [activityName, setActivityName] = useState("");
     const [activityDescription, setActivityDescription] = useState("");
+    const [activityStartDateTime, setActivityStartDateTime] = useState(
+        new Date()
+    );
 
     const [useLazyQueryActivity, { data, called }] = useGetActivityLazyQuery({
         variables: { activityId: activityId },
@@ -81,10 +85,14 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
             if (data.node.description) {
                 setActivityDescription(data.node.description);
             }
+            if (data.node.startDate) {
+                setActivityStartDateTime(new Date(data.node.startDate));
+            }
         }
     }, [data]);
 
     const handleEdit = (values: FormikValues): void => {
+        console.log(values.startDateTime);
         if (data?.node?.__typename === "Activity") {
             executeUpdate({
                 variables: {
@@ -93,7 +101,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         name: values.name,
                         description: values.description,
                         linkToDetails: data.node.linkToDetails,
-                        startDate: data.node.startDate,
+                        startDate: values.startDateTime,
                         endDate: data.node.endDate,
                     },
                 },
@@ -147,7 +155,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         routePointId: routePointId,
                         name: values.name,
                         description: values.description ?? "",
-                        startDate: new Date().toUTCString(),
+                        startDate: values.startDateTime,
                     },
                 },
                 refetchQueries: [
@@ -175,6 +183,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                     initialValues={{
                         name: activityName,
                         description: activityDescription,
+                        startDateTime: activityStartDateTime,
                     }}
                     enableReinitialize={true}
                     onSubmit={mode === "add" ? handleAdd : handleEdit}
@@ -187,6 +196,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         errors,
                         touched,
                         handleBlur,
+                        setFieldValue,
                     }) => (
                         <>
                             <Input
@@ -216,6 +226,48 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                 numberOfLines={4}
                                 style={styles.textArea}
                             />
+                            <View style={styles.dateTime}>
+                                <Text>
+                                    {t("screens.viewAddEditActivity.from")} :
+                                </Text>
+                                {mode !== "view" ? (
+                                    <View style={styles.dateTimePickerGroup}>
+                                        <RNDateTimePicker
+                                            value={activityStartDateTime}
+                                            style={styles.dateTimePicker}
+                                            onChange={(event, selectedDate) =>
+                                                selectedDate
+                                                    ? setActivityStartDateTime(
+                                                          selectedDate
+                                                      )
+                                                    : undefined
+                                            }
+                                        />
+                                        <RNDateTimePicker
+                                            value={activityStartDateTime}
+                                            mode="time"
+                                            style={styles.dateTimePicker}
+                                            onChange={(event, selectedDate) =>
+                                                selectedDate
+                                                    ? setFieldValue(
+                                                          "startDateTime",
+                                                          selectedDate
+                                                      )
+                                                    : undefined
+                                            }
+                                        />
+                                    </View>
+                                ) : (
+                                    <>
+                                        <Text style={styles.dateTimePicker}>
+                                            {activityStartDateTime.toLocaleDateString()}
+                                        </Text>
+                                        <Text style={styles.dateTimePicker}>
+                                            {getTime(activityStartDateTime)}
+                                        </Text>
+                                    </>
+                                )}
+                            </View>
                             {mode !== "view" && (
                                 <Button
                                     containerStyle={styles.buttonContainer}
@@ -240,7 +292,11 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                     }
                                     iconRight={true}
                                     onPress={() => handleSubmit()}
-                                    loading={loadingUpdate}
+                                    loading={
+                                        mode === "add"
+                                            ? loadingCreate
+                                            : loadingUpdate
+                                    }
                                 />
                             )}
                             {mode === "edit" && (
@@ -270,6 +326,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         </>
                     )}
                 </Formik>
+                // TODO change Header
                 <Button title="edit" onPress={() => setMode("edit")} />
             </KeyboardAwareScrollView>
         </SafeAreaView>
@@ -305,6 +362,20 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         backgroundColor: "#BCE1B0",
+    },
+    dateTime: {
+        flexDirection: "row",
+        alignItems: "center",
+        alignContent: "space-between",
+    },
+    dateTimePickerGroup: {
+        flexDirection: "row",
+        flexGrow: 1,
+    },
+    dateTimePicker: {
+        flexGrow: 1,
+        margin: 10,
+        fontSize: 20,
     },
 });
 
