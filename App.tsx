@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import {
     NavigationContainer,
     NavigationContainerRef,
@@ -9,12 +10,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
+import ScreenHeader from "./src/components/ScreenHeader";
 import SvgLogo from "./src/components/SvgLogo";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
 import AddEditActivityGroupScreen from "./src/screens/AddEditActivityGroup/AddEditActivityGroupScreen";
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 import TripItinerary from "./src/screens/Itinerary/TripItinerary";
 import Login from "./src/screens/Login/Login";
+import { LoginMutation } from "./src/screens/Login/types/loginMutation";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
@@ -34,10 +37,14 @@ export default function App(): JSX.Element {
     };
     const { getCurrentUser } = useCurrentAuthUser();
     const [initialRoute, setInitialRoute] = useState("");
+    const [user, setUser] = useState<
+        LoginMutation["login"]["user"] | undefined
+    >();
 
     useEffect(() => {
         async function loadInitialRoute(): Promise<void> {
             const result = await getCurrentUser();
+            setUser(result);
             const route = result != null ? Routes.DASHBOARD : Routes.LOGIN;
             console.log("Initial route? " + route);
             setInitialRoute(route);
@@ -55,44 +62,78 @@ export default function App(): JSX.Element {
                             <Stack.Screen
                                 name={Routes.LOGIN}
                                 component={Login}
-                                options={{ title: t("login") }}
+                                options={{
+                                    headerBackTitleVisible: false,
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t("login")}
+                                            {...props}
+                                        />
+                                    ),
+                                }}
                             />
                             <Stack.Screen
                                 name={Routes.REGISTER}
                                 component={Register}
-                                options={{ title: t("register") }}
+                                options={{
+                                    headerBackTitleVisible: false,
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t("register")}
+                                            {...props}
+                                        />
+                                    ),
+                                }}
                             />
                             <Stack.Screen
                                 name={Routes.DASHBOARD}
                                 component={TripsDashboard}
                                 options={{
-                                    title: t("screens.dashboard.title"),
+                                    headerBackTitleVisible: false,
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t(
+                                                "screens.dashboard.title"
+                                            )}
+                                            user={user}
+                                            {...props}
+                                        />
+                                    ),
                                 }}
                             />
                             <Stack.Screen
                                 name={Routes.ITINERARY}
                                 component={TripItinerary}
-                                options={({ route }) => {
-                                    const params = route.params as {
-                                        tripName: string;
-                                    };
-                                    return {
-                                        title: params.tripName,
-                                    };
-                                }}
+                                //options set in screen
                             />
                             <Stack.Screen
                                 name={Routes.ADD_TRIP}
                                 component={AddTrip}
                                 options={{
-                                    title: t("screens.add_trip.title"),
+                                    headerBackTitleVisible: false,
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t(
+                                                "screens.add_trip.title"
+                                            )}
+                                            {...props}
+                                        />
+                                    ),
                                 }}
                             />
                             <Stack.Screen
                                 name={Routes.SHARE_TRIP}
                                 component={ShareTrip}
                                 options={{
-                                    title: t("screens.shareTrip.title"),
+                                    headerBackTitleVisible: false,
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={t(
+                                                "screens.shareTrip.title"
+                                            )}
+                                            {...props}
+                                        />
+                                    ),
                                 }}
                             />
                             <Stack.Screen
@@ -103,15 +144,22 @@ export default function App(): JSX.Element {
                                         tripRoutePointToEdit: TripRoutePoint;
                                     };
                                     return {
-                                        title:
-                                            params.tripRoutePointToEdit ===
-                                            undefined
-                                                ? t(
-                                                      "screens.addEditActivityGroup.titleCreate"
-                                                  )
-                                                : t(
-                                                      "screens.addEditActivityGroup.titleUpdate"
-                                                  ),
+                                        headerBackTitleVisible: false,
+                                        headerTitle: (props) => (
+                                            <ScreenHeader
+                                                screenTitle={
+                                                    params.tripRoutePointToEdit ===
+                                                    undefined
+                                                        ? t(
+                                                              "screens.addEditActivityGroup.titleCreate"
+                                                          )
+                                                        : t(
+                                                              "screens.addEditActivityGroup.titleUpdate"
+                                                          )
+                                                }
+                                                {...props}
+                                            />
+                                        ),
                                     };
                                 }}
                             />
