@@ -141,9 +141,12 @@ export const resources = {
                     removeActivity: "Remove Activity",
                     submitUpdate: "Update Activity",
                     submitCreate: "Add Activity",
+                    createActivity: "create Activity",
                     removeDialogTitle: "Really remove activity?",
                     removeDialogMessage:
                         "You will not be able to restore it afterwards!",
+                    from: "from",
+                    to: "to",
                 },
             },
         },
@@ -259,8 +262,6 @@ export const resources = {
                     removeDialogTitle: "Aktivitätsgruppe wirklich löschen?",
                     removeDialogMessage:
                         "Du kannst sie nicht wiederherstellen. Alle Aktivitäten darin werden gelöscht!",
-                    from: "from",
-                    to: "to",
                 },
                 viewAddEditActivity: {
                     activityName: "Aktivitätsname",
