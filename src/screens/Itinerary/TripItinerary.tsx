@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import ActivityGroup, {
     ActivityGroupData,
 } from "../../components/ActivityGroup";
+import ScreenHeader from "../../components/ScreenHeader";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { useGetTripQuery } from "./types/getTripQuery";
@@ -43,6 +44,29 @@ export default function TripItinerary(props: Props): JSX.Element {
         props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_GROUP, routeOpts);
         console.log("Add activity group button pressed");
     };
+
+    props.navigation.setOptions({
+        headerBackTitleVisible: false,
+        // eslint-disable-next-line react/display-name
+        headerTitle: (headerProps) => (
+            <ScreenHeader
+                // eslint-disable-next-line react/prop-types
+                screenTitle={props.route.params.tripName}
+                actionIcon={
+                    <Icon
+                        style={styles.iconButton}
+                        name="share"
+                        size={20}
+                        color="#222"
+                        type="font-awesome-5"
+                    />
+                }
+                actionCallback={() => console.log("share trip")}
+                {...headerProps}
+            />
+        ),
+    });
+
     if (data?.node?.__typename === "Trip") {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>

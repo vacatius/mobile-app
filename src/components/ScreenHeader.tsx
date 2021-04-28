@@ -1,42 +1,87 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Avatar, Header, Text } from "react-native-elements";
+import { Avatar, Text, Button } from "react-native-elements";
+import { LoginMutation } from "../screens/Login/types/loginMutation";
+import stc from "string-to-color";
+import { useNavigation } from "@react-navigation/core";
 
 export interface ScreenHeaderProps {
     screenTitle: string;
+    user?: LoginMutation["login"]["user"];
+    actionCallback?: () => void;
+    actionIcon?: JSX.Element;
 }
 
 const ScreenHeader: React.FC<ScreenHeaderProps> = (
     props: ScreenHeaderProps
-) => (
-    <View>
-        <Header
-            placement="left"
-            leftComponent={<Text h1>{props.screenTitle}</Text>}
-            rightComponent={
-                <TouchableOpacity>
+) => {
+    const navigation = useNavigation();
+
+    let textWidth = 70;
+    let extraSpace = 0;
+    if (props.user == undefined) {
+        extraSpace++;
+    }
+    if (props.actionIcon == undefined) {
+        extraSpace++;
+    }
+    if (!navigation.canGoBack()) {
+        extraSpace++;
+    }
+
+    textWidth += extraSpace * 10;
+    return (
+        <View
+            style={{
+                flex: 1,
+                flexDirection: "row",
+                overflow: "hidden",
+                alignItems: "center",
+                marginRight: -8,
+                marginLeft: navigation.canGoBack() ? -10 : 0,
+            }}
+        >
+            <Text
+                numberOfLines={1}
+                style={{
+                    fontSize: 22,
+                    width: `${textWidth}%`,
+                }}
+            >
+                {props.screenTitle}
+            </Text>
+            <Button
+                type="clear"
+                icon={props.actionIcon}
+                onPress={props.actionCallback}
+                containerStyle={styles.actionButton}
+            />
+            {props.user !== undefined && (
+                <TouchableOpacity
+                    style={{ marginLeft: "auto" }}
+                    onPress={() =>
+                        console.log("press avatar of user: " + props.user?.id)
+                    }
+                >
                     <Avatar
                         rounded
-                        title="V"
-                        containerStyle={styles.avatar}
-                        size="medium"
+                        title={props.user.displayName.charAt(0).toUpperCase()}
+                        containerStyle={{ backgroundColor: stc(props.user.id) }}
                     />
                 </TouchableOpacity>
-            }
-            containerStyle={styles.header}
-        />
-    </View>
-);
+            )}
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
-    header: {
-        backgroundColor: "transparent",
-        color: "black",
-    },
-    avatar: {
-        backgroundColor: "red",
-        borderWidth: 2,
+    actionButton: {
+        minHeight: "100%",
+        justifyContent: "center",
+        marginLeft: "auto",
+        marginRight: 5,
     },
 });
 
+ScreenHeader.displayName = "ScreenHeader";
 export default ScreenHeader;
