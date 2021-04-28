@@ -46,6 +46,7 @@ export default function TripItinerary(props: Props): JSX.Element {
     };
 
     props.navigation.setOptions({
+        headerBackTitleVisible: false,
         // eslint-disable-next-line react/display-name
         headerTitle: (props2) => (
             <ScreenHeader

@@ -63,6 +63,7 @@ export default function App(): JSX.Element {
                                 name={Routes.LOGIN}
                                 component={Login}
                                 options={{
+                                    headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
                                             screenTitle={t("login")}
@@ -75,6 +76,7 @@ export default function App(): JSX.Element {
                                 name={Routes.REGISTER}
                                 component={Register}
                                 options={{
+                                    headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
                                             screenTitle={t("register")}
@@ -87,6 +89,7 @@ export default function App(): JSX.Element {
                                 name={Routes.DASHBOARD}
                                 component={TripsDashboard}
                                 options={{
+                                    headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
                                             screenTitle={t(
@@ -107,6 +110,7 @@ export default function App(): JSX.Element {
                                 name={Routes.ADD_TRIP}
                                 component={AddTrip}
                                 options={{
+                                    headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
                                             screenTitle={t(
@@ -121,6 +125,7 @@ export default function App(): JSX.Element {
                                 name={Routes.SHARE_TRIP}
                                 component={ShareTrip}
                                 options={{
+                                    headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
                                             screenTitle={t(
@@ -139,6 +144,7 @@ export default function App(): JSX.Element {
                                         tripRoutePointToEdit: TripRoutePoint;
                                     };
                                     return {
+                                        headerBackTitleVisible: false,
                                         headerTitle: (props) => (
                                             <ScreenHeader
                                                 screenTitle={
