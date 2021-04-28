@@ -52,7 +52,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
 
     const [
         executeUpdate,
-        { error: ErrorUpdate, loading: loadingUpdate },
+        { error: errorUpdate, loading: loadingUpdate },
     ] = useUpdateActivityMutation();
 
     const [
@@ -268,6 +268,21 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                     </>
                                 )}
                             </View>
+                            {errorCreate && (
+                                <Text style={styles.errorText}>
+                                    {errorCreate.message}
+                                </Text>
+                            )}
+                            {errorUpdate && (
+                                <Text style={styles.errorText}>
+                                    {errorUpdate.message}
+                                </Text>
+                            )}
+                            {errorRemove && (
+                                <Text style={styles.errorText}>
+                                    {errorRemove.message}
+                                </Text>
+                            )}
                             {mode !== "view" && (
                                 <Button
                                     containerStyle={styles.buttonContainer}
@@ -349,6 +364,12 @@ const styles = StyleSheet.create({
     errorMessage: {
         color: "#e03030",
         fontSize: 13,
+    },
+    errorText: {
+        fontSize: 16,
+        marginBottom: 15,
+        alignSelf: "center",
+        color: "#e03030",
     },
     textArea: {
         height: 130,
