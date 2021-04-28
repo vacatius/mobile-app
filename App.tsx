@@ -18,9 +18,7 @@ import Login from "./src/screens/Login/Login";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
-import ViewAddEditActivity, {
-    Mode,
-} from "./src/screens/ViewAddEditActivity/ViewAddEditActivity";
+import ViewAddEditActivity from "./src/screens/ViewAddEditActivity/ViewAddEditActivity";
 import i18n from "./src/services/i18n";
 import { TripRoutePoint } from "./src/types";
 import { Routes } from "./src/types/Routes";
@@ -123,15 +121,17 @@ export default function App(): JSX.Element {
                                 component={ViewAddEditActivity}
                                 options={({ route }) => {
                                     const params = route.params as {
-                                        activityName: string;
+                                        activityName?: string;
                                     };
                                     return {
                                         title:
                                             params.activityName === undefined
                                                 ? t(
-                                                      "screens.viewAddEditActivity.createActivity"
+                                                      "screens.addEditActivityGroup.titleCreate"
                                                   )
-                                                : params.activityName,
+                                                : t(
+                                                      "screens.addEditActivityGroup.titleUpdate"
+                                                  ),
                                     };
                                 }}
                             />
