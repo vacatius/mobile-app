@@ -67,7 +67,6 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
                         rounded
                         title={props.user.displayName.charAt(0).toUpperCase()}
                         containerStyle={{ backgroundColor: stc(props.user.id) }}
-                        size="medium"
                     />
                 </TouchableOpacity>
             )}
