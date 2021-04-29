@@ -4,7 +4,14 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { TFunction } from "i18next";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import {
+    Alert,
+    Platform,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    View,
+} from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
@@ -42,9 +49,10 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     );
     const [activityName, setActivityName] = useState("");
     const [activityDescription, setActivityDescription] = useState("");
-    const [activityStartDateTime, setActivityStartDateTime] = useState(
-        new Date()
-    );
+    const [activityStartTime, setActivityStartTime] = useState(new Date());
+    const [activityStartDate, setActivityStartDate] = useState(new Date());
+    const [showStartDate, setShowStartDate] = useState(false);
+    const [showStartTime, setShowStartTime] = useState(false);
 
     const [useLazyQueryActivity, { data, called }] = useGetActivityLazyQuery({
         variables: { activityId: activityId },
@@ -79,14 +87,14 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     };
 
     useEffect(() => {
-        console.log(data);
         if (data?.node?.__typename === "Activity") {
             setActivityName(data.node.name);
             if (data.node.description) {
                 setActivityDescription(data.node.description);
             }
             if (data.node.startDate) {
-                setActivityStartDateTime(new Date(data.node.startDate));
+                setActivityStartTime(new Date(data.node.startDate));
+                setActivityStartDate(new Date(data.node.startDate));
             }
         }
     }, [data]);
@@ -94,6 +102,14 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     const handleEdit = (values: FormikValues): void => {
         console.log(values.startDateTime);
         if (data?.node?.__typename === "Activity") {
+            const date = new Date(
+                activityStartDate.getFullYear(),
+                activityStartDate.getMonth(),
+                activityStartDate.getDate(),
+                activityStartTime.getHours(),
+                activityStartTime.getMinutes(),
+                activityStartTime.getSeconds()
+            );
             executeUpdate({
                 variables: {
                     input: {
@@ -101,7 +117,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         name: values.name,
                         description: values.description,
                         linkToDetails: data.node.linkToDetails,
-                        startDate: values.startDateTime,
+                        startDate: date.toISOString(),
                         endDate: data.node.endDate,
                     },
                 },
@@ -149,13 +165,21 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     const handleAdd = (values: FormikValues): void => {
         const routePointId = props.route.params.activityGroupId ?? "";
         if (routePointId.length > 0) {
+            const date = new Date(
+                activityStartDate.getFullYear(),
+                activityStartDate.getMonth(),
+                activityStartDate.getDate(),
+                activityStartTime.getHours(),
+                activityStartTime.getMinutes(),
+                activityStartTime.getSeconds()
+            );
             executeCreate({
                 variables: {
                     input: {
                         routePointId: routePointId,
                         name: values.name,
                         description: values.description ?? "",
-                        startDate: values.startDateTime,
+                        startDate: date.toUTCString(),
                     },
                 },
                 refetchQueries: [
@@ -176,6 +200,18 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
         }
     };
 
+    const handleStartDateChange = (date: Date): void => {
+        console.log("date before", date.toLocaleDateString());
+        setShowStartDate(false);
+        setActivityStartDate(date);
+    };
+
+    const handleStartTimeChange = (date: Date): void => {
+        console.log("time before", date);
+        setShowStartTime(false);
+        setActivityStartTime(date);
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
@@ -183,7 +219,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                     initialValues={{
                         name: activityName,
                         description: activityDescription,
-                        startDateTime: activityStartDateTime,
+                        // startDateTime: activityStartDateTime,
                     }}
                     enableReinitialize={true}
                     onSubmit={mode === "add" ? handleAdd : handleEdit}
@@ -196,7 +232,6 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         errors,
                         touched,
                         handleBlur,
-                        setFieldValue,
                     }) => (
                         <>
                             <Input
@@ -230,43 +265,60 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                 <Text>
                                     {t("screens.viewAddEditActivity.from")} :
                                 </Text>
-                                {mode !== "view" ? (
-                                    <View style={styles.dateTimePickerGroup}>
+                                <View style={styles.dateTimePickerGroup}>
+                                    {(Platform.OS === "android" ||
+                                        mode === "view") && (
+                                        <>
+                                            <Button
+                                                disabled={mode === "view"}
+                                                title={activityStartDate.toLocaleDateString()}
+                                                onPress={() =>
+                                                    setShowStartDate(true)
+                                                }
+                                            />
+                                            <Button
+                                                disabled={mode === "view"}
+                                                title={getTime(
+                                                    activityStartTime
+                                                )}
+                                                onPress={() =>
+                                                    setShowStartTime(true)
+                                                }
+                                            />
+                                        </>
+                                    )}
+                                    {((Platform.OS === "ios" &&
+                                        mode !== "view") ||
+                                        showStartDate) && (
                                         <RNDateTimePicker
-                                            value={activityStartDateTime}
+                                            value={activityStartDate}
                                             style={styles.dateTimePicker}
                                             onChange={(event, selectedDate) =>
                                                 selectedDate
-                                                    ? setActivityStartDateTime(
+                                                    ? handleStartDateChange(
                                                           selectedDate
                                                       )
                                                     : undefined
                                             }
                                         />
+                                    )}
+                                    {((Platform.OS === "ios" &&
+                                        mode !== "view") ||
+                                        showStartTime) && (
                                         <RNDateTimePicker
-                                            value={activityStartDateTime}
+                                            value={activityStartTime}
                                             mode="time"
                                             style={styles.dateTimePicker}
                                             onChange={(event, selectedDate) =>
                                                 selectedDate
-                                                    ? setFieldValue(
-                                                          "startDateTime",
+                                                    ? handleStartTimeChange(
                                                           selectedDate
                                                       )
                                                     : undefined
                                             }
                                         />
-                                    </View>
-                                ) : (
-                                    <>
-                                        <Text style={styles.dateTimePicker}>
-                                            {activityStartDateTime.toLocaleDateString()}
-                                        </Text>
-                                        <Text style={styles.dateTimePicker}>
-                                            {getTime(activityStartDateTime)}
-                                        </Text>
-                                    </>
-                                )}
+                                    )}
+                                </View>
                             </View>
                             {errorCreate && (
                                 <Text style={styles.errorText}>
