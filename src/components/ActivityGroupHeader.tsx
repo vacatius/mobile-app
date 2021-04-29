@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Icon } from "react-native-elements";
 
 interface ActivityGroupHeaderProps {
@@ -19,38 +19,40 @@ export default function ActivityGroupHeader(
     props: ActivityGroupHeaderProps
 ): JSX.Element {
     return (
-        <View style={styles.container}>
-            <View style={styles.containerItemLeft}>
-                <Text numberOfLines={1} style={styles.title}>
-                    {props.title}
-                </Text>
+        <Pressable onPress={props.onOpen}>
+            <View style={styles.container}>
+                <View style={styles.containerItemLeft}>
+                    <Text numberOfLines={1} style={styles.title}>
+                        {props.title}
+                    </Text>
+                </View>
+                <View style={styles.containerItemRight}>
+                    <Icon
+                        name="pen"
+                        size={iconValues.size - 5}
+                        type="font-awesome-5"
+                        color={iconValues.blue}
+                        onPress={props.onEdit}
+                        style={styles.penIcon}
+                    />
+                    <Icon
+                        name="plus"
+                        size={iconValues.size}
+                        type="font-awesome-5"
+                        color={iconValues.blue}
+                        onPress={props.onAdd}
+                        style={styles.addIcon}
+                    />
+                    <Icon
+                        name={props.isOpen ? "chevron-up" : "chevron-down"}
+                        size={iconValues.size}
+                        type="font-awesome-5"
+                        color="black"
+                        onPress={props.onOpen}
+                    />
+                </View>
             </View>
-            <View style={styles.containerItemRight}>
-                <Icon
-                    name="pen"
-                    size={iconValues.size - 5}
-                    type="font-awesome-5"
-                    color={iconValues.blue}
-                    onPress={props.onEdit}
-                    style={styles.penIcon}
-                />
-                <Icon
-                    name="plus"
-                    size={iconValues.size}
-                    type="font-awesome-5"
-                    color={iconValues.blue}
-                    onPress={props.onAdd}
-                    style={styles.addIcon}
-                />
-                <Icon
-                    name={props.isOpen ? "chevron-up" : "chevron-down"}
-                    size={iconValues.size}
-                    type="font-awesome-5"
-                    color="black"
-                    onPress={props.onOpen}
-                />
-            </View>
-        </View>
+        </Pressable>
     );
 }
 
