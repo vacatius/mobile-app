@@ -117,7 +117,7 @@ export default function ApolloConnection(props: Props): JSX.Element {
             }
             if (networkError) {
                 Toast.show({
-                    text1: t("error.generic"),
+                    text1: t("error.network"),
                     text2: networkError.message,
                     type: "error",
                 });
