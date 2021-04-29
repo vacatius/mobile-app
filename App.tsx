@@ -170,6 +170,7 @@ export default function App(): JSX.Element {
             )}
             <Toast
                 ref={(ref) => Toast.setRef(ref)}
+                topOffset={80}
                 style={{
                     height: 50,
                 }}
