@@ -3,7 +3,8 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Avatar, Text, Button } from "react-native-elements";
 import { LoginMutation } from "../screens/Login/types/loginMutation";
 import stc from "string-to-color";
-import { useNavigation } from "@react-navigation/core";
+import { StackActions, useNavigation } from "@react-navigation/core";
+import { Routes } from "../types/Routes";
 
 export interface ScreenHeaderProps {
     screenTitle: string;
@@ -60,7 +61,11 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
                 <TouchableOpacity
                     style={{ marginLeft: "auto" }}
                     onPress={() =>
-                        console.log("press avatar of user: " + props.user?.id)
+                        navigation.dispatch(
+                            StackActions.push(Routes.PROFILE, {
+                                userID: props.user?.id,
+                            })
+                        )
                     }
                 >
                     <Avatar

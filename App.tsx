@@ -18,6 +18,7 @@ import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 import TripItinerary from "./src/screens/Itinerary/TripItinerary";
 import Login from "./src/screens/Login/Login";
 import { LoginMutation } from "./src/screens/Login/types/loginMutation";
+import Profile from "./src/screens/Profile/Profile";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
@@ -161,6 +162,21 @@ export default function App(): JSX.Element {
                                             />
                                         ),
                                     };
+                                }}
+                            />
+                            <Stack.Screen
+                                name={Routes.PROFILE}
+                                component={Profile}
+                                options={{
+                                    headerBackTitleVisible: false,
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={
+                                                user?.displayName || ""
+                                            }
+                                            {...props}
+                                        />
+                                    ),
                                 }}
                             />
                         </Stack.Navigator>

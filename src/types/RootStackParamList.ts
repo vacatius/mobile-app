@@ -11,6 +11,7 @@ type RootStackParamList = {
         tripRoutePointToEdit?: ActivityGroupData;
         tripId: string;
     };
+    Profile: { userID: string };
 };
 
 export default RootStackParamList;
