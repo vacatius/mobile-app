@@ -219,7 +219,6 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                     initialValues={{
                         name: activityName,
                         description: activityDescription,
-                        // startDateTime: activityStartDateTime,
                     }}
                     enableReinitialize={true}
                     onSubmit={mode === "add" ? handleAdd : handleEdit}
@@ -271,6 +270,16 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                         <>
                                             <Button
                                                 disabled={mode === "view"}
+                                                buttonStyle={styles.dateButton}
+                                                containerStyle={
+                                                    styles.dateButtonContainer
+                                                }
+                                                titleStyle={
+                                                    styles.dateButtonText
+                                                }
+                                                disabledStyle={
+                                                    styles.dateButton
+                                                }
                                                 title={activityStartDate.toLocaleDateString()}
                                                 onPress={() =>
                                                     setShowStartDate(true)
@@ -278,6 +287,16 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                             />
                                             <Button
                                                 disabled={mode === "view"}
+                                                buttonStyle={styles.dateButton}
+                                                containerStyle={
+                                                    styles.dateButtonContainer
+                                                }
+                                                titleStyle={
+                                                    styles.dateButtonText
+                                                }
+                                                disabledStyle={
+                                                    styles.dateButton
+                                                }
                                                 title={getTime(
                                                     activityStartTime
                                                 )}
@@ -443,12 +462,25 @@ const styles = StyleSheet.create({
     },
     dateTimePickerGroup: {
         flexDirection: "row",
+        alignItems: "center",
         flexGrow: 1,
     },
     dateTimePicker: {
         flexGrow: 1,
         margin: 10,
         fontSize: 20,
+    },
+    dateButtonContainer: {
+        margin: 10,
+    },
+    dateButton: {
+        flexGrow: 1,
+        margin: 10,
+        fontSize: 20,
+        backgroundColor: "transparent",
+    },
+    dateButtonText: {
+        color: "black",
     },
 });
 
