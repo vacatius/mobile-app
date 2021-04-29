@@ -9,6 +9,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection";
 import ScreenHeader from "./src/components/ScreenHeader";
 import SvgLogo from "./src/components/SvgLogo";
@@ -167,6 +168,13 @@ export default function App(): JSX.Element {
                     </ApolloConnection>
                 </NavigationContainer>
             )}
+            <Toast
+                ref={(ref) => Toast.setRef(ref)}
+                topOffset={80}
+                style={{
+                    height: 50,
+                }}
+            />
         </SafeAreaProvider>
     );
 }
