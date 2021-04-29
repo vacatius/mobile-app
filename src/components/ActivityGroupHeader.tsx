@@ -48,7 +48,6 @@ export default function ActivityGroupHeader(
                         size={iconValues.size}
                         type="font-awesome-5"
                         color="black"
-                        onPress={props.onOpen}
                     />
                 </View>
             </View>
