@@ -265,16 +265,6 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                         color: "black",
                                         fontSize: 25,
                                     }}
-                                    icon={
-                                        <Icon
-                                            style={styles.iconButton}
-                                            name="arrow-right"
-                                            size={15}
-                                            color="black"
-                                            type="font-awesome-5"
-                                        />
-                                    }
-                                    iconRight={true}
                                     onPress={() => handleSubmit()}
                                     loading={loadingCreate || loadingUpdate}
                                 />
