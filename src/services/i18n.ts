@@ -137,12 +137,12 @@ export const resources = {
                         "You will not be able to restore it afterwards. All activities inside will be deleted!",
                 },
                 viewAddEditActivity: {
-                    activityName: "activity name",
+                    activityName: "Activity Name",
                     removeActivity: "Remove Activity",
                     submitUpdate: "Update Activity",
                     submitCreate: "Add Activity",
-                    createActivity: "create Activity",
-                    removeDialogTitle: "Really remove activity?",
+                    createActivity: "Create Activity",
+                    removeDialogTitle: "Really remove Activity?",
                     removeDialogMessage:
                         "You will not be able to restore it afterwards!",
                     from: "from",

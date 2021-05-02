@@ -15,6 +15,8 @@ import {
 import { Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
+import ScreenHeader from "../../components/ScreenHeader";
+import SvgStrandedTraveller from "../../components/svg/SvgStrandedTraveller";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { Formik, FormikValues } from "formik";
@@ -47,7 +49,9 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     const [activityId, setActivityId] = useState(
         props.route.params.activityId ? props.route.params.activityId : ""
     );
-    const [activityName, setActivityName] = useState("");
+    const [activityName, setActivityName] = useState(
+        props.route.params.activityName ?? ""
+    );
     const [activityDescription, setActivityDescription] = useState("");
     const [activityStartTime, setActivityStartTime] = useState(new Date());
     const [activityStartDate, setActivityStartDate] = useState(new Date());
@@ -99,8 +103,37 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
         }
     }, [data]);
 
+    useEffect(() => {
+        props.navigation.setOptions({
+            headerBackTitleVisible: false,
+            // eslint-disable-next-line react/display-name
+            headerTitle: (headerProps) => (
+                <ScreenHeader
+                    // eslint-disable-next-line react/prop-types
+                    screenTitle={
+                        mode === "add"
+                            ? t("screens.viewAddEditActivity.createActivity")
+                            : activityName
+                    }
+                    actionIcon={
+                        mode === "view" ? (
+                            <Icon
+                                style={styles.iconButton}
+                                name={"pen"}
+                                size={20}
+                                color="#222"
+                                type="font-awesome-5"
+                            />
+                        ) : undefined
+                    }
+                    actionCallback={() => setMode("edit")}
+                    {...headerProps}
+                />
+            ),
+        });
+    }, [mode, activityName]);
+
     const handleEdit = (values: FormikValues): void => {
-        console.log(values.startDateTime);
         if (data?.node?.__typename === "Activity") {
             const date = new Date(
                 activityStartDate.getFullYear(),
@@ -201,13 +234,11 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     };
 
     const handleStartDateChange = (date: Date): void => {
-        console.log("date before", date.toLocaleDateString());
         setShowStartDate(false);
         setActivityStartDate(date);
     };
 
     const handleStartTimeChange = (date: Date): void => {
-        console.log("time before", date);
         setShowStartTime(false);
         setActivityStartTime(date);
     };
@@ -215,6 +246,12 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
     return (
         <SafeAreaView style={styles.container}>
             <KeyboardAwareScrollView>
+                {/* Undraw.co: stranded traveller */}
+                <SvgStrandedTraveller
+                    style={styles.travelPlan}
+                    width={150}
+                    height={150}
+                />
                 <Formik
                     initialValues={{
                         name: activityName,
@@ -367,16 +404,6 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                         color: "black",
                                         fontSize: 25,
                                     }}
-                                    icon={
-                                        <Icon
-                                            style={styles.iconButton}
-                                            name="arrow-right"
-                                            size={15}
-                                            color="black"
-                                            type="font-awesome-5"
-                                        />
-                                    }
-                                    iconRight={true}
                                     onPress={() => handleSubmit()}
                                     loading={
                                         mode === "add"
@@ -412,8 +439,6 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         </>
                     )}
                 </Formik>
-                {/*TODO change Header*/}
-                <Button title="edit" onPress={() => setMode("edit")} />
             </KeyboardAwareScrollView>
         </SafeAreaView>
     );
@@ -481,6 +506,9 @@ const styles = StyleSheet.create({
     },
     dateButtonText: {
         color: "black",
+    },
+    travelPlan: {
+        alignSelf: "center",
     },
 });
 

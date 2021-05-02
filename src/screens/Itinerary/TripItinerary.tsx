@@ -53,7 +53,6 @@ export default function TripItinerary(props: Props): JSX.Element {
         });
     };
 
-
     useEffect(() => {
         props.navigation.setOptions({
             headerBackTitleVisible: false,
