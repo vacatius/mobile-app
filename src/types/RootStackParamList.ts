@@ -1,5 +1,6 @@
 import { ActivityGroupData } from "../components/ActivityGroup";
 import { CreateTripMutation } from "../screens/AddTrip/types/add-trip.mutation";
+import { LoginMutation } from "../screens/Login/types/loginMutation";
 
 type RootStackParamList = {
     Login: undefined;
@@ -11,7 +12,7 @@ type RootStackParamList = {
         tripRoutePointToEdit?: ActivityGroupData;
         tripId: string;
     };
-    Profile: { userID: string };
+    Profile: { user: LoginMutation["login"]["user"] };
 };
 
 export default RootStackParamList;

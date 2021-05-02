@@ -136,6 +136,9 @@ export const resources = {
                     removeDialogMessage:
                         "You will not be able to restore it afterwards. All activities inside will be deleted!",
                 },
+                profile: {
+                    save: "Save",
+                },
             },
         },
     },
@@ -250,6 +253,9 @@ export const resources = {
                     removeDialogTitle: "Aktivitätsgruppe wirklich löschen?",
                     removeDialogMessage:
                         "Du kannst sie nicht wiederherstellen. Alle Aktivitäten darin werden gelöscht!",
+                },
+                profile: {
+                    save: "Speichern",
                 },
             },
         },

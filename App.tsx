@@ -171,9 +171,7 @@ export default function App(): JSX.Element {
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
-                                            screenTitle={
-                                                user?.displayName || ""
-                                            }
+                                            screenTitle={user?.username || ""}
                                             {...props}
                                         />
                                     ),

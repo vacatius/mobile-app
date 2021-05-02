@@ -63,7 +63,7 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
                     onPress={() =>
                         navigation.dispatch(
                             StackActions.push(Routes.PROFILE, {
-                                userID: props.user?.id,
+                                user: props.user,
                             })
                         )
                     }
