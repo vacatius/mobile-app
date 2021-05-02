@@ -11,6 +11,7 @@ import ActivityGroup, {
 import ScreenHeader from "../../components/ScreenHeader";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
+import { Mode } from "../ViewAddEditActivity/ViewAddEditActivity";
 import { useGetTripQuery } from "./types/getTripQuery";
 
 type TripItineraryScreenNavigationProp = StackNavigationProp<
@@ -49,7 +50,7 @@ export default function TripItinerary(props: Props): JSX.Element {
         props.navigation.navigate(Routes.VIEW_ADD_EDIT_ACTIVITY, {
             tripId: tripId,
             activityGroupId: activityGroupId,
-            mode: "add",
+            mode: Mode.ADD,
         });
     };
 

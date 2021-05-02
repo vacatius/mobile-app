@@ -26,7 +26,11 @@ import { useGetActivityLazyQuery } from "./types/getActivityQuery";
 import { useRemoveActivityMutation } from "./types/removeActivityMutation";
 import { useUpdateActivityMutation } from "./types/updateActivityMutation";
 
-export type Mode = "view" | "edit" | "add";
+export enum Mode {
+    VIEW,
+    EDIT,
+    ADD,
+}
 
 type ViewAddEditActivityScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -77,7 +81,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
         { error: errorCreate, loading: loadingCreate },
     ] = useCreateActivityMutation();
 
-    if (mode !== "add" && !called) {
+    if (mode !== Mode.ADD && !called) {
         useLazyQueryActivity();
     }
 
@@ -111,12 +115,12 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                 <ScreenHeader
                     // eslint-disable-next-line react/prop-types
                     screenTitle={
-                        mode === "add"
+                        mode === Mode.ADD
                             ? t("screens.viewAddEditActivity.createActivity")
                             : activityName
                     }
                     actionIcon={
-                        mode === "view" ? (
+                        mode === Mode.VIEW ? (
                             <Icon
                                 style={styles.iconButton}
                                 name={"pen"}
@@ -126,7 +130,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                             />
                         ) : undefined
                     }
-                    actionCallback={() => setMode("edit")}
+                    actionCallback={() => setMode(Mode.EDIT)}
                     {...headerProps}
                 />
             ),
@@ -160,7 +164,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                     }),
                 ],
             })
-                .then(() => setMode("view"))
+                .then(() => setMode(Mode.VIEW))
                 .catch((e) => console.log(e)); // TODO handle error
         }
     };
@@ -258,7 +262,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         description: activityDescription,
                     }}
                     enableReinitialize={true}
-                    onSubmit={mode === "add" ? handleAdd : handleEdit}
+                    onSubmit={mode === Mode.ADD ? handleAdd : handleEdit}
                     validationSchema={validationSchema(t)}
                 >
                     {({
@@ -276,7 +280,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                 )}
                                 value={values.name}
                                 onChangeText={handleChange("name")}
-                                disabled={mode === "view"}
+                                disabled={mode === Mode.VIEW}
                                 onBlur={handleBlur("name")}
                                 errorMessage={
                                     errors.name && touched.name
@@ -292,7 +296,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                 }
                                 onChangeText={handleChange("description")}
                                 onBlur={handleBlur("description")}
-                                disabled={mode === "view"}
+                                disabled={mode === Mode.VIEW}
                                 multiline={true}
                                 numberOfLines={4}
                                 style={styles.textArea}
@@ -303,10 +307,10 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                 </Text>
                                 <View style={styles.dateTimePickerGroup}>
                                     {(Platform.OS === "android" ||
-                                        mode === "view") && (
+                                        mode === Mode.VIEW) && (
                                         <>
                                             <Button
-                                                disabled={mode === "view"}
+                                                disabled={mode === Mode.VIEW}
                                                 buttonStyle={styles.dateButton}
                                                 containerStyle={
                                                     styles.dateButtonContainer
@@ -323,7 +327,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                                 }
                                             />
                                             <Button
-                                                disabled={mode === "view"}
+                                                disabled={mode === Mode.VIEW}
                                                 buttonStyle={styles.dateButton}
                                                 containerStyle={
                                                     styles.dateButtonContainer
@@ -344,7 +348,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                         </>
                                     )}
                                     {((Platform.OS === "ios" &&
-                                        mode !== "view") ||
+                                        mode !== Mode.VIEW) ||
                                         showStartDate) && (
                                         <RNDateTimePicker
                                             value={activityStartDate}
@@ -359,7 +363,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                         />
                                     )}
                                     {((Platform.OS === "ios" &&
-                                        mode !== "view") ||
+                                        mode !== Mode.VIEW) ||
                                         showStartTime) && (
                                         <RNDateTimePicker
                                             value={activityStartTime}
@@ -391,12 +395,12 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                     {errorRemove.message}
                                 </Text>
                             )}
-                            {mode !== "view" && (
+                            {mode !== Mode.VIEW && (
                                 <Button
                                     containerStyle={styles.buttonContainer}
                                     buttonStyle={styles.submitButton}
                                     title={t(
-                                        mode === "add"
+                                        mode === Mode.ADD
                                             ? "screens.viewAddEditActivity.submitCreate"
                                             : "screens.viewAddEditActivity.submitUpdate"
                                     )}
@@ -406,13 +410,13 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                     }}
                                     onPress={() => handleSubmit()}
                                     loading={
-                                        mode === "add"
+                                        mode === Mode.ADD
                                             ? loadingCreate
                                             : loadingUpdate
                                     }
                                 />
                             )}
-                            {mode === "edit" && (
+                            {mode === Mode.EDIT && (
                                 <Button
                                     containerStyle={styles.buttonContainer}
                                     title={t(

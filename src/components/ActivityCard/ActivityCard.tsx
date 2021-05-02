@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Badge, Icon } from "react-native-elements";
 import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
 import { refetchGetTripQuery } from "../../screens/Itinerary/types/getTripQuery";
+import { Mode } from "../../screens/ViewAddEditActivity/ViewAddEditActivity";
 import * as Types from "../../types.d";
 import { Routes } from "../../types/Routes";
 import { useCreateActivityReactionMutation } from "./types/CreateActivityReactionMutation";
@@ -157,7 +158,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
             activityId: props.id,
             tripId: props.tripId,
             activityName: props.name,
-            mode: "view",
+            mode: Mode.VIEW,
         });
     };
 
