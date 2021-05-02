@@ -1,7 +1,7 @@
 import * as React from "react";
 import Svg, { SvgProps, Ellipse, Path, Circle } from "react-native-svg";
 
-function SvgStrandedTraveller(props: SvgProps) {
+function SvgStrandedTraveller(props: SvgProps): JSX.Element {
     return (
         <Svg
             data-name="Layer 1"
