@@ -23,6 +23,7 @@ import { LoginMutation } from "./src/screens/Login/types/loginMutation";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
+import ViewAddEditActivity from "./src/screens/ViewAddEditActivity/ViewAddEditActivity";
 import i18n from "./src/services/i18n";
 import { TripRoutePoint } from "./src/types";
 import RootStackParamList from "./src/types/RootStackParamList";
@@ -166,6 +167,25 @@ export default function App(): JSX.Element {
                                                 {...props}
                                             />
                                         ),
+                                    };
+                                }}
+                            />
+                            <Stack.Screen
+                                name={Routes.VIEW_ADD_EDIT_ACTIVITY}
+                                component={ViewAddEditActivity}
+                                options={({ route }) => {
+                                    const params = route.params as {
+                                        activityName?: string;
+                                    };
+                                    return {
+                                        title:
+                                            params.activityName === undefined
+                                                ? t(
+                                                      "screens.addEditActivityGroup.titleCreate"
+                                                  )
+                                                : t(
+                                                      "screens.addEditActivityGroup.titleUpdate"
+                                                  ),
                                     };
                                 }}
                             />

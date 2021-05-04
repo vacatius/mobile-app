@@ -1,6 +1,7 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { ActivityGroupData } from "../components/ActivityGroup";
 import { CreateTripMutation } from "../screens/AddTrip/types/add-trip.mutation";
+import { Mode } from "../screens/ViewAddEditActivity/ViewAddEditActivity";
 import { Routes } from "./Routes";
 import TripTabParamList from "./TripTabParamList";
 
@@ -14,6 +15,13 @@ type RootStackParamList = {
     [Routes.ADD_EDIT_ACTIVITY_GROUP]: {
         tripRoutePointToEdit?: ActivityGroupData;
         tripId: string;
+    };
+    ViewEditActivity: {
+        activityId?: string;
+        activityGroupId?: string;
+        tripId: string;
+        mode: Mode;
+        activityName?: string;
     };
 };
 

@@ -3,7 +3,7 @@ import { CompositeNavigationProp, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActivityGroup, {
@@ -12,6 +12,7 @@ import ActivityGroup, {
 import ScreenHeader from "../../components/ScreenHeader";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
+import { Mode } from "../ViewAddEditActivity/ViewAddEditActivity";
 import TripTabParamList from "../../types/TripTabParamList";
 import { useGetTripQuery } from "./types/getTripQuery";
 
@@ -45,6 +46,14 @@ export default function TripItinerary(props: Props): JSX.Element {
         }
         props.navigation.navigate(Routes.ADD_EDIT_ACTIVITY_GROUP, routeOpts);
         console.log("Add activity group button pressed");
+    };
+
+    const onAddActivity = (tripId: string, activityGroupId: string): void => {
+        props.navigation.navigate(Routes.VIEW_ADD_EDIT_ACTIVITY, {
+            tripId: tripId,
+            activityGroupId: activityGroupId,
+            mode: Mode.ADD,
+        });
     };
 
     useEffect(() => {
@@ -103,11 +112,14 @@ export default function TripItinerary(props: Props): JSX.Element {
                             activityGroupData={i}
                             tripId={props.route.params.tripId}
                             onEditActivityGroup={onEditActivityGroup}
+                            onAddActivity={onAddActivity}
                         />
                     ))}
                 </SafeAreaView>
             </ScrollView>
         );
+    } else if (loading) {
+        return <ActivityIndicator size="large" />;
     } else {
         return <Text>{t("error.generic")}</Text>;
     }

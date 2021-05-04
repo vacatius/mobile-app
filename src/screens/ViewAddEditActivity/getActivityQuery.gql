@@ -1,0 +1,23 @@
+query getActivity($activityId: ID!) {
+    node(id: $activityId) {
+        id
+        __typename
+        ... on Activity {
+            id
+            name
+            description
+            linkToDetails
+            startDate
+            endDate
+            routePoint {
+                id
+            }
+            addedByUser {
+                id
+            }
+            trip {
+                id
+            }
+        }
+    }
+}

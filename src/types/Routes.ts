@@ -8,4 +8,5 @@ export enum Routes {
     TRIP_SETTINGS = "TripSettings",
     SHARE_TRIP = "ShareTrip",
     ADD_EDIT_ACTIVITY_GROUP = "AddEditActivityGroup",
+    VIEW_ADD_EDIT_ACTIVITY = "ViewEditActivity",
 }
