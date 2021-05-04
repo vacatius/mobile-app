@@ -41,7 +41,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.14.0",
     "@graphql-codegen/cli": "^1.21.4",
     "@graphql-codegen/introspection": "^1.18.1",
     "@graphql-codegen/named-operations-object": "^1.18.1",
