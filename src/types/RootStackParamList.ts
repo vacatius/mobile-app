@@ -16,7 +16,7 @@ type RootStackParamList = {
         tripRoutePointToEdit?: ActivityGroupData;
         tripId: string;
     };
-    ViewEditActivity: {
+    [Routes.VIEW_ADD_EDIT_ACTIVITY]: {
         activityId?: string;
         activityGroupId?: string;
         tripId: string;
