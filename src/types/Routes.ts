@@ -1,4 +1,5 @@
 export enum Routes {
+    EMPTY = "",
     LOGIN = "Login",
     REGISTER = "Register",
     DASHBOARD = "Dashboard",
