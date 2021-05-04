@@ -38,7 +38,7 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                 };
             }}
             tabBarOptions={{
-                activeTintColor: "#BCE1B0",
+                activeTintColor: "#007AFF",
                 inactiveTintColor: "gray",
             }}
         >
