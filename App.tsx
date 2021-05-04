@@ -1,4 +1,5 @@
 /* eslint-disable react/display-name */
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
     NavigationContainer,
     NavigationContainerRef,
@@ -14,9 +15,9 @@ import ApolloConnection from "./src/components/ApolloConnection/ApolloConnection
 import ScreenHeader from "./src/components/ScreenHeader";
 import SvgLogo from "./src/components/SvgLogo";
 import useCurrentAuthUser from "./src/hooks/useCurrentAuthUser";
+import TripTabs from "./src/routes/TripTabs";
 import AddEditActivityGroupScreen from "./src/screens/AddEditActivityGroup/AddEditActivityGroupScreen";
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
-import TripItinerary from "./src/screens/Itinerary/TripItinerary";
 import Login from "./src/screens/Login/Login";
 import { LoginMutation } from "./src/screens/Login/types/loginMutation";
 import Register from "./src/screens/Register/Register";
@@ -24,10 +25,11 @@ import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
 import i18n from "./src/services/i18n";
 import { TripRoutePoint } from "./src/types";
+import RootStackParamList from "./src/types/RootStackParamList";
 import { Routes } from "./src/types/Routes";
 //init i18n
 i18n;
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export default function App(): JSX.Element {
     const { t } = useTranslation();
@@ -37,7 +39,7 @@ export default function App(): JSX.Element {
         navigationRef.current?.dispatch(StackActions.replace(name, params));
     };
     const { getCurrentUser } = useCurrentAuthUser();
-    const [initialRoute, setInitialRoute] = useState("");
+    const [initialRoute, setInitialRoute] = useState<Routes>(Routes.EMPTY);
     const [user, setUser] = useState<
         LoginMutation["login"]["user"] | undefined
     >();
@@ -56,10 +58,13 @@ export default function App(): JSX.Element {
     return (
         <SafeAreaProvider>
             <StatusBar style="dark" backgroundColor="white" />
-            {(initialRoute === "" && <SvgLogo />) || (
+            {(initialRoute === Routes.EMPTY && <SvgLogo />) || (
                 <NavigationContainer ref={navigationRef}>
                     <ApolloConnection navigationFn={replace}>
-                        <Stack.Navigator initialRouteName={initialRoute}>
+                        <Stack.Navigator
+                            // @ts-ignore
+                            initialRouteName={initialRoute}
+                        >
                             <Stack.Screen
                                 name={Routes.LOGIN}
                                 component={Login}
@@ -104,7 +109,7 @@ export default function App(): JSX.Element {
                             />
                             <Stack.Screen
                                 name={Routes.ITINERARY}
-                                component={TripItinerary}
+                                component={TripTabs}
                                 //options set in screen
                             />
                             <Stack.Screen
@@ -141,7 +146,7 @@ export default function App(): JSX.Element {
                                 name={Routes.ADD_EDIT_ACTIVITY_GROUP}
                                 component={AddEditActivityGroupScreen}
                                 options={({ route }) => {
-                                    const params = route.params as {
+                                    const params = (route.params as unknown) as {
                                         tripRoutePointToEdit: TripRoutePoint;
                                     };
                                     return {

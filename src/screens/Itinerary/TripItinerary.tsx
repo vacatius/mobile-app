@@ -1,4 +1,5 @@
-import { RouteProp } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { CompositeNavigationProp, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -11,14 +12,15 @@ import ActivityGroup, {
 import ScreenHeader from "../../components/ScreenHeader";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
+import TripTabParamList from "../../types/TripTabParamList";
 import { useGetTripQuery } from "./types/getTripQuery";
 
-type TripItineraryScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.ITINERARY
+type TripItineraryScreenNavigationProp = CompositeNavigationProp<
+    BottomTabNavigationProp<TripTabParamList, Routes.ITINERARY>,
+    StackNavigationProp<RootStackParamList, Routes.ITINERARY>
 >;
 
-type TripItineraryRouteProp = RouteProp<RootStackParamList, Routes.ITINERARY>;
+type TripItineraryRouteProp = RouteProp<TripTabParamList, Routes.ITINERARY>;
 
 type Props = {
     navigation: TripItineraryScreenNavigationProp;
