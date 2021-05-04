@@ -20,7 +20,6 @@ type Props = {
 };
 
 const TripSettings = (props: Props): JSX.Element => {
-    console.log("settings", props);
     return <Text>{props.route.params.tripId}</Text>;
 };
 
