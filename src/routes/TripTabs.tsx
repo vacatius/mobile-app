@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
 import ScreenHeader from "../components/ScreenHeader";
@@ -13,10 +13,7 @@ import TripTabParamList from "../types/TripTabParamList";
 
 const Tab = createBottomTabNavigator<TripTabParamList>();
 
-type TripTabsScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.DASHBOARD
->;
+type TripTabsScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.DASHBOARD>;
 type TripTabsRouteProp = RouteProp<TripTabParamList, "TripTabsNavigation">;
 
 type TripTabsProps = {
@@ -24,6 +21,8 @@ type TripTabsProps = {
     route: TripTabsRouteProp;
 };
 const TripTabs = (props: TripTabsProps): JSX.Element => {
+    const [currentScreen, setCurrentScreen] = useState<Routes>(Routes.ITINERARY);
+
     useEffect(() => {
         props.navigation.setOptions({
             headerBackTitleVisible: false,
@@ -35,7 +34,7 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                     actionIcon={
                         <Icon
                             style={styles.iconButton}
-                            name="share"
+                            name={currentScreen === Routes.ITINERARY ? "share" : "pen"}
                             size={20}
                             color="#222"
                             type="font-awesome-5"
@@ -46,7 +45,7 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                 />
             ),
         });
-    }, []);
+    }, [currentScreen]);
 
     return (
         <Tab.Navigator
@@ -57,14 +56,30 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                         // You can return any component that you like here!
                         return (
                             <Icon
-                                name={
-                                    route.name === Routes.ITINERARY
-                                        ? "suitcase"
-                                        : "cog"
-                                }
+                                name={route.name === Routes.ITINERARY ? "suitcase" : "cog"}
                                 type="font-awesome-5"
                                 size={size}
                                 color={color}
+                                onPress={() => {
+                                    if (route.name === Routes.ITINERARY) {
+                                        setCurrentScreen(Routes.ITINERARY);
+                                        props.navigation.navigate(Routes.ITINERARY, {
+                                            screen: Routes.ITINERARY,
+                                            params: {
+                                                tripId: props.route.params.params.tripId,
+                                                tripName: props.route.params.params.tripName,
+                                            },
+                                        });
+                                    } else {
+                                        setCurrentScreen(Routes.TRIP_SETTINGS);
+                                        props.navigation.navigate(Routes.ITINERARY, {
+                                            screen: Routes.TRIP_SETTINGS,
+                                            params: {
+                                                tripId: props.route.params.params.tripId,
+                                            },
+                                        });
+                                    }
+                                }}
                             />
                         );
                     },
