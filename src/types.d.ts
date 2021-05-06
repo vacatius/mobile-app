@@ -143,6 +143,7 @@ export type Mutation = {
   createTrip: Trip;
   joinTrip: Trip;
   leaveTrip: Trip;
+  removeMemberFromTrip: Trip;
   removeTrip: MutationResult;
   updateTrip: Trip;
   createTripRoutePoint: TripRoutePoint;
@@ -175,6 +176,12 @@ export type MutationJoinTripArgs = {
 
 
 export type MutationLeaveTripArgs = {
+  tripId: Scalars['String'];
+};
+
+
+export type MutationRemoveMemberFromTripArgs = {
+  userIdToRemove: Scalars['String'];
   tripId: Scalars['String'];
 };
 

@@ -148,6 +148,9 @@ export const resources = {
                     from: "from",
                     to: "to",
                 },
+                tripSettings: {
+                    submitUpdate: "Update Trip",
+                },
             },
         },
     },
@@ -216,7 +219,8 @@ export const resources = {
                 ],
                 description: ["Cooler roadtrip meinen Freunden"],
                 nameRequired: "Bitte gib einen Namen ein!",
-                descriptionRequired: "Bitte gib eine Beschreibung Reise ein!",
+                descriptionRequired:
+                    "Bitte gib eine Beschreibung für die Reise ein!",
             },
             screens: {
                 register: {
@@ -274,6 +278,9 @@ export const resources = {
                         "Du kannst sie nicht wiederherstellen.",
                     from: "von",
                     to: "bis",
+                },
+                tripSettings: {
+                    submitUpdate: "Reise aktualisieren",
                 },
             },
         },
