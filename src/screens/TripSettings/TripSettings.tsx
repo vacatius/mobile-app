@@ -3,7 +3,7 @@ import { CompositeNavigationProp, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { Avatar, Button, Input, ListItem, Text } from "react-native-elements";
@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import Toast from "react-native-toast-message";
 import stc from "string-to-color";
 import * as Yup from "yup";
+import TripHeaderContext from "../../routes/TripHeaderContext";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import TripTabParamList from "../../types/TripTabParamList";
@@ -20,7 +21,7 @@ import {
 } from "../Itinerary/types/getTripQuery";
 import { useUpdateTripMutation } from "./types/update-trip.mutation";
 
-enum Mode {
+export enum Mode {
     VIEW,
     EDIT,
 }
@@ -39,7 +40,9 @@ type TripSettingsProps = {
 
 export default function TripSettings(props: TripSettingsProps): JSX.Element {
     const { t } = useTranslation();
-    const [mode, setMode] = useState<Mode>(Mode.EDIT);
+    const { settingsMode, setSettingsMode, setTitle } = useContext(
+        TripHeaderContext
+    );
 
     const [placeholder] = useState({
         tripName: t("placeholder.tripName", { returnObjects: true })[
@@ -84,7 +87,12 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                 }),
             ],
         })
-            .then(() => setMode(Mode.VIEW))
+            .then(() => {
+                if (setTitle && setSettingsMode) {
+                    setTitle(values.tripName);
+                    setSettingsMode(Mode.VIEW);
+                }
+            })
             .catch((e) =>
                 Toast.show({
                     text1: t("error.generic"),
@@ -94,7 +102,10 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
             );
     };
 
-    const handleRemoveMember = (userId: string): void => {};
+    const handleRemoveMember = (userId: string): void => {
+        // TODO do something here
+        console.log("handle remove member");
+    };
 
     if (data?.node?.__typename === "Trip") {
         return (
@@ -123,7 +134,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                     label={t("tripName")}
                                     value={values.tripName}
                                     onChangeText={handleChange("tripName")}
-                                    disabled={mode == Mode.VIEW}
+                                    disabled={settingsMode == Mode.VIEW}
                                     onBlur={handleBlur("tripName")}
                                     errorMessage={
                                         errors.tripName && touched.tripName
@@ -141,7 +152,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                             : ""
                                     }
                                     onChangeText={handleChange("description")}
-                                    disabled={mode == Mode.VIEW}
+                                    disabled={settingsMode == Mode.VIEW}
                                     onBlur={handleBlur("description")}
                                     multiline={true}
                                     numberOfLines={4}
@@ -160,7 +171,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                         {errorUpdate.message}
                                     </Text>
                                 )}
-                                {mode === Mode.EDIT && (
+                                {settingsMode === Mode.EDIT && (
                                     <Button
                                         containerStyle={styles.buttonContainer}
                                         buttonStyle={styles.submitButton}
