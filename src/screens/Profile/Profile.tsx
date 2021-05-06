@@ -1,6 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React from "react";
 import { Avatar, Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RootStackParamList from "../../types/RootStackParamList";
@@ -13,8 +13,6 @@ import stc from "string-to-color";
 import { useUpdateUserMutationMutation } from "./types/updateUserMutation";
 import * as SecureStore from "expo-secure-store";
 import SecureStorageItems from "../../types/SecureStorageItems";
-import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
-import { LoginMutation } from "../Login/types/loginMutation";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -31,22 +29,24 @@ type Props = {
 const Profile = (props: Props): JSX.Element => {
     const { t } = useTranslation();
     const [execute, { error, loading }] = useUpdateUserMutationMutation();
-    const { getCurrentUser } = useCurrentAuthUser();
-    const [user, setUser] = useState<
-        LoginMutation["login"]["user"] | undefined
-    >();
-    getCurrentUser().then((res) => {
-        setUser(res);
-    });
 
     const submit = (values: FormikValues): void => {
-        console.log(values);
+        if (
+            values.displayName === props.route.params.user.displayName &&
+            values.email === props.route.params.user.email &&
+            values.password === ""
+        ) {
+            return;
+        }
+
         execute({
             variables: {
                 input: {
-                    displayName: values.displayName,
-                    email: values.email,
-                    password: values.password ? values.password : undefined,
+                    displayName: values.displayName.trim(),
+                    email: values.email.trim(),
+                    password: values.password
+                        ? values.password.trim()
+                        : undefined,
                 },
             },
         }).then(async (res) => {
@@ -83,7 +83,11 @@ const Profile = (props: Props): JSX.Element => {
                         marginBottom: 20,
                     }}
                     size="xlarge"
-                    title={user?.displayName.charAt(0)?.toUpperCase() ?? "?"}
+                    title={
+                        props.route.params.user.displayName
+                            .charAt(0)
+                            ?.toUpperCase() ?? "?"
+                    }
                 />
                 <Formik
                     initialValues={{
