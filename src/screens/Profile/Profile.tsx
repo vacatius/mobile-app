@@ -110,8 +110,8 @@ const Profile = (props: Props): JSX.Element => {
                                 errorStyle={styles.errorMessage}
                             />
                             <Input
-                                label={t("password")}
-                                placeholder={t("password")}
+                                label={t("passwordNew")}
+                                placeholder={t("passwordNew")}
                                 leftIcon={
                                     <Icon
                                         style={styles.icon}
@@ -133,7 +133,7 @@ const Profile = (props: Props): JSX.Element => {
                                 errorStyle={styles.errorMessage}
                             />
                             <Input
-                                label={t("repeatPassword")}
+                                label={t("repeatPasswordNew")}
                                 placeholder={t("password")}
                                 leftIcon={
                                     <Icon
@@ -179,15 +179,17 @@ const validationSchema = (
             .required(t("validation.emailRequired"))
             .email(t("validation.emailRequired")),
         displayName: Yup.string().required(t("validation.displayNameRequired")),
-        password: Yup.string()
-            .required(t("validation.password.required"))
-            .min(8, t("validation.password.minLength", { amount: "8" })),
+        password: Yup.string().min(
+            8,
+            t("validation.password.minLength", { amount: "8" })
+        ),
         password2: Yup.string()
-            .required(t("validation.password.required"))
-            .oneOf(
-                [Yup.ref("password."), null],
-                t("validation.password.match")
-            ),
+            .when("password", {
+                is: (val: any) => val?.length > 0,
+                then: Yup.string().required(t("validation.password.required")),
+            })
+            .min(8, t("validation.password.minLength", { amount: "8" }))
+            .oneOf([Yup.ref("password."), ""], t("validation.password.match")),
     });
 
 const styles = StyleSheet.create({
