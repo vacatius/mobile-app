@@ -1,3 +1,4 @@
+import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import * as SecureStore from "expo-secure-store";
 import { Formik, FormikValues } from "formik";
@@ -20,8 +21,11 @@ type ProfileScreenNavigationProp = StackNavigationProp<
     Routes.LOGIN
 >;
 
+type LoginRouteProp = RouteProp<RootStackParamList, Routes.LOGIN>;
+
 type Props = {
     navigation: ProfileScreenNavigationProp;
+    route: LoginRouteProp;
 };
 
 async function saveInSecureStore(key: string, value: string): Promise<void> {
@@ -64,6 +68,8 @@ export default function Login(props: Props): JSX.Element {
                     ).catch((e) => console.log(e));
                 }
                 if (res.data?.login.user) {
+                    props.route.params.updateUser(res.data.login.user);
+
                     saveInSecureStore(
                         SecureStorageItems.CURRENT_USER,
                         JSON.stringify(res.data?.login.user)

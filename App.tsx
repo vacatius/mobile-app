@@ -63,6 +63,7 @@ export default function App(): JSX.Element {
                             <Stack.Screen
                                 name={Routes.LOGIN}
                                 component={Login}
+                                initialParams={{ updateUser: setUser }}
                                 options={{
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
@@ -167,6 +168,7 @@ export default function App(): JSX.Element {
                             <Stack.Screen
                                 name={Routes.PROFILE}
                                 component={Profile}
+                                initialParams={{ updateUser: setUser }}
                                 options={{
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (

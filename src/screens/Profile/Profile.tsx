@@ -1,15 +1,20 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
-import { Avatar, Button, Icon, Input, Text } from "react-native-elements";
+import React, { useState } from "react";
+import { Avatar, Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
-import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import { Formik, FormikValues } from "formik";
 import { TFunction, useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import stc from "string-to-color";
+import { useUpdateUserMutationMutation } from "./types/updateUserMutation";
+import * as SecureStore from "expo-secure-store";
+import SecureStorageItems from "../../types/SecureStorageItems";
+import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
+import { LoginMutation } from "../Login/types/loginMutation";
 
 type ProfileScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -25,9 +30,45 @@ type Props = {
 
 const Profile = (props: Props): JSX.Element => {
     const { t } = useTranslation();
+    const [execute, { error, loading }] = useUpdateUserMutationMutation();
+    const { getCurrentUser } = useCurrentAuthUser();
+    const [user, setUser] = useState<
+        LoginMutation["login"]["user"] | undefined
+    >();
+    getCurrentUser().then((res) => {
+        setUser(res);
+    });
 
     const submit = (values: FormikValues): void => {
         console.log(values);
+        execute({
+            variables: {
+                input: {
+                    displayName: values.displayName,
+                    email: values.email,
+                    password: values.password ? values.password : undefined,
+                },
+            },
+        }).then(async (res) => {
+            await SecureStore.setItemAsync(
+                SecureStorageItems.CURRENT_USER,
+                JSON.stringify(res.data?.updateUser)
+            );
+            if (res.data?.updateUser) {
+                props.route.params.updateUser(res.data?.updateUser);
+            }
+        });
+    };
+
+    const logout = async (): Promise<void> => {
+        console.log("logout");
+        console.log(props.route.params.updateUser);
+        await SecureStore.deleteItemAsync(SecureStorageItems.CURRENT_USER);
+        await SecureStore.deleteItemAsync(SecureStorageItems.ACCESS_TOKEN);
+        props.route.params.updateUser(undefined);
+        props.navigation.reset({
+            routes: [{ name: Routes.LOGIN }],
+        });
     };
 
     return (
@@ -42,11 +83,7 @@ const Profile = (props: Props): JSX.Element => {
                         marginBottom: 20,
                     }}
                     size="xlarge"
-                    title={
-                        props.route.params.user.displayName
-                            .charAt(0)
-                            ?.toUpperCase() ?? "?"
-                    }
+                    title={user?.displayName.charAt(0)?.toUpperCase() ?? "?"}
                 />
                 <Formik
                     initialValues={{
@@ -160,12 +197,17 @@ const Profile = (props: Props): JSX.Element => {
                                 buttonStyle={styles.buttonRegister}
                                 title={t("screens.profile.save")}
                                 titleStyle={styles.buttonTitle}
-                                iconRight
                                 onPress={() => handleSubmit()}
+                                loading={loading}
                             />
                         </>
                     )}
                 </Formik>
+                <Button
+                    title={t("screens.profile.logout")}
+                    type="clear"
+                    onPress={logout}
+                />
             </SafeAreaView>
         </KeyboardAwareScrollView>
     );
@@ -185,10 +227,10 @@ const validationSchema = (
         ),
         password2: Yup.string()
             .when("password", {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 is: (val: any) => val?.length > 0,
                 then: Yup.string().required(t("validation.password.required")),
             })
-            .min(8, t("validation.password.minLength", { amount: "8" }))
             .oneOf([Yup.ref("password."), ""], t("validation.password.match")),
     });
 

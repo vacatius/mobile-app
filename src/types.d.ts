@@ -143,6 +143,7 @@ export type Mutation = {
   createTrip: Trip;
   joinTrip: Trip;
   leaveTrip: Trip;
+  removeMemberFromTrip: Trip;
   removeTrip: MutationResult;
   updateTrip: Trip;
   createTripRoutePoint: TripRoutePoint;
@@ -175,6 +176,12 @@ export type MutationJoinTripArgs = {
 
 
 export type MutationLeaveTripArgs = {
+  tripId: Scalars['String'];
+};
+
+
+export type MutationRemoveMemberFromTripArgs = {
+  userIdToRemove: Scalars['String'];
   tripId: Scalars['String'];
 };
 
@@ -277,6 +284,7 @@ export type Node = {
 export type Query = {
   __typename?: 'Query';
   trips: Array<Trip>;
+  trip: Trip;
   tripRoutePoint: TripRoutePoint;
   user: User;
   activities: Array<Activity>;
@@ -288,6 +296,11 @@ export type Query = {
 
 export type QueryTripsArgs = {
   includeHistorical?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type QueryTripArgs = {
+  tripId: Scalars['String'];
 };
 
 
@@ -454,8 +467,6 @@ export type UpdateUserInput = {
   email?: Maybe<Scalars['String']>;
   /** Verification captcha token to avoid spam */
   captchaToken?: Maybe<Scalars['String']>;
-  /** User ID of the user to be updated */
-  userIdToUpdate: Scalars['String'];
 };
 
 export type User = Node & {

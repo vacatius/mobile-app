@@ -51,12 +51,14 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (
             >
                 {props.screenTitle}
             </Text>
-            <Button
-                type="clear"
-                icon={props.actionIcon}
-                onPress={props.actionCallback}
-                containerStyle={styles.actionButton}
-            />
+            {props.actionIcon !== undefined && (
+                <Button
+                    type="clear"
+                    icon={props.actionIcon}
+                    onPress={props.actionCallback}
+                    containerStyle={styles.actionButton}
+                />
+            )}
             {props.user !== undefined && (
                 <TouchableOpacity
                     style={{ marginLeft: "auto" }}

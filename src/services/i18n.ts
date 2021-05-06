@@ -140,6 +140,7 @@ export const resources = {
                 },
                 profile: {
                     save: "Save",
+                    logout: "Logout",
                 },
             },
         },
@@ -260,6 +261,7 @@ export const resources = {
                 },
                 profile: {
                     save: "Speichern",
+                    logout: "Abmelden",
                 },
             },
         },
