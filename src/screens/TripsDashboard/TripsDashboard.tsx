@@ -69,8 +69,11 @@ export default function TripsDashboard(props: Props): JSX.Element {
     }
     const openTripDetails = (trip: TripsQuery["trips"][0]): void => {
         props.navigation.navigate(Routes.ITINERARY, {
-            tripId: trip.id,
-            tripName: trip.name,
+            screen: Routes.ITINERARY,
+            params: {
+                tripId: trip.id,
+                tripName: trip.name,
+            },
         });
         console.log("Opening trip details for tripId: " + trip.id);
     };

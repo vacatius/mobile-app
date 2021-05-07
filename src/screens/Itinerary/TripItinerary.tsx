@@ -1,24 +1,26 @@
-import { RouteProp } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
+import { CompositeNavigationProp, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useEffect } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActivityGroup, {
     ActivityGroupData,
 } from "../../components/ActivityGroup";
-import ScreenHeader from "../../components/ScreenHeader";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
+import { Mode } from "../ViewAddEditActivity/ViewAddEditActivity";
+import TripTabParamList from "../../types/TripTabParamList";
 import { useGetTripQuery } from "./types/getTripQuery";
 
-type TripItineraryScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.ITINERARY
+type TripItineraryScreenNavigationProp = CompositeNavigationProp<
+    BottomTabNavigationProp<TripTabParamList, Routes.ITINERARY>,
+    StackNavigationProp<RootStackParamList, Routes.ITINERARY>
 >;
 
-type TripItineraryRouteProp = RouteProp<RootStackParamList, Routes.ITINERARY>;
+type TripItineraryRouteProp = RouteProp<TripTabParamList, Routes.ITINERARY>;
 
 type Props = {
     navigation: TripItineraryScreenNavigationProp;
@@ -45,29 +47,13 @@ export default function TripItinerary(props: Props): JSX.Element {
         console.log("Add activity group button pressed");
     };
 
-    useEffect(() => {
-        props.navigation.setOptions({
-            headerBackTitleVisible: false,
-            // eslint-disable-next-line react/display-name
-            headerTitle: (headerProps) => (
-                <ScreenHeader
-                    // eslint-disable-next-line react/prop-types
-                    screenTitle={props.route.params.tripName}
-                    actionIcon={
-                        <Icon
-                            style={styles.iconButton}
-                            name="share"
-                            size={20}
-                            color="#222"
-                            type="font-awesome-5"
-                        />
-                    }
-                    actionCallback={() => console.log("share trip")}
-                    {...headerProps}
-                />
-            ),
+    const onAddActivity = (tripId: string, activityGroupId: string): void => {
+        props.navigation.navigate(Routes.VIEW_ADD_EDIT_ACTIVITY, {
+            tripId: tripId,
+            activityGroupId: activityGroupId,
+            mode: Mode.ADD,
         });
-    }, []);
+    };
 
     if (data?.node?.__typename === "Trip") {
         return (
@@ -101,11 +87,14 @@ export default function TripItinerary(props: Props): JSX.Element {
                             activityGroupData={i}
                             tripId={props.route.params.tripId}
                             onEditActivityGroup={onEditActivityGroup}
+                            onAddActivity={onAddActivity}
                         />
                     ))}
                 </SafeAreaView>
             </ScrollView>
         );
+    } else if (loading) {
+        return <ActivityIndicator size="large" />;
     } else {
         return <Text>{t("error.generic")}</Text>;
     }

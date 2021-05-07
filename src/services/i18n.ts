@@ -142,6 +142,18 @@ export const resources = {
                     save: "Save",
                     logout: "Logout",
                 },
+                viewAddEditActivity: {
+                    activityName: "Activity Name",
+                    removeActivity: "Remove Activity",
+                    submitUpdate: "Update Activity",
+                    submitCreate: "Add Activity",
+                    createActivity: "Create Activity",
+                    removeDialogTitle: "Really remove Activity?",
+                    removeDialogMessage:
+                        "You will not be able to restore it afterwards!",
+                    from: "from",
+                    to: "to",
+                },
             },
         },
     },
@@ -262,6 +274,18 @@ export const resources = {
                 profile: {
                     save: "Speichern",
                     logout: "Abmelden",
+                },
+                viewAddEditActivity: {
+                    activityName: "Aktivitätsname",
+                    removeActivity: "Aktivität löschen",
+                    submitUpdate: "Aktivität aktualisieren",
+                    submitCreate: "Aktivität hinzufügen",
+                    removeDialogTitle: "Aktivität wirklich löschen?",
+                    createActivity: "Aktivität erstellen",
+                    removeDialogMessage:
+                        "Du kannst sie nicht wiederherstellen.",
+                    from: "von",
+                    to: "bis",
                 },
             },
         },

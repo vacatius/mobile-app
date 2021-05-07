@@ -1,9 +1,12 @@
+import { useNavigation } from "@react-navigation/core";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Badge, Icon } from "react-native-elements";
 import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
 import { refetchGetTripQuery } from "../../screens/Itinerary/types/getTripQuery";
+import { Mode } from "../../screens/ViewAddEditActivity/ViewAddEditActivity";
 import * as Types from "../../types.d";
+import { Routes } from "../../types/Routes";
 import { useCreateActivityReactionMutation } from "./types/CreateActivityReactionMutation";
 import { useRemoveActivityReactionMutation } from "./types/RemoveActivityReactionMutation";
 import { useUpdateActivityReactionMutation } from "./types/UpdateActivityReactionMutation";
@@ -28,6 +31,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
     const [executeCreate] = useCreateActivityReactionMutation();
     const [executeRemove] = useRemoveActivityReactionMutation();
     const [executeUpdate] = useUpdateActivityReactionMutation();
+    const navigation = useNavigation();
 
     const date: Date = new Date(Date.parse(props.date || ""));
 
@@ -149,9 +153,18 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         }`;
     };
 
+    const openActivityDetails = (): void => {
+        navigation.navigate(Routes.VIEW_ADD_EDIT_ACTIVITY, {
+            activityId: props.id,
+            tripId: props.tripId,
+            activityName: props.name,
+            mode: Mode.VIEW,
+        });
+    };
+
     return (
         <View style={styles.container}>
-            <Pressable onPress={() => console.log("press activity")}>
+            <Pressable onPress={() => openActivityDetails()}>
                 <View style={styles.cardBody}>
                     <Text numberOfLines={2} style={styles.cardName}>
                         {props.name}

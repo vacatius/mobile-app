@@ -1,0 +1,5 @@
+mutation removeActivity($input: String!) {
+    removeActivity(id: $input) {
+        successful
+    }
+}

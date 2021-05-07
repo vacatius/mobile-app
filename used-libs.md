@@ -9,7 +9,13 @@
 1. react-native-svg
     - [documentation](https://docs.expo.io/versions/latest/sdk/svg/)
     - license: MIT
-
+1. react-native-toast-message
+    - [documentation](https://github.com/calintamas/react-native-toast-message)
+    - license: MIT
+1.  react-native-datetimepicker / datetimepicker
+    - [github](https://github.com/react-native-datetimepicker/datetimepicker)
+    - license: MIT
+   
 #### Forms and Validation
 
 1. formik

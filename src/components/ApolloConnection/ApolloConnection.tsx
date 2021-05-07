@@ -10,6 +10,8 @@ import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import * as SecureStore from "expo-secure-store";
 import React from "react";
+import { useTranslation } from "react-i18next";
+import Toast from "react-native-toast-message";
 import { getEnvironment } from "../../get-environment";
 import SecureStorageItems from "../../types/SecureStorageItems";
 import { REFRESH_TOKEN_MUTATION } from "./refresh-token.mutation";
@@ -22,6 +24,8 @@ export default function ApolloConnection(props: Props): JSX.Element {
     // Initialize Apollo Client (Backend)
     let isRefreshing = false;
     let pendingRequests: any[] = []; // eslint-disable-line
+
+    const { t } = useTranslation();
 
     const resolvePendingRequests = (): void => {
         pendingRequests.map((callback) => callback());
@@ -51,10 +55,15 @@ export default function ApolloConnection(props: Props): JSX.Element {
 
     // https://able.bio/AnasT/apollo-graphql-async-access-token-refresh--470t1c8
     const errorLink: ApolloLink = onError(
-        ({ graphQLErrors, operation, forward }) => {
+        ({ graphQLErrors, networkError, operation, forward }) => {
             if (graphQLErrors) {
                 for (const err of graphQLErrors) {
                     console.error(err);
+                    Toast.show({
+                        text1: t("error.generic"),
+                        text2: err.message,
+                        type: "error",
+                    });
                     switch (err.extensions?.code) {
                         case "UNAUTHENTICATED":
                             // Handle token refresh errors e.g clear stored tokens, redirect to login
@@ -105,6 +114,13 @@ export default function ApolloConnection(props: Props): JSX.Element {
                             break;
                     }
                 }
+            }
+            if (networkError) {
+                Toast.show({
+                    text1: t("error.network"),
+                    text2: networkError.message,
+                    type: "error",
+                });
             }
         }
     );
