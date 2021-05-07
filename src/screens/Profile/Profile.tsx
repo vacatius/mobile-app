@@ -1,6 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
+import React, { useState } from "react";
 import { Avatar, Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import RootStackParamList from "../../types/RootStackParamList";
@@ -29,6 +29,9 @@ type Props = {
 const Profile = (props: Props): JSX.Element => {
     const { t } = useTranslation();
     const [execute, { error, loading }] = useUpdateUserMutationMutation();
+    const [displayName, setDisplayName] = useState(
+        props.route.params.user.displayName
+    );
 
     const submit = (values: FormikValues): void => {
         if (
@@ -55,6 +58,7 @@ const Profile = (props: Props): JSX.Element => {
                 JSON.stringify(res.data?.updateUser)
             );
             if (res.data?.updateUser) {
+                setDisplayName(res.data.updateUser.displayName);
                 props.route.params.updateUser(res.data?.updateUser);
             }
         });
@@ -83,11 +87,7 @@ const Profile = (props: Props): JSX.Element => {
                         marginBottom: 20,
                     }}
                     size="xlarge"
-                    title={
-                        props.route.params.user.displayName
-                            .charAt(0)
-                            ?.toUpperCase() ?? "?"
-                    }
+                    title={displayName.charAt(0)?.toUpperCase() ?? "?"}
                 />
                 <Formik
                     initialValues={{
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        padding: 20,
+        margin: 20,
     },
     text: {
         fontSize: 40,
