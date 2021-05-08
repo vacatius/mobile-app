@@ -9,7 +9,9 @@ export const resources = {
             register: "Register",
             email: "Email",
             password: "Password",
+            passwordNew: "New Password",
             repeatPassword: "Repeat Password",
+            repeatPasswordNew: "Repeat New Password",
             username: "Username",
             description: "Description",
             startJourney: ["Start Journey", "Lets go"],
@@ -136,6 +138,10 @@ export const resources = {
                     removeDialogMessage:
                         "You will not be able to restore it afterwards. All activities inside will be deleted!",
                 },
+                profile: {
+                    save: "Save",
+                    logout: "Logout",
+                },
                 viewAddEditActivity: {
                     activityName: "Activity Name",
                     removeActivity: "Remove Activity",
@@ -157,7 +163,9 @@ export const resources = {
             register: "Registrieren",
             email: "Email",
             password: "Passwort",
+            passwordNew: "Neues Password",
             repeatPassword: "Passwort Wiederholen",
+            repeatPasswordNew: "Neues Passwort Wiederholen",
             username: "Benutzername",
             description: "Beschreibung",
             displayName: "Anzeige Name",
@@ -262,6 +270,10 @@ export const resources = {
                     removeDialogTitle: "Aktivitätsgruppe wirklich löschen?",
                     removeDialogMessage:
                         "Du kannst sie nicht wiederherstellen. Alle Aktivitäten darin werden gelöscht!",
+                },
+                profile: {
+                    save: "Speichern",
+                    logout: "Abmelden",
                 },
                 viewAddEditActivity: {
                     activityName: "Aktivitätsname",

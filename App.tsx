@@ -20,6 +20,7 @@ import AddEditActivityGroupScreen from "./src/screens/AddEditActivityGroup/AddEd
 import { AddTrip } from "./src/screens/AddTrip/AddTrip";
 import Login from "./src/screens/Login/Login";
 import { LoginMutation } from "./src/screens/Login/types/loginMutation";
+import Profile from "./src/screens/Profile/Profile";
 import Register from "./src/screens/Register/Register";
 import ShareTrip from "./src/screens/ShareTrip/ShareTrip";
 import TripsDashboard from "./src/screens/TripsDashboard/TripsDashboard";
@@ -63,12 +64,14 @@ export default function App(): JSX.Element {
                 <NavigationContainer ref={navigationRef}>
                     <ApolloConnection navigationFn={replace}>
                         <Stack.Navigator
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                             // @ts-ignore
                             initialRouteName={initialRoute}
                         >
                             <Stack.Screen
                                 name={Routes.LOGIN}
                                 component={Login}
+                                initialParams={{ updateUser: setUser }}
                                 options={{
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
@@ -187,6 +190,20 @@ export default function App(): JSX.Element {
                                                       "screens.addEditActivityGroup.titleUpdate"
                                                   ),
                                     };
+                                }}
+                            />
+                            <Stack.Screen
+                                name={Routes.PROFILE}
+                                component={Profile}
+                                initialParams={{ updateUser: setUser }}
+                                options={{
+                                    headerBackTitleVisible: false,
+                                    headerTitle: (props) => (
+                                        <ScreenHeader
+                                            screenTitle={user?.username || ""}
+                                            {...props}
+                                        />
+                                    ),
                                 }}
                             />
                         </Stack.Navigator>

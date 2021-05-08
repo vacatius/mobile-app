@@ -1,12 +1,15 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { ActivityGroupData } from "../components/ActivityGroup";
 import { CreateTripMutation } from "../screens/AddTrip/types/add-trip.mutation";
+import { LoginMutation } from "../screens/Login/types/loginMutation";
 import { Mode } from "../screens/ViewAddEditActivity/ViewAddEditActivity";
 import { Routes } from "./Routes";
 import TripTabParamList from "./TripTabParamList";
 
 type RootStackParamList = {
-    [Routes.LOGIN]: undefined;
+    [Routes.LOGIN]: {
+        updateUser(user: LoginMutation["login"]["user"] | undefined): void;
+    };
     [Routes.REGISTER]: undefined;
     [Routes.DASHBOARD]: undefined;
     [Routes.ITINERARY]: NavigatorScreenParams<TripTabParamList>;
@@ -22,6 +25,10 @@ type RootStackParamList = {
         tripId: string;
         mode: Mode;
         activityName?: string;
+    };
+    [Routes.PROFILE]: {
+        user: LoginMutation["login"]["user"];
+        updateUser(user: LoginMutation["login"]["user"] | undefined): void;
     };
 };
 

@@ -1,0 +1,8 @@
+mutation updateUserMutation($input: UpdateUserInput!) {
+  updateUser(data: $input){
+    id
+    displayName
+    username
+    email
+  }
+}

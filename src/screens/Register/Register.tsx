@@ -81,9 +81,7 @@ export default function Register(props: Props): JSX.Element {
                             })}
                         </Text>
                         <Button
-                            onPress={() =>
-                                props.navigation.navigate(Routes.LOGIN)
-                            }
+                            onPress={() => props.navigation.goBack()}
                             title={t("login")}
                             buttonStyle={styles.buttonRegister}
                             containerStyle={styles.buttonContainerWelcome}
