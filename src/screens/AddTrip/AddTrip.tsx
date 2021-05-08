@@ -74,7 +74,7 @@ export const AddTrip = (props: Props): JSX.Element => {
             .catch((e) => console.error(e)); // TODO - Notify user
     };
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 bounces={true}

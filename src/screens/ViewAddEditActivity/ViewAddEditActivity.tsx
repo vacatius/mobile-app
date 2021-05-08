@@ -249,7 +249,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
                 {/* Undraw.co: stranded traveller */}
                 <SvgStrandedTraveller
                     style={styles.travelPlan}

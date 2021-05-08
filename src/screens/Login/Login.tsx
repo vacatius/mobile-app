@@ -83,7 +83,7 @@ export default function Login(props: Props): JSX.Element {
     };
 
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
                     <SvgLogo style={styles.logo} width={150} height={150} />

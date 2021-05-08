@@ -67,7 +67,7 @@ export default function Register(props: Props): JSX.Element {
     };
 
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
                     <Overlay
