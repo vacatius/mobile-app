@@ -49,6 +49,19 @@ export default function Register(props: Props): JSX.Element {
         ],
     });
 
+    const [registerTitle] = useState(
+        t("startJourney", {
+            returnObjects: true,
+        })[
+            Math.floor(
+                Math.random() *
+                    t("startJourney", {
+                        returnObjects: true,
+                    }).length
+            )
+        ]
+    );
+
     const handleRegister = (values: FormikValues): void => {
         execute({
             variables: {
@@ -234,18 +247,7 @@ export default function Register(props: Props): JSX.Element {
                                 <Button
                                     containerStyle={styles.buttonContainer}
                                     buttonStyle={styles.buttonRegister}
-                                    title={
-                                        t("startJourney", {
-                                            returnObjects: true,
-                                        })[
-                                            Math.floor(
-                                                Math.random() *
-                                                    t("startJourney", {
-                                                        returnObjects: true,
-                                                    }).length
-                                            )
-                                        ]
-                                    }
+                                    title={registerTitle}
                                     titleStyle={styles.buttonTitle}
                                     icon={
                                         <Icon
