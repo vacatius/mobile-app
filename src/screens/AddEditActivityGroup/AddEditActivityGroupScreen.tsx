@@ -159,7 +159,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
 
     return (
         <SafeAreaView>
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
                 <View style={styles.inner}>
                     {/* Undraw.co: travel plans */}
                     <SvgTravelPlan
