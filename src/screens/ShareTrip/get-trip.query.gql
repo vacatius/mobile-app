@@ -1,0 +1,7 @@
+query GetTrip($tripId: String!) {
+  trip(tripId: $tripId) {
+    id
+    name
+    description
+  }
+}

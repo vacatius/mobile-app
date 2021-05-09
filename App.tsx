@@ -1,5 +1,4 @@
 /* eslint-disable react/display-name */
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
     NavigationContainer,
     NavigationContainerRef,
@@ -29,6 +28,7 @@ import i18n from "./src/services/i18n";
 import { TripRoutePoint } from "./src/types";
 import RootStackParamList from "./src/types/RootStackParamList";
 import { Routes } from "./src/types/Routes";
+import * as Linking from "expo-linking";
 //init i18n
 i18n;
 const Stack = createStackNavigator<RootStackParamList>();
@@ -57,11 +57,22 @@ export default function App(): JSX.Element {
 
         loadInitialRoute();
     }, []);
+
+    const prefix = Linking.createURL("/");
+    const linking = {
+        prefixes: [prefix],
+        config: {
+            screens: {
+                ShareTrip: "joinTrip/:invitationId",
+            },
+        },
+    };
+
     return (
         <SafeAreaProvider>
             <StatusBar style="dark" backgroundColor="white" />
             {(initialRoute === Routes.EMPTY && <SvgLogo />) || (
-                <NavigationContainer ref={navigationRef}>
+                <NavigationContainer ref={navigationRef} linking={linking}>
                     <ApolloConnection navigationFn={replace}>
                         <Stack.Navigator
                             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

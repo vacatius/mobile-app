@@ -1,6 +1,6 @@
 import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
     Platform,
@@ -10,11 +10,21 @@ import {
     StyleSheet,
 } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
+import Toast from "react-native-toast-message";
 import SvgLogo from "../../components/SvgLogo";
 import { getEnvironment } from "../../get-environment";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
+import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateInvitationMutation } from "./types/create-invite.mutation";
+import { useGetTripQuery } from "./types/get-trip.query";
+import { useJoinTripMutation } from "./types/join-trip.mutation";
+import * as Linking from "expo-linking";
+
+export enum Mode {
+    SHARE_TRIP,
+    JOIN_TRIP,
+}
 
 type ShareTripScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -32,27 +42,95 @@ type Props = {
 
 export default function ShareTrip(props: Props): JSX.Element {
     const { t } = useTranslation();
+    const [mode, setMode] = useState<Mode>(props.route.params.mode);
 
-    const trip = props.route.params.trip;
-    const [execute, { loading }] = useCreateInvitationMutation();
+    useEffect(() => {
+        async function getInitialUrl(): Promise<void> {
+            const link = await Linking.getInitialURL();
+            if (link && link !== null) {
+                console.log("we got a initial URL link");
+                console.log(link);
+            }
+        }
+        getInitialUrl();
+        Linking.addEventListener("url", (event) => {
+            console.log("got event listener callback");
+            console.log(event);
+        });
+    }, []);
 
-    const handleShare = (): void => {
-        execute({
-            variables: {
-                input: {
-                    tripId: trip.id,
+    const paramsTripId = props.route.params.tripId;
+    const [
+        executeCreateInvitation,
+        { loading: loadingCreateInvitation },
+    ] = useCreateInvitationMutation();
+    const [
+        executeJoinTripMutation,
+        { data: joinTripData, loading: loadingJoinTrip },
+    ] = useJoinTripMutation();
+
+    const { data: trip, error: getTripError } = useGetTripQuery({
+        variables: {
+            tripId: paramsTripId,
+        },
+    });
+
+    const handleSubmitButton = (): void => {
+        if (mode === Mode.SHARE_TRIP) {
+            executeCreateInvitation({
+                variables: {
+                    input: {
+                        tripId: trip?.trip.id || "",
+                    },
                 },
-            },
-        })
-            .then((result) => {
-                if (result.data?.createInvitation.id) {
-                    handleSystemShareSheet(
-                        getEnvironment()?.invitationBaseUrl +
-                            encodeURIComponent(result.data?.createInvitation.id)
-                    );
-                }
             })
-            .catch((error) => console.error(error)); // TODO - Notify user with error modal
+                .then((result) => {
+                    if (result.data?.createInvitation.id) {
+                        // exp://exp.host/@community/with-webbrowser-redirect/--/shareTrip/90194i0294i4240
+                        const expoLink = Linking.createURL(
+                            "joinTrip/" + result.data?.createInvitation.id
+                        );
+                        console.log(expoLink);
+
+                        // https://vacatius.com/invite/shareTrip/90194i0294i4240
+                        handleSystemShareSheet(
+                            getEnvironment()?.invitationBaseUrl +
+                                encodeURIComponent(
+                                    result.data?.createInvitation.id
+                                )
+                        );
+                    }
+                })
+                .catch((error) => console.error(error)); // TODO - Notify user with error modal
+        } else if (mode === Mode.JOIN_TRIP) {
+            executeJoinTripMutation({
+                variables: {
+                    input: {
+                        invitationId: "", // TODO
+                        tripId: trip?.trip.id || "",
+                    },
+                },
+                refetchQueries: [refetchTripsQuery()],
+            })
+                .then(() => {
+                    props.navigation.reset({
+                        index: 0,
+                        routes: [
+                            {
+                                name: Routes.DASHBOARD,
+                            },
+                        ],
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Toast.show({
+                        text1: t("error.generic"),
+                        text2: error.message,
+                        type: "error",
+                    });
+                });
+        }
     };
 
     const handleSystemShareSheet = async (
@@ -77,12 +155,20 @@ export default function ShareTrip(props: Props): JSX.Element {
         }
     };
 
+    if (!trip) {
+        return (
+            <>
+                <Text>{getTripError}</Text>
+            </>
+        );
+    }
+
     return (
         <>
             <Header
                 placement={"left"}
                 containerStyle={styles.header}
-                leftComponent={<Text h2>{trip.name}</Text>}
+                leftComponent={<Text h2>{trip.trip.name}</Text>}
                 rightComponent={
                     <Avatar
                         rounded
@@ -96,15 +182,17 @@ export default function ShareTrip(props: Props): JSX.Element {
                 }
             />
             <ScrollView style={styles.scrollView}>
-                {trip.description && <Text h4>{trip.description}</Text>}
+                {trip.trip.description && (
+                    <Text h4>{trip.trip.description}</Text>
+                )}
                 <SvgLogo style={styles.logo} height={150} width={150} />
                 <Button
                     containerStyle={styles.btnContainer}
                     buttonStyle={styles.shareBtn}
                     title={t("screens.shareTrip.share")}
                     titleStyle={styles.btnTextStyle}
-                    onPress={() => handleShare()}
-                    loading={loading}
+                    onPress={() => handleSubmitButton()}
+                    loading={loadingCreateInvitation}
                 />
                 <Button
                     containerStyle={styles.btnContainer}
@@ -122,8 +210,8 @@ export default function ShareTrip(props: Props): JSX.Element {
                                 {
                                     name: Routes.ITINERARY,
                                     params: {
-                                        tripId: props.route.params.trip.id,
-                                        tripName: props.route.params.trip.name,
+                                        tripId: trip.trip.id,
+                                        tripName: trip.trip.name,
                                     },
                                 },
                             ],
