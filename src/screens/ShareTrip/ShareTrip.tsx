@@ -88,7 +88,13 @@ export default function ShareTrip(props: Props): JSX.Element {
                     if (result.data?.createInvitation.id) {
                         // exp://exp.host/@community/with-webbrowser-redirect/--/shareTrip/90194i0294i4240
                         const expoLink = Linking.createURL(
-                            "joinTrip/" + result.data?.createInvitation.id
+                            "joinTrip/" + result.data?.createInvitation.id,
+                            {
+                                queryParams: {
+                                    invitationId:
+                                        result.data?.createInvitation.id,
+                                },
+                            }
                         );
                         console.log(expoLink);
 

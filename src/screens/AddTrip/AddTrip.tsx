@@ -11,6 +11,7 @@ import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
 import { Trip } from "../../types";
 import { Routes } from "../../types/Routes";
+import { Mode } from "../ShareTrip/ShareTrip";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateTripMutation } from "./types/add-trip.mutation";
 
@@ -66,6 +67,7 @@ export const AddTrip = (props: Props): JSX.Element => {
                             name: Routes.SHARE_TRIP,
                             params: {
                                 trip: result.data?.createTrip,
+                                mode: Mode.SHARE_TRIP,
                             },
                         },
                     ],
