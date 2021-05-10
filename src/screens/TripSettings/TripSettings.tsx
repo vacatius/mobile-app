@@ -269,7 +269,12 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
 
                         <ListItem.Content>
                             <ListItem.Title>{member.user.displayName}</ListItem.Title>
-                            <ListItem.Subtitle>{member.role}</ListItem.Subtitle>
+                            {member.role === "ADMIN" && (
+                                <ListItem.Subtitle>
+                                    {member.role.charAt(0).toUpperCase() +
+                                        member.role.toLowerCase().slice(1)}
+                                </ListItem.Subtitle>
+                            )}
                         </ListItem.Content>
                         {settingsMode === Mode.EDIT &&
                             data.trip.admin.id === currentUser?.id &&
