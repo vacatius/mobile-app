@@ -6,9 +6,7 @@ import { useTranslation } from "react-i18next";
 import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ActivityGroup, {
-    ActivityGroupData,
-} from "../../components/ActivityGroup";
+import ActivityGroup, { ActivityGroupData } from "../../components/ActivityGroup";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { Mode } from "../ViewAddEditActivity/ViewAddEditActivity";

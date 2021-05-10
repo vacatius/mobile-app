@@ -15,9 +15,7 @@ const iconValues = {
     blue: "#007AFF",
 };
 
-export default function ActivityGroupHeader(
-    props: ActivityGroupHeaderProps
-): JSX.Element {
+export default function ActivityGroupHeader(props: ActivityGroupHeaderProps): JSX.Element {
     return (
         <Pressable onPress={props.onOpen}>
             <View style={styles.container}>

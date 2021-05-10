@@ -2,13 +2,7 @@ import { RouteProp, useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-    ActivityIndicator,
-    ScrollView,
-    StyleSheet,
-    TouchableOpacity,
-    View,
-} from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Button, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
 import TripCard from "../../components/TripCard/TripCard";
@@ -16,14 +10,8 @@ import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { TripsQuery, useTripsQuery } from "./types/trip-dashboard.query";
 
-type TripsDashboardScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.DASHBOARD
->;
-type TripsDashboardScreenRouteProp = RouteProp<
-    RootStackParamList,
-    Routes.DASHBOARD
->;
+type TripsDashboardScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.DASHBOARD>;
+type TripsDashboardScreenRouteProp = RouteProp<RootStackParamList, Routes.DASHBOARD>;
 type Props = {
     navigation: TripsDashboardScreenNavigationProp;
     route: TripsDashboardScreenRouteProp;
@@ -83,20 +71,13 @@ export default function TripsDashboard(props: Props): JSX.Element {
     };
     return (
         <>
-            <ScrollView
-                contentContainerStyle={{ flexGrow: 1 }}
-                style={styles.scrollView}
-            >
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
                 <Text h3 style={styles.headlines}>
                     {t("screens.dashboard.currentTrips")}
                 </Text>
                 {currentTrips &&
                     currentTrips?.map((trip) => (
-                        <TripCard
-                            key={trip.id}
-                            trip={trip}
-                            openTripDetails={openTripDetails}
-                        />
+                        <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
                     ))}
                 {(!currentTrips || currentTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
@@ -108,11 +89,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
                 </Text>
                 {pastTrips &&
                     pastTrips?.map((trip) => (
-                        <TripCard
-                            key={trip.id}
-                            trip={trip}
-                            openTripDetails={openTripDetails}
-                        />
+                        <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
                     ))}
                 {(!pastTrips || pastTrips.length === 0) && (
                     <Text style={styles.noTripsFound}>
@@ -120,14 +97,9 @@ export default function TripsDashboard(props: Props): JSX.Element {
                     </Text>
                 )}
             </ScrollView>
-            <TouchableOpacity
-                activeOpacity={0.7}
-                style={styles.floatingTouchableOpacity}
-            >
+            <TouchableOpacity activeOpacity={0.7} style={styles.floatingTouchableOpacity}>
                 <Button
-                    icon={
-                        <SvgLogo style={styles.logo} width={40} height={40} />
-                    }
+                    icon={<SvgLogo style={styles.logo} width={40} height={40} />}
                     iconRight
                     title={t("screens.add_trip.title")}
                     titleStyle={{

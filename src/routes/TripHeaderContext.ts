@@ -8,8 +8,6 @@ type TripHeaderContextContent = {
     setTitle: (title: string) => void;
 };
 
-const TripHeaderContext = React.createContext<
-    Partial<TripHeaderContextContent>
->({});
+const TripHeaderContext = React.createContext<Partial<TripHeaderContextContent>>({});
 
 export default TripHeaderContext;

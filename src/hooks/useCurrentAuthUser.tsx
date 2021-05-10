@@ -5,12 +5,8 @@ import SecureStorageItems from "../types/SecureStorageItems";
 const useCurrentAuthUser = (): {
     getCurrentUser: () => Promise<LoginMutation["login"]["user"] | undefined>;
 } => {
-    const getCurrentUser = async (): Promise<
-        LoginMutation["login"]["user"] | undefined
-    > => {
-        const currentUser = await SecureStore.getItemAsync(
-            SecureStorageItems.CURRENT_USER
-        );
+    const getCurrentUser = async (): Promise<LoginMutation["login"]["user"] | undefined> => {
+        const currentUser = await SecureStore.getItemAsync(SecureStorageItems.CURRENT_USER);
         if (currentUser === null) {
             return undefined;
         }

@@ -44,8 +44,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         setUserLiked(
             props.activityReactions.filter(
                 (r) =>
-                    r.activityReactionType ===
-                        Types.ActivityReactionType.Like &&
+                    r.activityReactionType === Types.ActivityReactionType.Like &&
                     r.addedByUser.id === user.id
             ).length > 0
         );
@@ -53,20 +52,16 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         setUserDisliked(
             props.activityReactions.filter(
                 (r) =>
-                    r.activityReactionType ===
-                        Types.ActivityReactionType.Dislike &&
+                    r.activityReactionType === Types.ActivityReactionType.Dislike &&
                     r.addedByUser.id === user.id
             ).length > 0
         );
     });
 
-    const handleReactionType = (
-        reactionType: Types.ActivityReactionType
-    ): void => {
+    const handleReactionType = (reactionType: Types.ActivityReactionType): void => {
         const remove = (): void => {
             const activityReactionId =
-                props.activityReactions.find((r) => r.addedByUser.id === userId)
-                    ?.id || "";
+                props.activityReactions.find((r) => r.addedByUser.id === userId)?.id || "";
             if (activityReactionId.length > 0) {
                 executeRemove({
                     variables: {
@@ -81,9 +76,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
             }
         };
 
-        const create = (
-            activityReactionType: Types.ActivityReactionType
-        ): void => {
+        const create = (activityReactionType: Types.ActivityReactionType): void => {
             executeCreate({
                 variables: {
                     input: {
@@ -99,12 +92,9 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
             }).catch((e) => console.log(e)); // TODO error handling
         };
 
-        const update = (
-            activityReactionType: Types.ActivityReactionType
-        ): void => {
+        const update = (activityReactionType: Types.ActivityReactionType): void => {
             const activityReactionId =
-                props.activityReactions.find((r) => r.addedByUser.id === userId)
-                    ?.id || "";
+                props.activityReactions.find((r) => r.addedByUser.id === userId)?.id || "";
             if (activityReactionId.length > 0) {
                 executeUpdate({
                     variables: {
@@ -148,9 +138,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
         const hours = date.getHours();
         const minutes = date.getMinutes();
 
-        return `${hours < 10 ? "0" + hours : hours}:${
-            minutes < 10 ? "0" + minutes : minutes
-        }`;
+        return `${hours < 10 ? "0" + hours : hours}:${minutes < 10 ? "0" + minutes : minutes}`;
     };
 
     const openActivityDetails = (): void => {
@@ -171,9 +159,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
                     </Text>
                     <View style={styles.cardExtra}>
                         <View style={styles.extraDate}>
-                            <Text style={styles.cardDate}>
-                                {date.toLocaleDateString()}
-                            </Text>
+                            <Text style={styles.cardDate}>{date.toLocaleDateString()}</Text>
                             <Text style={styles.cardDate}>{getTime(date)}</Text>
                         </View>
                         <Icon
@@ -187,9 +173,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
             </Pressable>
             <View style={styles.badgeRow}>
                 <Badge
-                    onPress={() =>
-                        handleReactionType(Types.ActivityReactionType.Like)
-                    }
+                    onPress={() => handleReactionType(Types.ActivityReactionType.Like)}
                     badgeStyle={styles.badge}
                     value={
                         <View style={styles.badgeBody}>
@@ -202,10 +186,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
                             <Text
                                 style={
                                     userLiked
-                                        ? StyleSheet.compose(
-                                              styles.badgeText,
-                                              styles.likeColor
-                                          )
+                                        ? StyleSheet.compose(styles.badgeText, styles.likeColor)
                                         : styles.badgeText
                                 }
                             >
@@ -221,9 +202,7 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
                     }
                 />
                 <Badge
-                    onPress={() =>
-                        handleReactionType(Types.ActivityReactionType.Dislike)
-                    }
+                    onPress={() => handleReactionType(Types.ActivityReactionType.Dislike)}
                     badgeStyle={styles.badge}
                     value={
                         <View style={styles.badgeBody}>
@@ -231,17 +210,12 @@ export default function ActivityCard(props: ActivityCardProps): JSX.Element {
                                 name="thumbs-down"
                                 size={15}
                                 type="font-awesome-5"
-                                color={
-                                    userDisliked ? styles.likeColor.color : ""
-                                }
+                                color={userDisliked ? styles.likeColor.color : ""}
                             />
                             <Text
                                 style={
                                     userDisliked
-                                        ? StyleSheet.compose(
-                                              styles.badgeText,
-                                              styles.likeColor
-                                          )
+                                        ? StyleSheet.compose(styles.badgeText, styles.likeColor)
                                         : styles.badgeText
                                 }
                             >

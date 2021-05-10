@@ -14,10 +14,7 @@ import TripHeaderContext from "./TripHeaderContext";
 
 const Tab = createBottomTabNavigator<TripTabParamList>();
 
-type TripTabsScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.DASHBOARD
->;
+type TripTabsScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.DASHBOARD>;
 type TripTabsRouteProp = RouteProp<TripTabParamList, "TripTabsNavigation">;
 
 type TripTabsProps = {
@@ -25,9 +22,7 @@ type TripTabsProps = {
     route: TripTabsRouteProp;
 };
 const TripTabs = (props: TripTabsProps): JSX.Element => {
-    const [currentScreen, setCurrentScreen] = useState<Routes>(
-        Routes.ITINERARY
-    );
+    const [currentScreen, setCurrentScreen] = useState<Routes>(Routes.ITINERARY);
     const [settingsMode, setSettingsMode] = useState<Mode>(Mode.VIEW);
     const [title, setTitle] = useState(props.route.params.params.tripName);
 
@@ -40,15 +35,10 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                     // eslint-disable-next-line react/prop-types
                     screenTitle={title}
                     actionIcon={
-                        settingsMode === Mode.VIEW ||
-                        currentScreen === Routes.ITINERARY ? (
+                        settingsMode === Mode.VIEW || currentScreen === Routes.ITINERARY ? (
                             <Icon
                                 style={styles.iconButton}
-                                name={
-                                    currentScreen === Routes.ITINERARY
-                                        ? "share"
-                                        : "pen"
-                                }
+                                name={currentScreen === Routes.ITINERARY ? "share" : "pen"}
                                 size={20}
                                 color="#222"
                                 type="font-awesome-5"
@@ -93,46 +83,26 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                                         if (route.name === Routes.ITINERARY) {
                                             setCurrentScreen(Routes.ITINERARY);
                                             setSettingsMode(Mode.VIEW);
-                                            props.navigation.navigate(
-                                                Routes.ITINERARY,
-                                                {
-                                                    screen: Routes.ITINERARY,
-                                                    params: {
-                                                        tripId:
-                                                            props.route.params
-                                                                .params.tripId,
-                                                        tripName:
-                                                            props.route.params
-                                                                .params
-                                                                .tripName,
-                                                    },
-                                                }
-                                            );
+                                            props.navigation.navigate(Routes.ITINERARY, {
+                                                screen: Routes.ITINERARY,
+                                                params: {
+                                                    tripId: props.route.params.params.tripId,
+                                                    tripName: props.route.params.params.tripName,
+                                                },
+                                            });
                                         } else {
-                                            setCurrentScreen(
-                                                Routes.TRIP_SETTINGS
-                                            );
-                                            props.navigation.navigate(
-                                                Routes.ITINERARY,
-                                                {
-                                                    screen:
-                                                        Routes.TRIP_SETTINGS,
-                                                    params: {
-                                                        tripId:
-                                                            props.route.params
-                                                                .params.tripId,
-                                                    },
-                                                }
-                                            );
+                                            setCurrentScreen(Routes.TRIP_SETTINGS);
+                                            props.navigation.navigate(Routes.ITINERARY, {
+                                                screen: Routes.TRIP_SETTINGS,
+                                                params: {
+                                                    tripId: props.route.params.params.tripId,
+                                                },
+                                            });
                                         }
                                     }}
                                 >
                                     <Icon
-                                        name={
-                                            route.name === Routes.ITINERARY
-                                                ? "suitcase"
-                                                : "cog"
-                                        }
+                                        name={route.name === Routes.ITINERARY ? "suitcase" : "cog"}
                                         type="font-awesome-5"
                                         size={size}
                                         color={color}

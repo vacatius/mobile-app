@@ -42,9 +42,7 @@ export default function App(): JSX.Element {
     };
     const { getCurrentUser } = useCurrentAuthUser();
     const [initialRoute, setInitialRoute] = useState<Routes>(Routes.EMPTY);
-    const [user, setUser] = useState<
-        LoginMutation["login"]["user"] | undefined
-    >();
+    const [user, setUser] = useState<LoginMutation["login"]["user"] | undefined>();
 
     useEffect(() => {
         async function loadInitialRoute(): Promise<void> {
@@ -75,10 +73,7 @@ export default function App(): JSX.Element {
                                 options={{
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
-                                        <ScreenHeader
-                                            screenTitle={t("login")}
-                                            {...props}
-                                        />
+                                        <ScreenHeader screenTitle={t("login")} {...props} />
                                     ),
                                 }}
                             />
@@ -88,10 +83,7 @@ export default function App(): JSX.Element {
                                 options={{
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
-                                        <ScreenHeader
-                                            screenTitle={t("register")}
-                                            {...props}
-                                        />
+                                        <ScreenHeader screenTitle={t("register")} {...props} />
                                     ),
                                 }}
                             />
@@ -102,9 +94,7 @@ export default function App(): JSX.Element {
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
-                                            screenTitle={t(
-                                                "screens.dashboard.title"
-                                            )}
+                                            screenTitle={t("screens.dashboard.title")}
                                             user={user}
                                             {...props}
                                         />
@@ -123,9 +113,7 @@ export default function App(): JSX.Element {
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
-                                            screenTitle={t(
-                                                "screens.add_trip.title"
-                                            )}
+                                            screenTitle={t("screens.add_trip.title")}
                                             {...props}
                                         />
                                     ),
@@ -138,9 +126,7 @@ export default function App(): JSX.Element {
                                     headerBackTitleVisible: false,
                                     headerTitle: (props) => (
                                         <ScreenHeader
-                                            screenTitle={t(
-                                                "screens.shareTrip.title"
-                                            )}
+                                            screenTitle={t("screens.shareTrip.title")}
                                             {...props}
                                         />
                                     ),
@@ -158,8 +144,7 @@ export default function App(): JSX.Element {
                                         headerTitle: (props) => (
                                             <ScreenHeader
                                                 screenTitle={
-                                                    params.tripRoutePointToEdit ===
-                                                    undefined
+                                                    params.tripRoutePointToEdit === undefined
                                                         ? t(
                                                               "screens.addEditActivityGroup.titleCreate"
                                                           )
@@ -183,12 +168,8 @@ export default function App(): JSX.Element {
                                     return {
                                         title:
                                             params.activityName === undefined
-                                                ? t(
-                                                      "screens.addEditActivityGroup.titleCreate"
-                                                  )
-                                                : t(
-                                                      "screens.addEditActivityGroup.titleUpdate"
-                                                  ),
+                                                ? t("screens.addEditActivityGroup.titleCreate")
+                                                : t("screens.addEditActivityGroup.titleUpdate"),
                                     };
                                 }}
                             />

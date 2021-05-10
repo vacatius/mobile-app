@@ -54,76 +54,70 @@ export default function ApolloConnection(props: Props): JSX.Element {
     };
 
     // https://able.bio/AnasT/apollo-graphql-async-access-token-refresh--470t1c8
-    const errorLink: ApolloLink = onError(
-        ({ graphQLErrors, networkError, operation, forward }) => {
-            if (graphQLErrors) {
-                for (const err of graphQLErrors) {
-                    console.error(err);
-                    Toast.show({
-                        text1: t("error.generic"),
-                        text2: err.message,
-                        type: "error",
-                    });
-                    switch (err.extensions?.code) {
-                        case "UNAUTHENTICATED":
-                            // Handle token refresh errors e.g clear stored tokens, redirect to login
-                            console.log(
-                                "Acess Token no longer valid, trying to refresh"
-                            );
-
-                            if (!isRefreshing) {
-                                isRefreshing = true;
-                                fromPromise(
-                                    getNewToken()
-                                        .then(async (accessToken) => {
-                                            console.log(
-                                                "Got a new access token using refresh token"
-                                            );
-                                            await SecureStore.setItemAsync(
-                                                SecureStorageItems.ACCESS_TOKEN,
-                                                accessToken
-                                            );
-                                            resolvePendingRequests();
-
-                                            // retry the request, returning the new observable
-                                            return forward(operation);
-                                        })
-                                        .catch((error) => {
-                                            console.error(error);
-                                            pendingRequests = [];
-                                            // Handle token refresh errors e.g clear stored tokens, redirect to login
-                                            SecureStore.deleteItemAsync(
-                                                SecureStorageItems.ACCESS_TOKEN
-                                            );
-                                            props.navigationFn("Login", {});
-                                        })
-                                        .finally(() => {
-                                            isRefreshing = false;
-                                        })
-                                );
-                            } else {
-                                // Will only emit once the Promise is resolved
-                                fromPromise(
-                                    new Promise<void>((resolve) => {
-                                        pendingRequests.push(() => resolve());
-                                    })
-                                );
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            if (networkError) {
+    const errorLink: ApolloLink = onError(({ graphQLErrors, networkError, operation, forward }) => {
+        if (graphQLErrors) {
+            for (const err of graphQLErrors) {
+                console.error(err);
                 Toast.show({
-                    text1: t("error.network"),
-                    text2: networkError.message,
+                    text1: t("error.generic"),
+                    text2: err.message,
                     type: "error",
                 });
+                switch (err.extensions?.code) {
+                    case "UNAUTHENTICATED":
+                        // Handle token refresh errors e.g clear stored tokens, redirect to login
+                        console.log("Acess Token no longer valid, trying to refresh");
+
+                        if (!isRefreshing) {
+                            isRefreshing = true;
+                            fromPromise(
+                                getNewToken()
+                                    .then(async (accessToken) => {
+                                        console.log("Got a new access token using refresh token");
+                                        await SecureStore.setItemAsync(
+                                            SecureStorageItems.ACCESS_TOKEN,
+                                            accessToken
+                                        );
+                                        resolvePendingRequests();
+
+                                        // retry the request, returning the new observable
+                                        return forward(operation);
+                                    })
+                                    .catch((error) => {
+                                        console.error(error);
+                                        pendingRequests = [];
+                                        // Handle token refresh errors e.g clear stored tokens, redirect to login
+                                        SecureStore.deleteItemAsync(
+                                            SecureStorageItems.ACCESS_TOKEN
+                                        );
+                                        props.navigationFn("Login", {});
+                                    })
+                                    .finally(() => {
+                                        isRefreshing = false;
+                                    })
+                            );
+                        } else {
+                            // Will only emit once the Promise is resolved
+                            fromPromise(
+                                new Promise<void>((resolve) => {
+                                    pendingRequests.push(() => resolve());
+                                })
+                            );
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
-    );
+        if (networkError) {
+            Toast.show({
+                text1: t("error.network"),
+                text2: networkError.message,
+                type: "error",
+            });
+        }
+    });
 
     const authLink = setContext(async (_, { headers }) => {
         // get the authentication token from secure storage if it exists

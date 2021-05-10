@@ -13,9 +13,7 @@ export interface ScreenHeaderProps {
     actionIcon?: JSX.Element;
 }
 
-const ScreenHeader: React.FC<ScreenHeaderProps> = (
-    props: ScreenHeaderProps
-) => {
+const ScreenHeader: React.FC<ScreenHeaderProps> = (props: ScreenHeaderProps) => {
     const navigation = useNavigation();
 
     let textWidth = 70;

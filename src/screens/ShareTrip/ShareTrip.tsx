@@ -2,13 +2,7 @@ import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import {
-    Platform,
-    ScrollView,
-    Share,
-    ShareContent,
-    StyleSheet,
-} from "react-native";
+import { Platform, ScrollView, Share, ShareContent, StyleSheet } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
 import { getEnvironment } from "../../get-environment";
@@ -16,14 +10,8 @@ import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { useCreateInvitationMutation } from "./types/create-invite.mutation";
 
-type ShareTripScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.SHARE_TRIP
->;
-type ShareTripScreenRouteProp = RouteProp<
-    RootStackParamList,
-    Routes.SHARE_TRIP
->;
+type ShareTripScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.SHARE_TRIP>;
+type ShareTripScreenRouteProp = RouteProp<RootStackParamList, Routes.SHARE_TRIP>;
 
 type Props = {
     navigation: ShareTripScreenNavigationProp;
@@ -55,9 +43,7 @@ export default function ShareTrip(props: Props): JSX.Element {
             .catch((error) => console.error(error)); // TODO - Notify user with error modal
     };
 
-    const handleSystemShareSheet = async (
-        invitationLink: string
-    ): Promise<void> => {
+    const handleSystemShareSheet = async (invitationLink: string): Promise<void> => {
         try {
             let shareObject: ShareContent = {
                 title: t("screens.shareTrip.androidShareSheetTitle"),

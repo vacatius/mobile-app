@@ -24,10 +24,7 @@ const AvatarList: React.FC<AvatarListProps> = (props: AvatarListProps) => (
                             marginRight: 5,
                         }}
                         size="medium"
-                        title={
-                            member.user.displayName.charAt(0)?.toUpperCase() ??
-                            "?"
-                        }
+                        title={member.user.displayName.charAt(0)?.toUpperCase() ?? "?"}
                     />
                 </Tooltip>
             </View>
