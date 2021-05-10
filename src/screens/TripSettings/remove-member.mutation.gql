@@ -1,0 +1,5 @@
+mutation removeMemberFromTrip($tripId: String!, $userId: String!) {
+    removeMemberFromTrip(tripId: $tripId, userIdToRemove: $userId) {
+        id
+    }
+}

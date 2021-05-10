@@ -22,6 +22,7 @@ export const resources = {
             name: "Name",
             cancel: "Cancel",
             remove: "Remove",
+            leave: "Leave",
             error: {
                 network: "No Connection 😢",
                 credentials: "Invalid Credentials",
@@ -33,14 +34,7 @@ export const resources = {
                 generic: "An error occurred",
             },
             placeholder: {
-                username: [
-                    "Gordon_Freeman",
-                    "al1ce",
-                    "GLaDOS",
-                    "lux69",
-                    "j_sparrow",
-                    "bender1337",
-                ],
+                username: ["Gordon_Freeman", "al1ce", "GLaDOS", "lux69", "j_sparrow", "bender1337"],
                 password: [
                     "V4c47uis",
                     "P4ssw0rd",
@@ -49,11 +43,7 @@ export const resources = {
                     "P455w0rd",
                     "4711691337",
                 ],
-                email: [
-                    "email@example.com",
-                    "contact@vacatius.com",
-                    "TheLegend27@mail.com",
-                ],
+                email: ["email@example.com", "contact@vacatius.com", "TheLegend27@mail.com"],
                 tripName: [
                     "Roadtrip 2022",
                     "Awesome Roadtrip",
@@ -75,11 +65,7 @@ export const resources = {
                     "Saturday",
                     "Sunday",
                 ],
-                activityGroupDescription: [
-                    "Monday in Vienna",
-                    "Visit all parks",
-                    "Sightseeing",
-                ],
+                activityGroupDescription: ["Monday in Vienna", "Visit all parks", "Sightseeing"],
                 description: ["Awesome trip with my friends"],
             },
             validation: {
@@ -88,8 +74,7 @@ export const resources = {
                 displayNameRequired: "Please enter a display name!",
                 password: {
                     required: "Please enter a password!",
-                    minLength:
-                        "The password must have at least {{amount}} characters",
+                    minLength: "The password must have at least {{amount}} characters",
                     match: "Passwords must match",
                 },
                 nameRequired: "Please enter a name.",
@@ -149,13 +134,24 @@ export const resources = {
                     submitCreate: "Add Activity",
                     createActivity: "Create Activity",
                     removeDialogTitle: "Really remove Activity?",
-                    removeDialogMessage:
-                        "You will not be able to restore it afterwards!",
+                    removeDialogMessage: "You will not be able to restore it afterwards!",
                     from: "from",
                     to: "to",
                 },
                 tripSettings: {
+                    tripDetails: "Trip Details",
                     submitUpdate: "Update Trip",
+                    members: "Members",
+                    leave: {
+                        button: "Leave Trip",
+                        dialogTitle: "Really leave Trip?",
+                        dialogMessage:
+                            "You will need to rejoin this Trip using an invitation link!",
+                    },
+                    removeMember: {
+                        dialogTitle: "Really remove Member?",
+                        dialogMessage: "The member will need an invitation link to rejoin!",
+                    },
                 },
             },
         },
@@ -178,14 +174,14 @@ export const resources = {
             name: "Name",
             cancel: "Abbrechen",
             remove: "Löschen",
+            leave: "Verlassen",
             startJourney: ["Reise Starten", "Los gehts"],
             error: {
                 network: "Keine Verbindung 😢",
                 credentials: "Falsche Benutzerdaten",
                 username: "Falscher Benutzername",
                 password: "Falsches Passwort",
-                takenEmailUsername:
-                    "Die Email Adresse oder der Benutzername sind schon vergeben",
+                takenEmailUsername: "Die Email Adresse oder der Benutzername sind schon vergeben",
                 noDate: "Noch kein Datum bekannt.",
                 generic: "Ein Fehler ist aufgetreten",
             },
@@ -195,8 +191,7 @@ export const resources = {
                 displayNameRequired: "Bitte gib einen Anzeigenamen ein!",
                 password: {
                     required: "Bitte gib ein Passwort ein!",
-                    minLength:
-                        "Das Passwort muss mindestens {{amount}} Zeichen besitzten",
+                    minLength: "Das Passwort muss mindestens {{amount}} Zeichen besitzten",
                     match: "Die Passwörter müssen übereinstimmen!",
                 },
                 tripName: [
@@ -220,15 +215,10 @@ export const resources = {
                     "Samstag",
                     "Sonntag",
                 ],
-                activityGroupDescription: [
-                    "Montag in Wien",
-                    "Alle Parks besuchen",
-                    "Sightseeing",
-                ],
+                activityGroupDescription: ["Montag in Wien", "Alle Parks besuchen", "Sightseeing"],
                 description: ["Cooler roadtrip meinen Freunden"],
                 nameRequired: "Bitte gib einen Namen ein!",
-                descriptionRequired:
-                    "Bitte gib eine Beschreibung für die Reise ein!",
+                descriptionRequired: "Bitte gib eine Beschreibung für die Reise ein!",
             },
             screens: {
                 register: {
@@ -268,8 +258,7 @@ export const resources = {
                     submitCreate: "Gruppe erstellen",
                     submitUpdate: "Gruppe aktualisieren",
                     activityGroupName: "Gib deiner Gruppe einen Namen",
-                    activityGroupDescription:
-                        "Füge eine kurze Beschreibung hinzu",
+                    activityGroupDescription: "Füge eine kurze Beschreibung hinzu",
                     removeActivityGroup: "Gruppe löschen",
                     removeDialogTitle: "Aktivitätsgruppe wirklich löschen?",
                     removeDialogMessage:
@@ -286,13 +275,25 @@ export const resources = {
                     submitCreate: "Aktivität hinzufügen",
                     removeDialogTitle: "Aktivität wirklich löschen?",
                     createActivity: "Aktivität erstellen",
-                    removeDialogMessage:
-                        "Du kannst sie nicht wiederherstellen.",
+                    removeDialogMessage: "Du kannst sie nicht wiederherstellen.",
                     from: "von",
                     to: "bis",
                 },
                 tripSettings: {
+                    tripDetails: "Reisedetails",
                     submitUpdate: "Reise aktualisieren",
+                    members: "Mitglieder",
+                    leave: {
+                        button: "Reise verlassen",
+                        dialogTitle: "Reise wirklich verlassen?",
+                        dialogMessage:
+                            "Du benötigst einen Einladungslink, um dieser Reise wieder beizutreten!",
+                    },
+                    removeMember: {
+                        dialogTitle: "Mitglied wirklich entfernen?",
+                        dialogMessage:
+                            "Das Mitglied kann nur mit einem Einladungslink wieder beitreten!",
+                    },
                 },
             },
         },
