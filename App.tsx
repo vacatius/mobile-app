@@ -148,16 +148,27 @@ export default function App(): JSX.Element {
                             <Stack.Screen
                                 name={Routes.SHARE_TRIP}
                                 component={ShareTrip}
-                                options={{
-                                    headerBackTitleVisible: false,
-                                    headerTitle: (props) => (
-                                        <ScreenHeader
-                                            screenTitle={t(
-                                                "screens.shareTrip.title"
-                                            )}
-                                            {...props}
-                                        />
-                                    ),
+                                options={({ route }) => {
+                                    const params = (route.params as unknown) as {
+                                        tripId: string;
+                                    };
+                                    return {
+                                        headerBackTitleVisible: false,
+                                        headerTitle: (props) => (
+                                            <ScreenHeader
+                                                screenTitle={
+                                                    params.tripId === undefined
+                                                        ? t(
+                                                              "screens.shareTrip.titleJoin"
+                                                          )
+                                                        : t(
+                                                              "screens.shareTrip.titleShare"
+                                                          )
+                                                }
+                                                {...props}
+                                            />
+                                        ),
+                                    };
                                 }}
                             />
                             <Stack.Screen

@@ -114,11 +114,14 @@ export const resources = {
                     },
                 },
                 shareTrip: {
-                    title: "Share a Trip",
+                    titleShare: "Share a Trip",
                     share: "Share with Friends",
                     planTrip: "Plan Trip",
                     goToDashboard: "Go to Dashboard",
                     androidShareSheetTitle: "Share your Trip with Friends",
+                    titleJoin: "Join a Trip",
+                    joinTrip: "Join this Trip",
+                    cancelJoin: "No, thank you",
                 },
                 itinerary: {
                     add: "Add Group",
@@ -246,11 +249,14 @@ export const resources = {
                     },
                 },
                 shareTrip: {
-                    title: "Reise teilen",
+                    titleShare: "Reise teilen",
                     share: "Mit Freunden teilen",
                     planTrip: "Reise planen",
                     goToDashboard: "Zum Dashboard",
                     androidShareSheetTitle: "Teile deine Reise mit Freunden",
+                    titleJoin: "Einladung",
+                    joinTrip: "An Reise teilnehmen",
+                    cancelJoin: "Einladung ablehnen",
                 },
                 itinerary: {
                     add: " Gruppe Hinzufügen",

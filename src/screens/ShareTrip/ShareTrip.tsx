@@ -201,6 +201,27 @@ export default function ShareTrip(props: Props): JSX.Element {
         }
     };
 
+    const handlePlanTripNavigation = (): void => {
+        props.navigation.reset({
+            index: 1,
+            routes: [
+                {
+                    name: Routes.DASHBOARD,
+                },
+                {
+                    name: Routes.ITINERARY,
+                    params: {
+                        screen: Routes.ITINERARY,
+                        params: {
+                            tripId: trip?.trip.id,
+                            tripName: trip?.trip.name,
+                        },
+                    },
+                },
+            ],
+        });
+    };
+
     if (!trip) {
         return (
             <>
@@ -232,44 +253,66 @@ export default function ShareTrip(props: Props): JSX.Element {
                     <Text h4>{trip.trip.description}</Text>
                 )}
                 <SvgLogo style={styles.logo} height={150} width={150} />
-                <Button
-                    containerStyle={styles.btnContainer}
-                    buttonStyle={styles.shareBtn}
-                    title={t("screens.shareTrip.share")}
-                    titleStyle={styles.btnTextStyle}
-                    onPress={() => handleSubmitButton()}
-                    loading={loadingCreateInvitation}
-                />
+                {mode === Mode.SHARE_TRIP && (
+                    <Button
+                        containerStyle={styles.btnContainer}
+                        buttonStyle={styles.shareBtn}
+                        title={t("screens.shareTrip.share")}
+                        titleStyle={styles.btnTextStyle}
+                        onPress={() => handleSubmitButton()}
+                        loading={loadingCreateInvitation}
+                    />
+                )}
                 <Button
                     containerStyle={styles.btnContainer}
                     buttonStyle={styles.planTripBtn}
-                    title={t("screens.shareTrip.planTrip")}
+                    title={t(
+                        mode === Mode.SHARE_TRIP
+                            ? "screens.shareTrip.planTrip"
+                            : "screens.shareTrip.joinTrip"
+                    )}
                     titleStyle={styles.btnTextStyle}
                     // TODO - Redirect to trip itinerary screen
-                    onPress={() =>
-                        props.navigation.reset({
-                            index: 1,
-                            routes: [
-                                {
-                                    name: Routes.DASHBOARD,
-                                },
-                                {
-                                    name: Routes.ITINERARY,
-                                    params: {
+                    onPress={() => {
+                        if (mode === Mode.JOIN_TRIP && invitation) {
+                            executeJoinTripMutation({
+                                variables: {
+                                    input: {
                                         tripId: trip.trip.id,
-                                        tripName: trip.trip.name,
+                                        invitationId: invitation.invitation.id,
                                     },
                                 },
-                            ],
-                        })
-                    }
+                            })
+                                .then(() => handlePlanTripNavigation())
+                                .catch((e) => {
+                                    console.error(e);
+                                });
+                        } else {
+                            handlePlanTripNavigation();
+                        }
+                    }}
                 />
                 <Button
                     containerStyle={{ marginTop: -10 }}
                     buttonStyle={styles.backToDashboardBtn}
-                    title={t("screens.shareTrip.goToDashboard")}
+                    title={t(
+                        mode === Mode.SHARE_TRIP
+                            ? "screens.shareTrip.goToDashboard"
+                            : "screens.shareTrip.cancelJoin"
+                    )}
                     titleStyle={{ color: "black", fontSize: 20 }}
-                    onPress={() => props.navigation.popToTop()}
+                    onPress={() =>
+                        mode === Mode.SHARE_TRIP
+                            ? props.navigation.popToTop()
+                            : props.navigation.reset({
+                                  index: 0,
+                                  routes: [
+                                      {
+                                          name: Routes.DASHBOARD,
+                                      },
+                                  ],
+                              })
+                    }
                 />
             </ScrollView>
         </>
