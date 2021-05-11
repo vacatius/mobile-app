@@ -17,7 +17,8 @@ import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateInvitationMutation } from "./types/create-invite.mutation";
-import { useGetTripQuery } from "./types/get-trip.query";
+import { useGetInvitationLazyQuery } from "./types/get-invitation.query";
+import { useGetTripLazyQuery } from "./types/get-trip.query";
 import { useJoinTripMutation } from "./types/join-trip.mutation";
 import * as Linking from "expo-linking";
 
@@ -41,14 +42,17 @@ type Props = {
 };
 
 export default function ShareTrip(props: Props): JSX.Element {
+    console.log(props.route);
     const { t } = useTranslation();
-    const [mode, setMode] = useState<Mode>(props.route.params.mode);
+    const [mode, setMode] = useState<Mode>(
+        props.route.params.tripId ? Mode.SHARE_TRIP : Mode.JOIN_TRIP
+    );
 
     useEffect(() => {
         async function getInitialUrl(): Promise<void> {
             const link = await Linking.getInitialURL();
             if (link && link !== null) {
-                console.log("we got a initial URL link");
+                console.log("we got a initial URL link ded");
                 console.log(link);
             }
         }
@@ -59,7 +63,6 @@ export default function ShareTrip(props: Props): JSX.Element {
         });
     }, []);
 
-    const paramsTripId = props.route.params.tripId;
     const [
         executeCreateInvitation,
         { loading: loadingCreateInvitation },
@@ -69,11 +72,50 @@ export default function ShareTrip(props: Props): JSX.Element {
         { data: joinTripData, loading: loadingJoinTrip },
     ] = useJoinTripMutation();
 
-    const { data: trip, error: getTripError } = useGetTripQuery({
-        variables: {
-            tripId: paramsTripId,
+    const [
+        executeGetTripQuery,
+        { data: trip, error: getTripError, called: tripQueryCalled },
+    ] = useGetTripLazyQuery();
+
+    const [
+        executeGetInvitation,
+        {
+            data: invitation,
+            error: getInvitationError,
+            called: invitationQueryCalled,
+        },
+    ] = useGetInvitationLazyQuery({
+        notifyOnNetworkStatusChange: true,
+        fetchPolicy: "network-only",
+        onCompleted: (data) => {
+            console.log("fetching data onCompleted");
+            executeGetTripQuery({
+                variables: {
+                    tripId: data.invitation.trip.id,
+                },
+            });
         },
     });
+
+    if (mode === Mode.SHARE_TRIP && !tripQueryCalled) {
+        console.log("fetching share trip data", props.route.params.tripId);
+        executeGetTripQuery({
+            variables: {
+                tripId: props.route.params.tripId,
+            },
+        });
+    } else if (
+        mode === Mode.JOIN_TRIP &&
+        !tripQueryCalled &&
+        !invitationQueryCalled
+    ) {
+        console.log("fetching join data", props.route.params.invitationId);
+        if (props.route.params.invitationId) {
+            executeGetInvitation({
+                variables: { invitationId: props.route.params.invitationId },
+            });
+        }
+    }
 
     const handleSubmitButton = (): void => {
         if (mode === Mode.SHARE_TRIP) {
@@ -90,10 +132,10 @@ export default function ShareTrip(props: Props): JSX.Element {
                         const expoLink = Linking.createURL(
                             "joinTrip/" + result.data?.createInvitation.id,
                             {
-                                queryParams: {
-                                    invitationId:
-                                        result.data?.createInvitation.id,
-                                },
+                                // queryParams: {
+                                //     invitationId:
+                                //         result.data?.createInvitation.id,
+                                // },
                             }
                         );
                         console.log(expoLink);
@@ -101,9 +143,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                         // https://vacatius.com/invite/shareTrip/90194i0294i4240
                         handleSystemShareSheet(
                             getEnvironment()?.invitationBaseUrl +
-                                encodeURIComponent(
-                                    result.data?.createInvitation.id
-                                )
+                                encodeURIComponent(expoLink)
                         );
                     }
                 })

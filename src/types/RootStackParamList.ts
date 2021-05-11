@@ -16,7 +16,7 @@ type RootStackParamList = {
     [Routes.ADD_TRIP]: undefined;
     [Routes.SHARE_TRIP]: {
         tripId: string;
-        mode: ShareJoinTripMode;
+        // mode: ShareJoinTripMode;
         invitationId?: string; // TODO
     };
     [Routes.ADD_EDIT_ACTIVITY_GROUP]: {

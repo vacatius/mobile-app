@@ -1,0 +1,17 @@
+query getInvitation($invitationId: String!) {
+    invitation(invitationId: $invitationId) {
+        id,
+        status,
+        createdByUser {
+            displayName,
+            username,
+            id
+        }
+        trip {
+            id,
+            name,
+            description
+        },
+        acceptedUsersCount
+    }
+}
