@@ -59,10 +59,9 @@ export default function Login(props: Props): JSX.Element {
         })
             .then((res) => {
                 if (res.data?.login.token) {
-                    saveInSecureStore(
-                        SecureStorageItems.ACCESS_TOKEN,
-                        res.data?.login.token
-                    ).catch((e) => console.log(e));
+                    saveInSecureStore(SecureStorageItems.ACCESS_TOKEN, res.data?.login.token).catch(
+                        (e) => console.log(e)
+                    );
                 }
                 if (res.data?.login.user) {
                     props.route.params.updateUser(res.data.login.user);

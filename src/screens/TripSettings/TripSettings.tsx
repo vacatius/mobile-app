@@ -73,10 +73,8 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
     });
 
     const [executeUpdate, { error: errorUpdate, loading: loadingUpdate }] = useUpdateTripMutation();
-    const [
-        executeRemoveMember,
-        { error: errorRemoveMember, loading: loadingRemoveMember },
-    ] = useRemoveMemberFromTripMutation();
+    const [executeRemoveMember, { error: errorRemoveMember, loading: loadingRemoveMember }] =
+        useRemoveMemberFromTripMutation();
     const [executeLeave, { error: errorLeave, loading: loadingLeave }] = useLeaveTripMutation();
 
     const handleEdit = (values: FormikValues): void => {
