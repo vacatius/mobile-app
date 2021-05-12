@@ -136,7 +136,7 @@ export default function App(): JSX.Element {
                                 name={Routes.ADD_EDIT_ACTIVITY_GROUP}
                                 component={AddEditActivityGroupScreen}
                                 options={({ route }) => {
-                                    const params = (route.params as unknown) as {
+                                    const params = route.params as unknown as {
                                         tripRoutePointToEdit: TripRoutePoint;
                                     };
                                     return {

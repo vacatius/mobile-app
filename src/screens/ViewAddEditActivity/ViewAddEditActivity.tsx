@@ -54,20 +54,14 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
         variables: { activityId: activityId },
     });
 
-    const [
-        executeUpdate,
-        { error: errorUpdate, loading: loadingUpdate },
-    ] = useUpdateActivityMutation();
+    const [executeUpdate, { error: errorUpdate, loading: loadingUpdate }] =
+        useUpdateActivityMutation();
 
-    const [
-        executeRemove,
-        { error: errorRemove, loading: loadingRemove },
-    ] = useRemoveActivityMutation();
+    const [executeRemove, { error: errorRemove, loading: loadingRemove }] =
+        useRemoveActivityMutation();
 
-    const [
-        executeCreate,
-        { error: errorCreate, loading: loadingCreate },
-    ] = useCreateActivityMutation();
+    const [executeCreate, { error: errorCreate, loading: loadingCreate }] =
+        useCreateActivityMutation();
 
     if (mode !== Mode.ADD && !called) {
         useLazyQueryActivity();
