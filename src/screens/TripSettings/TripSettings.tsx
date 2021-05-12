@@ -6,14 +6,14 @@ import { TFunction } from "i18next";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, SafeAreaView, StyleSheet } from "react-native";
-import { Avatar, Button, Icon, Input, ListItem, Text } from "react-native-elements";
+import { Avatar, Button, Divider, Icon, Input, ListItem, Text } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Toast from "react-native-toast-message";
 import stc from "string-to-color";
 import * as Yup from "yup";
 import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
 import TripHeaderContext from "../../routes/TripHeaderContext";
-import { TripUserRole, User } from "../../types";
+import { TripUserRole, User } from "../../types.d";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import TripTabParamList from "../../types/TripTabParamList";
@@ -130,13 +130,19 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                     tripId: props.route.params.tripId,
                                 }),
                             ],
-                        }).catch((e) =>
-                            Toast.show({
-                                text1: t("error.generic"),
-                                text2: e.message,
-                                type: "error",
+                        })
+                            .then(() => {
+                                if (setSettingsMode) {
+                                    setSettingsMode(Mode.VIEW);
+                                }
                             })
-                        );
+                            .catch((e) =>
+                                Toast.show({
+                                    text1: t("error.generic"),
+                                    text2: e.message,
+                                    type: "error",
+                                })
+                            );
                     },
                 },
             ]
@@ -235,17 +241,20 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                 <Text style={styles.errorText}>{errorUpdate.message}</Text>
                             )}
                             {settingsMode === Mode.EDIT && (
-                                <Button
-                                    containerStyle={styles.buttonContainer}
-                                    buttonStyle={styles.submitButton}
-                                    title={t("screens.tripSettings.submitUpdate")}
-                                    titleStyle={{
-                                        color: "black",
-                                        fontSize: 25,
-                                    }}
-                                    onPress={() => handleSubmit()}
-                                    loading={loadingUpdate}
-                                />
+                                <>
+                                    <Button
+                                        containerStyle={styles.buttonContainer}
+                                        buttonStyle={styles.submitButton}
+                                        title={t("screens.tripSettings.submitUpdate")}
+                                        titleStyle={{
+                                            color: "black",
+                                            fontSize: 25,
+                                        }}
+                                        onPress={() => handleSubmit()}
+                                        loading={loadingUpdate}
+                                    />
+                                    <Divider style={styles.divider} />
+                                </>
                             )}
                         </>
                     )}
@@ -354,5 +363,8 @@ const styles = StyleSheet.create({
     },
     iconButton: {
         marginLeft: 10,
+    },
+    divider: {
+        marginBottom: 20,
     },
 });

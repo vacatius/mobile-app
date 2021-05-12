@@ -140,7 +140,7 @@ export const resources = {
                 },
                 tripSettings: {
                     tripDetails: "Trip Details",
-                    submitUpdate: "Update Trip",
+                    submitUpdate: "Update Trip details",
                     members: "Members",
                     leave: {
                         button: "Leave Trip",
@@ -281,7 +281,7 @@ export const resources = {
                 },
                 tripSettings: {
                     tripDetails: "Reisedetails",
-                    submitUpdate: "Reise aktualisieren",
+                    submitUpdate: "Reisedetails aktualisieren",
                     members: "Mitglieder",
                     leave: {
                         button: "Reise verlassen",
