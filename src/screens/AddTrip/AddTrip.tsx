@@ -82,22 +82,13 @@ export const AddTrip = (props: Props): JSX.Element => {
             >
                 <SafeAreaView style={styles.container}>
                     <SvgLogo style={styles.logo} width={75} height={75} />
-                    <Text style={styles.text}>
-                        {t("screens.add_trip.title")}
-                    </Text>
+                    <Text style={styles.text}>{t("screens.add_trip.title")}</Text>
                     <Formik
                         initialValues={{ tripName: "", description: "" }}
                         onSubmit={handleSubmit}
                         validationSchema={validationSchema(t)}
                     >
-                        {({
-                            handleChange,
-                            values,
-                            handleSubmit,
-                            errors,
-                            touched,
-                            handleBlur,
-                        }) => (
+                        {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
                             <>
                                 <Input
                                     label={t("screens.add_trip.trip_name")}
@@ -124,8 +115,7 @@ export const AddTrip = (props: Props): JSX.Element => {
                                 <Input
                                     label={t("description")}
                                     errorMessage={
-                                        errors.description &&
-                                        touched.description
+                                        errors.description && touched.description
                                             ? errors.description
                                             : undefined
                                     }
@@ -148,17 +138,11 @@ export const AddTrip = (props: Props): JSX.Element => {
                                     numberOfLines={4}
                                     style={styles.textArea}
                                 />
-                                {error && (
-                                    <Text style={styles.errorText}>
-                                        {error.message}
-                                    </Text>
-                                )}
+                                {error && <Text style={styles.errorText}>{error.message}</Text>}
                                 <Button
                                     containerStyle={styles.buttonContainer}
                                     buttonStyle={styles.submitButton}
-                                    title={t(
-                                        "screens.add_trip.submit_add_trip"
-                                    )}
+                                    title={t("screens.add_trip.submit_add_trip")}
                                     titleStyle={{
                                         color: "black",
                                         fontSize: 25,
@@ -194,14 +178,8 @@ export const AddTrip = (props: Props): JSX.Element => {
 // eslint-disable-next-line
 const validationSchema = (t: TFunction): object => {
     return Yup.object().shape({
-        tripName: Yup.string()
-            .min(1)
-            .max(30)
-            .required(t("validation.nameRequired")),
-        description: Yup.string()
-            .min(1)
-            .max(200)
-            .required(t("validation.descriptionRequired")),
+        tripName: Yup.string().min(1).max(30).required(t("validation.nameRequired")),
+        description: Yup.string().min(1).max(200).required(t("validation.descriptionRequired")),
     });
 };
 const styles = StyleSheet.create({

@@ -16,10 +16,7 @@ import { Routes } from "../../types/Routes";
 import SecureStorageItems from "../../types/SecureStorageItems";
 import { useLoginMutation } from "./types/loginMutation";
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.LOGIN
->;
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.LOGIN>;
 
 type LoginRouteProp = RouteProp<RootStackParamList, Routes.LOGIN>;
 
@@ -62,10 +59,9 @@ export default function Login(props: Props): JSX.Element {
         })
             .then((res) => {
                 if (res.data?.login.token) {
-                    saveInSecureStore(
-                        SecureStorageItems.ACCESS_TOKEN,
-                        res.data?.login.token
-                    ).catch((e) => console.log(e));
+                    saveInSecureStore(SecureStorageItems.ACCESS_TOKEN, res.data?.login.token).catch(
+                        (e) => console.log(e)
+                    );
                 }
                 if (res.data?.login.user) {
                     props.route.params.updateUser(res.data.login.user);
@@ -93,14 +89,7 @@ export default function Login(props: Props): JSX.Element {
                         onSubmit={handleLogin}
                         validationSchema={validationSchema(t)}
                     >
-                        {({
-                            handleChange,
-                            values,
-                            handleSubmit,
-                            errors,
-                            touched,
-                            handleBlur,
-                        }) => (
+                        {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
                             <>
                                 <Input
                                     label={t("username")}
@@ -185,9 +174,7 @@ export default function Login(props: Props): JSX.Element {
                         type="clear"
                         title={t("register")}
                         titleStyle={{ color: "darkslategray" }}
-                        onPress={() =>
-                            props.navigation.navigate(Routes.REGISTER)
-                        }
+                        onPress={() => props.navigation.navigate(Routes.REGISTER)}
                     />
                 </SafeAreaView>
             </ScrollView>
@@ -199,12 +186,8 @@ const validationSchema = (
     t: TFunction
 ): object => //eslint-disable-line
     Yup.object().shape({
-        username: Yup.string()
-            .min(1)
-            .required(t("validation.usernameRequired")),
-        password: Yup.string()
-            .min(1)
-            .required(t("validation.password.required")),
+        username: Yup.string().min(1).required(t("validation.usernameRequired")),
+        password: Yup.string().min(1).required(t("validation.password.required")),
     });
 
 const styles = StyleSheet.create({

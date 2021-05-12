@@ -1,0 +1,21 @@
+query getUniqueTrip($tripId: String!) {
+    trip(tripId: $tripId) {
+        id,
+        name,
+        description,
+        admin {
+            id
+            displayName
+            username
+        }
+        members {
+            role
+            color
+            user {
+                id
+                displayName
+                username
+            }
+        }
+    }
+}

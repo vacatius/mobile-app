@@ -14,10 +14,7 @@ import { useUpdateUserMutationMutation } from "./types/updateUserMutation";
 import * as SecureStore from "expo-secure-store";
 import SecureStorageItems from "../../types/SecureStorageItems";
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.PROFILE
->;
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.PROFILE>;
 
 type ProfileRouteProp = RouteProp<RootStackParamList, Routes.PROFILE>;
 
@@ -29,9 +26,7 @@ type Props = {
 const Profile = (props: Props): JSX.Element => {
     const { t } = useTranslation();
     const [execute, { error, loading }] = useUpdateUserMutationMutation();
-    const [displayName, setDisplayName] = useState(
-        props.route.params.user.displayName
-    );
+    const [displayName, setDisplayName] = useState(props.route.params.user.displayName);
 
     const submit = (values: FormikValues): void => {
         if (
@@ -47,9 +42,7 @@ const Profile = (props: Props): JSX.Element => {
                 input: {
                     displayName: values.displayName.trim(),
                     email: values.email.trim(),
-                    password: values.password
-                        ? values.password.trim()
-                        : undefined,
+                    password: values.password ? values.password.trim() : undefined,
                 },
             },
         }).then(async (res) => {
@@ -99,14 +92,7 @@ const Profile = (props: Props): JSX.Element => {
                     onSubmit={(values) => submit(values)}
                     validationSchema={validationSchema(t)}
                 >
-                    {({
-                        handleChange,
-                        values,
-                        handleSubmit,
-                        errors,
-                        touched,
-                        handleBlur,
-                    }) => (
+                    {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
                         <>
                             <Input
                                 label={t("displayName")}
@@ -144,9 +130,7 @@ const Profile = (props: Props): JSX.Element => {
                                 onChangeText={handleChange("email")}
                                 onBlur={handleBlur("email")}
                                 errorMessage={
-                                    errors.email && touched.email
-                                        ? errors.email
-                                        : undefined
+                                    errors.email && touched.email ? errors.email : undefined
                                 }
                                 errorStyle={styles.errorMessage}
                             />
@@ -207,11 +191,7 @@ const Profile = (props: Props): JSX.Element => {
                         </>
                     )}
                 </Formik>
-                <Button
-                    title={t("screens.profile.logout")}
-                    type="clear"
-                    onPress={logout}
-                />
+                <Button title={t("screens.profile.logout")} type="clear" onPress={logout} />
             </SafeAreaView>
         </KeyboardAwareScrollView>
     );
@@ -225,10 +205,7 @@ const validationSchema = (
             .required(t("validation.emailRequired"))
             .email(t("validation.emailRequired")),
         displayName: Yup.string().required(t("validation.displayNameRequired")),
-        password: Yup.string().min(
-            8,
-            t("validation.password.minLength", { amount: "8" })
-        ),
+        password: Yup.string().min(8, t("validation.password.minLength", { amount: "8" })),
         password2: Yup.string()
             .when("password", {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
