@@ -34,18 +34,12 @@ type Props = {
 const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
     const { t } = useTranslation();
 
-    const [
-        executeCreate,
-        { error: errorCreate, loading: loadingCreate },
-    ] = useAddActivityGroupMutation();
-    const [
-        executeUpdate,
-        { error: errorUpdate, loading: loadingUpdate },
-    ] = useUpdateActivityGroupMutation();
-    const [
-        executeRemove,
-        { error: errorRemove, loading: loadingRemove },
-    ] = useRemoveActivityGroupMutation();
+    const [executeCreate, { error: errorCreate, loading: loadingCreate }] =
+        useAddActivityGroupMutation();
+    const [executeUpdate, { error: errorUpdate, loading: loadingUpdate }] =
+        useUpdateActivityGroupMutation();
+    const [executeRemove, { error: errorRemove, loading: loadingRemove }] =
+        useRemoveActivityGroupMutation();
 
     const [placeholder] = useState({
         tripName: t("placeholder.activityGroupName", { returnObjects: true })[
