@@ -13,7 +13,7 @@ import stc from "string-to-color";
 import * as Yup from "yup";
 import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
 import TripHeaderContext from "../../routes/TripHeaderContext";
-import { User } from "../../types";
+import { TripUserRole, User } from "../../types";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import TripTabParamList from "../../types/TripTabParamList";
@@ -188,7 +188,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
         <SafeAreaView style={styles.container}>
             {loading && <Text>{t("loading")}</Text>}
 
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
                 <Text h3 style={{ marginBottom: 15 }}>
                     {t("screens.tripSettings.tripDetails")}
                 </Text>
@@ -255,8 +255,8 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                 <Text h3 style={{ marginBottom: 15 }}>
                     {t("screens.tripSettings.members")}
                 </Text>
-                {data.trip.members.map((member, i) => (
-                    <ListItem key={i} bottomDivider>
+                {data.trip.members.map((member) => (
+                    <ListItem key={member.user.id} bottomDivider>
                         <Avatar
                             rounded
                             containerStyle={{
@@ -269,7 +269,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
 
                         <ListItem.Content>
                             <ListItem.Title>{member.user.displayName}</ListItem.Title>
-                            {member.role === "ADMIN" && (
+                            {member.role === TripUserRole.Admin && (
                                 <ListItem.Subtitle>
                                     {member.role.charAt(0).toUpperCase() +
                                         member.role.toLowerCase().slice(1)}

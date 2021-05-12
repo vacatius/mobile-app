@@ -70,7 +70,6 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                     return {
                         /* eslint-disable react/prop-types */
                         tabBarIcon: function TabBarIcon({ color, size }) {
-                            // You can return any component that you like here!
                             return (
                                 <Pressable
                                     style={{
