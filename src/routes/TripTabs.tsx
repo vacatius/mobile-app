@@ -1,12 +1,19 @@
+import { FetchResult } from "@apollo/client";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
 import ScreenHeader from "../components/ScreenHeader";
 import TripItinerary from "../screens/Itinerary/TripItinerary";
+import {
+    CreateInvitationMutation,
+    useCreateInvitationMutation,
+} from "../screens/ShareTrip/types/create-invite.mutation";
 import TripSettings, { Mode } from "../screens/TripSettings/TripSettings";
+import { handleShare } from "../services/shareSheetHandler";
 import RootStackParamList from "../types/RootStackParamList";
 import { Routes } from "../types/Routes";
 import TripTabParamList from "../types/TripTabParamList";
@@ -22,9 +29,21 @@ type TripTabsProps = {
     route: TripTabsRouteProp;
 };
 const TripTabs = (props: TripTabsProps): JSX.Element => {
+    const { t } = useTranslation();
     const [currentScreen, setCurrentScreen] = useState<Routes>(Routes.ITINERARY);
     const [settingsMode, setSettingsMode] = useState<Mode>(Mode.VIEW);
     const [title, setTitle] = useState(props.route.params.params.tripName);
+
+    const [execute, { loading: loadingInvitationLink }] = useCreateInvitationMutation();
+    const getInvitationLinkPromise = (): Promise<FetchResult<CreateInvitationMutation>> => {
+        return execute({
+            variables: {
+                input: {
+                    tripId: props.route.params.params.tripId,
+                },
+            },
+        });
+    };
 
     useEffect(() => {
         props.navigation.setOptions({
@@ -38,7 +57,13 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                         settingsMode === Mode.VIEW || currentScreen === Routes.ITINERARY ? (
                             <Icon
                                 style={styles.iconButton}
-                                name={currentScreen === Routes.ITINERARY ? "share" : "pen"}
+                                name={
+                                    currentScreen === Routes.ITINERARY
+                                        ? loadingInvitationLink
+                                            ? "spinner"
+                                            : "share"
+                                        : "pen"
+                                }
                                 size={20}
                                 color="#222"
                                 type="font-awesome-5"
@@ -47,7 +72,7 @@ const TripTabs = (props: TripTabsProps): JSX.Element => {
                     }
                     actionCallback={() =>
                         currentScreen === Routes.ITINERARY
-                            ? console.log("share trip")
+                            ? handleShare(getInvitationLinkPromise(), t)
                             : setSettingsMode(Mode.EDIT)
                     }
                     {...headerProps}

@@ -1,15 +1,18 @@
+import { FetchResult } from "@apollo/client";
 import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Platform, ScrollView, Share, ShareContent, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
-import Toast from "react-native-toast-message";
 import SvgLogo from "../../components/SvgLogo";
-import { getEnvironment } from "../../get-environment";
+import { handleShare } from "../../services/shareSheetHandler";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
-import { useCreateInvitationMutation } from "./types/create-invite.mutation";
+import {
+    CreateInvitationMutation,
+    useCreateInvitationMutation,
+} from "./types/create-invite.mutation";
 
 type ShareTripScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.SHARE_TRIP>;
 type ShareTripScreenRouteProp = RouteProp<RootStackParamList, Routes.SHARE_TRIP>;
@@ -21,50 +24,17 @@ type Props = {
 
 export default function ShareTrip(props: Props): JSX.Element {
     const { t } = useTranslation();
-
     const trip = props.route.params.trip;
-    const [execute, { loading }] = useCreateInvitationMutation();
 
-    const handleShare = (): void => {
-        execute({
+    const [execute, { loading }] = useCreateInvitationMutation();
+    const getInvitationLinkPromise = (): Promise<FetchResult<CreateInvitationMutation>> => {
+        return execute({
             variables: {
                 input: {
                     tripId: trip.id,
                 },
             },
-        })
-            .then((result) => {
-                if (result.data?.createInvitation.id) {
-                    handleSystemShareSheet(
-                        getEnvironment()?.invitationBaseUrl +
-                            encodeURIComponent(result.data?.createInvitation.id)
-                    );
-                }
-            })
-            .catch((error) => console.error(error)); // TODO - Notify user with error modal
-    };
-
-    const handleSystemShareSheet = async (invitationLink: string): Promise<void> => {
-        try {
-            let shareObject: ShareContent = {
-                title: t("screens.shareTrip.androidShareSheetTitle"),
-                message: invitationLink,
-            };
-            // Only use url to properly display shareable content in iOS share sheet
-            if (Platform.OS === "ios") {
-                shareObject = {
-                    url: invitationLink,
-                };
-            }
-
-            await Share.share({ ...shareObject });
-        } catch (error) {
-            Toast.show({
-                text1: t("error.generic"),
-                text2: error.message,
-                type: "error",
-            });
-        }
+        });
     };
 
     return (
@@ -93,7 +63,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                     buttonStyle={styles.shareBtn}
                     title={t("screens.shareTrip.share")}
                     titleStyle={styles.btnTextStyle}
-                    onPress={() => handleShare()}
+                    onPress={() => handleShare(getInvitationLinkPromise(), t)}
                     loading={loading}
                 />
                 <Button
