@@ -97,7 +97,16 @@ export default function ApolloConnection(props: Props): JSX.Element {
                                             );
                                             resolvePendingRequests();
 
-                                            // retry the request, returning the new observable
+                                            const context =
+                                                operation.setContext({
+                                                    headers: {
+                                                        authorization: `Bearer ${accessToken}`,
+                                                    },
+                                                });
+                                            console.log("context start");
+                                            console.log(context);
+                                            console.log("context end");
+
                                             return forward(operation);
                                         })
                                         .catch(async (error) => {
@@ -151,7 +160,9 @@ export default function ApolloConnection(props: Props): JSX.Element {
 
     const authLink = setContext(async (_, { headers }) => {
         // get the authentication token from secure storage if it exists
-        const token = await SecureStore.getItemAsync("accessToken");
+        const token = await SecureStore.getItemAsync(
+            SecureStorageItems.ACCESS_TOKEN
+        );
         if (token) {
             // return the headers to the context so httpLink can read them
             return {
