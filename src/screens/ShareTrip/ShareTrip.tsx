@@ -4,6 +4,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Platform, ScrollView, Share, ShareContent, StyleSheet } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
+import Toast from "react-native-toast-message";
 import SvgLogo from "../../components/SvgLogo";
 import { getEnvironment } from "../../get-environment";
 import RootStackParamList from "../../types/RootStackParamList";
@@ -58,8 +59,11 @@ export default function ShareTrip(props: Props): JSX.Element {
 
             await Share.share({ ...shareObject });
         } catch (error) {
-            // TODO - Notify user with error modal
-            console.error(error.message);
+            Toast.show({
+                text1: t("error.generic"),
+                text2: error.message,
+                type: "error",
+            });
         }
     };
 
@@ -97,7 +101,6 @@ export default function ShareTrip(props: Props): JSX.Element {
                     buttonStyle={styles.planTripBtn}
                     title={t("screens.shareTrip.planTrip")}
                     titleStyle={styles.btnTextStyle}
-                    // TODO - Redirect to trip itinerary screen
                     onPress={() =>
                         props.navigation.reset({
                             index: 1,
@@ -108,8 +111,11 @@ export default function ShareTrip(props: Props): JSX.Element {
                                 {
                                     name: Routes.ITINERARY,
                                     params: {
-                                        tripId: props.route.params.trip.id,
-                                        tripName: props.route.params.trip.name,
+                                        screen: Routes.ITINERARY,
+                                        params: {
+                                            tripId: trip.id,
+                                            tripName: trip.name,
+                                        },
                                     },
                                 },
                             ],

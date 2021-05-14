@@ -8,9 +8,7 @@ type TripTabParamList = {
         };
     };
     [Routes.ITINERARY]: { tripId: string; tripName: string };
-    [Routes.TRIP_SETTINGS]: {
-        tripId: string;
-    };
+    [Routes.TRIP_SETTINGS]: { tripId: string };
 };
 
 export default TripTabParamList;
