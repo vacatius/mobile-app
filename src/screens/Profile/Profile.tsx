@@ -69,6 +69,8 @@ const Profile = (props: Props): JSX.Element => {
         console.log(props.route.params.updateUser);
         await SecureStore.deleteItemAsync(SecureStorageItems.CURRENT_USER);
         await SecureStore.deleteItemAsync(SecureStorageItems.ACCESS_TOKEN);
+        await SecureStore.deleteItemAsync(SecureStorageItems.USERNAME);
+        await SecureStore.deleteItemAsync(SecureStorageItems.PASSWORD);
         props.route.params.updateUser(undefined);
         props.navigation.reset({
             routes: [{ name: Routes.LOGIN }],

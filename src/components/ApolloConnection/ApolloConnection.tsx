@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 import Toast from "react-native-toast-message";
 import { getEnvironment } from "../../get-environment";
 import SecureStorageItems from "../../types/SecureStorageItems";
-import { REFRESH_TOKEN_MUTATION } from "./refresh-token.mutation";
+import { loginMutation } from "./login.mutation";
 
 export type Props = {
     children: JSX.Element;
@@ -36,20 +36,38 @@ export default function ApolloConnection(props: Props): JSX.Element {
         uri: getEnvironment()?.backendUrl,
         credentials: "include",
     });
-    const getNewToken = (): Promise<string> => {
+    const getNewToken = async (): Promise<string> => {
         console.log("get new token");
 
+        const password = await SecureStore.getItemAsync(
+            SecureStorageItems.PASSWORD
+        );
+        const username = await SecureStore.getItemAsync(
+            SecureStorageItems.USERNAME
+        );
+        console.log("fetch token with credentials");
+        if (password === null || username === null) {
+            throw new Error("no credentials stored");
+        }
         return client
-            .mutate({ mutation: REFRESH_TOKEN_MUTATION, errorPolicy: "all" })
+            .mutate({
+                mutation: loginMutation,
+                variables: {
+                    input: { password: password, username: username },
+                },
+                errorPolicy: "all",
+            })
             .then((response) => {
                 // extract your accessToken from your response data and return it
 
-                console.log("fetch token");
-                const data = response.data?.refreshToken;
-                if (!data) {
-                    throw new Error("could not get a refresh token");
+                const token = response.data?.login?.token;
+
+                if (!token) {
+                    throw new Error(
+                        "could not get a new token with credentials"
+                    );
                 }
-                return data?.token;
+                return token;
             });
     };
 
@@ -58,12 +76,6 @@ export default function ApolloConnection(props: Props): JSX.Element {
         ({ graphQLErrors, networkError, operation, forward }) => {
             if (graphQLErrors) {
                 for (const err of graphQLErrors) {
-                    console.error(err);
-                    Toast.show({
-                        text1: t("error.generic"),
-                        text2: err.message,
-                        type: "error",
-                    });
                     switch (err.extensions?.code) {
                         case "UNAUTHENTICATED":
                             // Handle token refresh errors e.g clear stored tokens, redirect to login
@@ -77,7 +89,7 @@ export default function ApolloConnection(props: Props): JSX.Element {
                                     getNewToken()
                                         .then(async (accessToken) => {
                                             console.log(
-                                                "Got a new access token using refresh token"
+                                                "Got a new access token using credentials"
                                             );
                                             await SecureStore.setItemAsync(
                                                 SecureStorageItems.ACCESS_TOKEN,
@@ -88,11 +100,17 @@ export default function ApolloConnection(props: Props): JSX.Element {
                                             // retry the request, returning the new observable
                                             return forward(operation);
                                         })
-                                        .catch((error) => {
+                                        .catch(async (error) => {
+                                            console.log(err.message);
+                                            Toast.show({
+                                                text1: t("error.generic"),
+                                                text2: err.message,
+                                                type: "error",
+                                            });
                                             console.error(error);
                                             pendingRequests = [];
                                             // Handle token refresh errors e.g clear stored tokens, redirect to login
-                                            SecureStore.deleteItemAsync(
+                                            await SecureStore.deleteItemAsync(
                                                 SecureStorageItems.ACCESS_TOKEN
                                             );
                                             props.navigationFn("Login", {});
@@ -111,6 +129,12 @@ export default function ApolloConnection(props: Props): JSX.Element {
                             }
                             break;
                         default:
+                            console.log(err.message);
+                            Toast.show({
+                                text1: t("error.generic"),
+                                text2: err.message,
+                                type: "error",
+                            });
                             break;
                     }
                 }

@@ -74,6 +74,15 @@ export default function Login(props: Props): JSX.Element {
                         SecureStorageItems.CURRENT_USER,
                         JSON.stringify(res.data?.login.user)
                     ).catch((e) => console.log(e));
+
+                    saveInSecureStore(
+                        SecureStorageItems.PASSWORD,
+                        values.password
+                    );
+                    saveInSecureStore(
+                        SecureStorageItems.USERNAME,
+                        values.username
+                    );
                 }
                 props.navigation.replace(Routes.DASHBOARD);
             })
