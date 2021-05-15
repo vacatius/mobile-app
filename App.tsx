@@ -137,7 +137,7 @@ export default function App(): JSX.Element {
                                 name={Routes.SHARE_TRIP}
                                 component={ShareTrip}
                                 options={({ route }) => {
-                                    const params = (route.params as unknown) as {
+                                    const params = route.params as unknown as {
                                         tripId: string;
                                     };
                                     return {
@@ -146,12 +146,8 @@ export default function App(): JSX.Element {
                                             <ScreenHeader
                                                 screenTitle={
                                                     params.tripId === undefined
-                                                        ? t(
-                                                              "screens.shareTrip.titleJoin"
-                                                          )
-                                                        : t(
-                                                              "screens.shareTrip.titleShare"
-                                                          )
+                                                        ? t("screens.shareTrip.titleJoin")
+                                                        : t("screens.shareTrip.titleShare")
                                                 }
                                                 {...props}
                                             />

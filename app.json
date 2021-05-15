@@ -15,9 +15,7 @@
         "updates": {
             "fallbackToCacheTimeout": 0
         },
-        "assetBundlePatterns": [
-            "**/*"
-        ],
+        "assetBundlePatterns": ["**/*"],
         "ios": {
             "supportsTablet": true
         },
@@ -35,10 +33,7 @@
                             "scheme": "vacatius"
                         }
                     ],
-                    "category": [
-                        "BROWSABLE",
-                        "DEFAULT"
-                    ]
+                    "category": ["BROWSABLE", "DEFAULT"]
                 }
             ]
         },
