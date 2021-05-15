@@ -65,7 +65,8 @@ export const AddTrip = (props: Props): JSX.Element => {
                         {
                             name: Routes.SHARE_TRIP,
                             params: {
-                                trip: result.data?.createTrip,
+                                tripId: result.data?.createTrip.id,
+                                // mode: Mode.SHARE_TRIP,
                             },
                         },
                     ],

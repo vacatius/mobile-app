@@ -1,0 +1,11 @@
+mutation joinTrip($input: JoinTripInput!) {
+	joinTrip(data: $input) {
+		id
+		members {
+			user {
+				displayName
+				id
+			}
+		}
+	}
+}

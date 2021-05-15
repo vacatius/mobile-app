@@ -24,7 +24,18 @@
                 "foregroundImage": "./assets/adaptive-icon.png",
                 "backgroundColor": "#FFFFFF"
             },
-            "package": "com.vacatius.app"
+            "package": "com.vacatius.app",
+            "intentFilters": [
+                {
+                    "action": "VIEW",
+                    "data": [
+                        {
+                            "scheme": "vacatius"
+                        }
+                    ],
+                    "category": ["BROWSABLE", "DEFAULT"]
+                }
+            ]
         },
         "web": {
             "favicon": "./assets/favicon.png"

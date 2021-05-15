@@ -1,18 +1,29 @@
 import { FetchResult } from "@apollo/client";
 import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
+import Toast from "react-native-toast-message";
 import SvgLogo from "../../components/SvgLogo";
 import { handleShare } from "../../services/shareSheetHandler";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
+import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import {
     CreateInvitationMutation,
     useCreateInvitationMutation,
 } from "./types/create-invite.mutation";
+import { useGetInvitationLazyQuery } from "./types/get-invitation.query";
+import { useGetTripLazyQuery } from "./types/get-trip.query";
+import { useJoinTripMutation } from "./types/join-trip.mutation";
+import * as Linking from "expo-linking";
+
+export enum Mode {
+    SHARE_TRIP,
+    JOIN_TRIP,
+}
 
 type ShareTripScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.SHARE_TRIP>;
 type ShareTripScreenRouteProp = RouteProp<RootStackParamList, Routes.SHARE_TRIP>;
@@ -24,25 +35,137 @@ type Props = {
 
 export default function ShareTrip(props: Props): JSX.Element {
     const { t } = useTranslation();
-    const trip = props.route.params.trip;
+    const [mode] = useState<Mode>(props.route.params.tripId ? Mode.SHARE_TRIP : Mode.JOIN_TRIP);
 
-    const [execute, { loading }] = useCreateInvitationMutation();
-    const getInvitationLinkPromise = (): Promise<FetchResult<CreateInvitationMutation>> => {
-        return execute({
-            variables: {
-                input: {
-                    tripId: trip.id,
-                },
+    useEffect(() => {
+        async function getInitialUrl(): Promise<void> {
+            const link = await Linking.getInitialURL();
+            if (link && link !== null) {
+                console.log("[Share Trip] we got a initial URL link");
+                console.log("[Share Trip] ", link);
+            }
+        }
+        getInitialUrl();
+        Linking.addEventListener("url", (event) => {
+            console.log("[Share Trip] got event listener callback");
+            console.log("[Share Trip] ", event);
+        });
+    }, []);
+
+    const [executeCreateInvitation, { loading: loadingCreateInvitation }] =
+        useCreateInvitationMutation();
+    const [executeJoinTripMutation, { loading: loadingJoinTrip }] = useJoinTripMutation();
+
+    const [executeGetTripQuery, { data: trip, error: getTripError, called: tripQueryCalled }] =
+        useGetTripLazyQuery();
+
+    const [executeGetInvitation, { data: invitation, called: invitationQueryCalled }] =
+        useGetInvitationLazyQuery({
+            notifyOnNetworkStatusChange: true,
+            fetchPolicy: "network-only",
+            onCompleted: (data) => {
+                executeGetTripQuery({
+                    variables: {
+                        tripId: data.invitation.trip.id,
+                    },
+                });
             },
         });
+
+    if (mode === Mode.SHARE_TRIP && !tripQueryCalled) {
+        console.log("fetching share trip data", props.route.params.tripId);
+        executeGetTripQuery({
+            variables: {
+                tripId: props.route.params.tripId,
+            },
+        });
+    } else if (mode === Mode.JOIN_TRIP && !tripQueryCalled && !invitationQueryCalled) {
+        console.log("fetching join data", props.route.params.invitationId);
+        if (props.route.params.invitationId) {
+            executeGetInvitation({
+                variables: { invitationId: props.route.params.invitationId },
+            });
+        }
+    }
+
+    const handleSubmitButton = (): void => {
+        if (mode === Mode.SHARE_TRIP) {
+            const getInvitationLinkPromise = (): Promise<FetchResult<CreateInvitationMutation>> => {
+                return executeCreateInvitation({
+                    variables: {
+                        input: {
+                            tripId: trip?.trip.id || "",
+                        },
+                    },
+                });
+            };
+            handleShare(getInvitationLinkPromise(), t);
+        } else if (mode === Mode.JOIN_TRIP && invitation) {
+            executeJoinTripMutation({
+                variables: {
+                    input: {
+                        invitationId: invitation.invitation.id,
+                        tripId: trip?.trip.id || "",
+                    },
+                },
+                refetchQueries: [refetchTripsQuery()],
+            })
+                .then(() => {
+                    props.navigation.reset({
+                        index: 0,
+                        routes: [
+                            {
+                                name: Routes.DASHBOARD,
+                            },
+                        ],
+                    });
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Toast.show({
+                        text1: t("error.generic"),
+                        text2: error.message,
+                        type: "error",
+                    });
+                });
+        }
     };
+
+    const handlePlanTripNavigation = (): void => {
+        props.navigation.reset({
+            index: 1,
+            routes: [
+                {
+                    name: Routes.DASHBOARD,
+                },
+                {
+                    name: Routes.ITINERARY,
+                    params: {
+                        screen: Routes.ITINERARY,
+                        params: {
+                            tripId: trip?.trip.id,
+                            tripName: trip?.trip.name,
+                        },
+                    },
+                },
+            ],
+        });
+    };
+
+    if (!trip) {
+        return (
+            <>
+                <Text>{getTripError}</Text>
+            </>
+        );
+    }
 
     return (
         <>
             <Header
                 placement={"left"}
                 containerStyle={styles.header}
-                leftComponent={<Text h2>{trip.name}</Text>}
+                leftComponent={<Text h2>{trip.trip.name}</Text>}
                 rightComponent={
                     <Avatar
                         rounded
@@ -56,48 +179,73 @@ export default function ShareTrip(props: Props): JSX.Element {
                 }
             />
             <ScrollView style={styles.scrollView}>
-                {trip.description && <Text h4>{trip.description}</Text>}
+                {trip.trip.description && <Text h4>{trip.trip.description}</Text>}
                 <SvgLogo style={styles.logo} height={150} width={150} />
-                <Button
-                    containerStyle={styles.btnContainer}
-                    buttonStyle={styles.shareBtn}
-                    title={t("screens.shareTrip.share")}
-                    titleStyle={styles.btnTextStyle}
-                    onPress={() => handleShare(getInvitationLinkPromise(), t)}
-                    loading={loading}
-                />
+                {mode === Mode.SHARE_TRIP && (
+                    <Button
+                        containerStyle={styles.btnContainer}
+                        buttonStyle={styles.shareBtn}
+                        title={t("screens.shareTrip.share")}
+                        titleStyle={styles.btnTextStyle}
+                        onPress={() => handleSubmitButton()}
+                        loading={loadingCreateInvitation}
+                    />
+                )}
                 <Button
                     containerStyle={styles.btnContainer}
                     buttonStyle={styles.planTripBtn}
-                    title={t("screens.shareTrip.planTrip")}
+                    title={t(
+                        mode === Mode.SHARE_TRIP
+                            ? "screens.shareTrip.planTrip"
+                            : "screens.shareTrip.joinTrip"
+                    )}
                     titleStyle={styles.btnTextStyle}
-                    onPress={() =>
-                        props.navigation.reset({
-                            index: 1,
-                            routes: [
-                                {
-                                    name: Routes.DASHBOARD,
-                                },
-                                {
-                                    name: Routes.ITINERARY,
-                                    params: {
-                                        screen: Routes.ITINERARY,
-                                        params: {
-                                            tripId: trip.id,
-                                            tripName: trip.name,
-                                        },
+                    onPress={() => {
+                        if (mode === Mode.JOIN_TRIP && invitation) {
+                            executeJoinTripMutation({
+                                variables: {
+                                    input: {
+                                        tripId: trip.trip.id,
+                                        invitationId: invitation.invitation.id,
                                     },
                                 },
-                            ],
-                        })
-                    }
+                            })
+                                .then(() => handlePlanTripNavigation())
+                                .catch((err) => {
+                                    console.error(err);
+                                    Toast.show({
+                                        text1: t("error.generic"),
+                                        text2: err.message,
+                                        type: "error",
+                                    });
+                                });
+                        } else {
+                            handlePlanTripNavigation();
+                        }
+                    }}
+                    loading={mode === Mode.JOIN_TRIP ? loadingJoinTrip : false}
                 />
                 <Button
                     containerStyle={{ marginTop: -10 }}
                     buttonStyle={styles.backToDashboardBtn}
-                    title={t("screens.shareTrip.goToDashboard")}
+                    title={t(
+                        mode === Mode.SHARE_TRIP
+                            ? "screens.shareTrip.goToDashboard"
+                            : "screens.shareTrip.cancelJoin"
+                    )}
                     titleStyle={{ color: "black", fontSize: 20 }}
-                    onPress={() => props.navigation.popToTop()}
+                    onPress={() =>
+                        mode === Mode.SHARE_TRIP
+                            ? props.navigation.popToTop()
+                            : props.navigation.reset({
+                                  index: 0,
+                                  routes: [
+                                      {
+                                          name: Routes.DASHBOARD,
+                                      },
+                                  ],
+                              })
+                    }
                 />
             </ScrollView>
         </>

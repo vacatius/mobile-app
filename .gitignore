@@ -424,3 +424,7 @@ fabric.properties
 .idea/codestream.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/reactnative,vscode,webstorm
+
+# GraphQL
+.graphqlconfig
+schema.graphql

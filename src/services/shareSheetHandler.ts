@@ -4,6 +4,7 @@ import { Platform, Share, ShareContent } from "react-native";
 import Toast from "react-native-toast-message";
 import { getEnvironment } from "../get-environment";
 import { CreateInvitationMutation } from "../screens/ShareTrip/types/create-invite.mutation";
+import * as Linking from "expo-linking";
 
 export const handleShare = (
     execute: Promise<FetchResult<CreateInvitationMutation>>,
@@ -12,9 +13,13 @@ export const handleShare = (
     execute
         .then((result) => {
             if (result.data?.createInvitation.id) {
+                const expoLink = Linking.createURL(
+                    "joinTrip/" + result.data?.createInvitation.id,
+                    {}
+                );
+                console.log(expoLink);
                 handleSystemShareSheet(
-                    getEnvironment()?.invitationBaseUrl +
-                        encodeURIComponent(result.data?.createInvitation.id),
+                    getEnvironment()?.invitationBaseUrl + encodeURIComponent(expoLink),
                     t
                 );
             }
