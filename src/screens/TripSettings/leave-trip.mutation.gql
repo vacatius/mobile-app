@@ -1,0 +1,5 @@
+mutation leaveTrip($tripId: String!) {
+    leaveTrip(tripId: $tripId) {
+        id
+    }
+}

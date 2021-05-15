@@ -34,18 +34,12 @@ type Props = {
 const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
     const { t } = useTranslation();
 
-    const [
-        executeCreate,
-        { error: errorCreate, loading: loadingCreate },
-    ] = useAddActivityGroupMutation();
-    const [
-        executeUpdate,
-        { error: errorUpdate, loading: loadingUpdate },
-    ] = useUpdateActivityGroupMutation();
-    const [
-        executeRemove,
-        { error: errorRemove, loading: loadingRemove },
-    ] = useRemoveActivityGroupMutation();
+    const [executeCreate, { error: errorCreate, loading: loadingCreate }] =
+        useAddActivityGroupMutation();
+    const [executeUpdate, { error: errorUpdate, loading: loadingUpdate }] =
+        useUpdateActivityGroupMutation();
+    const [executeRemove, { error: errorRemove, loading: loadingRemove }] =
+        useRemoveActivityGroupMutation();
 
     const [placeholder] = useState({
         tripName: t("placeholder.activityGroupName", { returnObjects: true })[
@@ -85,9 +79,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                         console.log("Remove Pressed");
                         executeRemove({
                             variables: {
-                                id:
-                                    props.route.params.tripRoutePointToEdit
-                                        ?.id ?? "",
+                                id: props.route.params.tripRoutePointToEdit?.id ?? "",
                             },
                             refetchQueries: [
                                 refetchGetTripQuery({
@@ -96,9 +88,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                             ],
                         })
                             .then(() => {
-                                console.log(
-                                    "Successfully removed activity group"
-                                );
+                                console.log("Successfully removed activity group");
                                 props.navigation.goBack();
                             })
                             .catch((err) => {
@@ -137,8 +127,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
             executeUpdate({
                 variables: {
                     input: {
-                        routePointId:
-                            props.route.params.tripRoutePointToEdit.id,
+                        routePointId: props.route.params.tripRoutePointToEdit.id,
                         name: values.name,
                         description: values.description ?? "",
                     },
@@ -159,14 +148,10 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
 
     return (
         <SafeAreaView>
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
                 <View style={styles.inner}>
                     {/* Undraw.co: travel plans */}
-                    <SvgTravelPlan
-                        style={styles.travelPlan}
-                        width={150}
-                        height={150}
-                    />
+                    <SvgTravelPlan style={styles.travelPlan} width={150} height={150} />
                     <Text h3 style={styles.textHeading}>
                         {t("screens.addEditActivityGroup.groupYourActivities")}
                     </Text>
@@ -177,13 +162,9 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                         initialValues={
                             props.route.params.tripRoutePointToEdit
                                 ? {
-                                      name:
-                                          props.route.params
-                                              .tripRoutePointToEdit.name ?? "",
+                                      name: props.route.params.tripRoutePointToEdit.name ?? "",
                                       description:
-                                          props.route.params
-                                              .tripRoutePointToEdit
-                                              .description ?? "",
+                                          props.route.params.tripRoutePointToEdit.description ?? "",
                                   }
                                 : {
                                       name: "",
@@ -193,23 +174,12 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                         onSubmit={handleSubmit}
                         validationSchema={validationSchema(t)}
                     >
-                        {({
-                            handleChange,
-                            values,
-                            handleSubmit,
-                            errors,
-                            touched,
-                            handleBlur,
-                        }) => (
+                        {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
                             <>
                                 <Input
-                                    label={t(
-                                        "screens.addEditActivityGroup.activityGroupName"
-                                    )}
+                                    label={t("screens.addEditActivityGroup.activityGroupName")}
                                     errorMessage={
-                                        errors.name && touched.name
-                                            ? errors.name
-                                            : undefined
+                                        errors.name && touched.name ? errors.name : undefined
                                     }
                                     errorStyle={styles.errorMessage}
                                     placeholder={placeholder.tripName}
@@ -222,8 +192,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                         "screens.addEditActivityGroup.activityGroupDescription"
                                     )}
                                     errorMessage={
-                                        errors.description &&
-                                        touched.description
+                                        errors.description && touched.description
                                             ? errors.description
                                             : undefined
                                     }
@@ -234,32 +203,21 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                     onBlur={handleBlur("description")}
                                 />
                                 {errorCreate && (
-                                    <Text style={styles.errorText}>
-                                        {errorCreate.message}
-                                    </Text>
+                                    <Text style={styles.errorText}>{errorCreate.message}</Text>
                                 )}
                                 {errorUpdate && (
-                                    <Text style={styles.errorText}>
-                                        {errorUpdate.message}
-                                    </Text>
+                                    <Text style={styles.errorText}>{errorUpdate.message}</Text>
                                 )}
                                 {errorRemove && (
-                                    <Text style={styles.errorText}>
-                                        {errorRemove.message}
-                                    </Text>
+                                    <Text style={styles.errorText}>{errorRemove.message}</Text>
                                 )}
                                 <Button
                                     containerStyle={styles.buttonContainer}
                                     buttonStyle={styles.submitButton}
                                     title={
-                                        props.route.params
-                                            .tripRoutePointToEdit === undefined
-                                            ? t(
-                                                  "screens.addEditActivityGroup.submitCreate"
-                                              )
-                                            : t(
-                                                  "screens.addEditActivityGroup.submitUpdate"
-                                              )
+                                        props.route.params.tripRoutePointToEdit === undefined
+                                            ? t("screens.addEditActivityGroup.submitCreate")
+                                            : t("screens.addEditActivityGroup.submitUpdate")
                                     }
                                     titleStyle={{
                                         color: "black",
@@ -268,8 +226,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                     onPress={() => handleSubmit()}
                                     loading={loadingCreate || loadingUpdate}
                                 />
-                                {props.route.params.tripRoutePointToEdit !==
-                                    undefined && (
+                                {props.route.params.tripRoutePointToEdit !== undefined && (
                                     <Button
                                         containerStyle={styles.buttonContainer}
                                         title={t(
@@ -304,10 +261,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
 
 const validationSchema = (t: TFunction): any => {
     return Yup.object().shape({
-        name: Yup.string()
-            .min(1)
-            .max(30)
-            .required(t("validation.nameRequired")),
+        name: Yup.string().min(1).max(30).required(t("validation.nameRequired")),
         description: Yup.string().min(1).max(200),
     });
 };

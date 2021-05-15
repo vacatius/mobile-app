@@ -1,22 +1,20 @@
+import { FetchResult } from "@apollo/client";
 import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-    Platform,
-    ScrollView,
-    Share,
-    ShareContent,
-    StyleSheet,
-} from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import SvgLogo from "../../components/SvgLogo";
-import { getEnvironment } from "../../get-environment";
+import { handleShare } from "../../services/shareSheetHandler";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
-import { useCreateInvitationMutation } from "./types/create-invite.mutation";
+import {
+    CreateInvitationMutation,
+    useCreateInvitationMutation,
+} from "./types/create-invite.mutation";
 import { useGetInvitationLazyQuery } from "./types/get-invitation.query";
 import { useGetTripLazyQuery } from "./types/get-trip.query";
 import { useJoinTripMutation } from "./types/join-trip.mutation";
@@ -27,14 +25,8 @@ export enum Mode {
     JOIN_TRIP,
 }
 
-type ShareTripScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.SHARE_TRIP
->;
-type ShareTripScreenRouteProp = RouteProp<
-    RootStackParamList,
-    Routes.SHARE_TRIP
->;
+type ShareTripScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.SHARE_TRIP>;
+type ShareTripScreenRouteProp = RouteProp<RootStackParamList, Routes.SHARE_TRIP>;
 
 type Props = {
     navigation: ShareTripScreenNavigationProp;
@@ -259,7 +251,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                         buttonStyle={styles.shareBtn}
                         title={t("screens.shareTrip.share")}
                         titleStyle={styles.btnTextStyle}
-                        onPress={() => handleSubmitButton()}
+                        onPress={() => handleSubmitButton(getInvitationLinkPromise(), t)}
                         loading={loadingCreateInvitation}
                     />
                 )}

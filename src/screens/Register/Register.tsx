@@ -13,10 +13,7 @@ import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { useCreateUserMutation } from "./types/registerMutation";
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    Routes.REGISTER
->;
+type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.REGISTER>;
 
 type Props = {
     navigation: ProfileScreenNavigationProp;
@@ -49,6 +46,19 @@ export default function Register(props: Props): JSX.Element {
         ],
     });
 
+    const [registerTitle] = useState(
+        t("startJourney", {
+            returnObjects: true,
+        })[
+            Math.floor(
+                Math.random() *
+                    t("startJourney", {
+                        returnObjects: true,
+                    }).length
+            )
+        ]
+    );
+
     const handleRegister = (values: FormikValues): void => {
         execute({
             variables: {
@@ -67,13 +77,10 @@ export default function Register(props: Props): JSX.Element {
     };
 
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
-                    <Overlay
-                        isVisible={signInOverlay.length > 0}
-                        overlayStyle={styles.overlay}
-                    >
+                    <Overlay isVisible={signInOverlay.length > 0} overlayStyle={styles.overlay}>
                         <SvgLogo style={styles.logo} width={80} height={80} />
                         <Text style={styles.welcomeText}>
                             {t("screens.register.welcome", {
@@ -100,14 +107,7 @@ export default function Register(props: Props): JSX.Element {
                         onSubmit={(values) => handleRegister(values)}
                         validationSchema={validationSchema(t)}
                     >
-                        {({
-                            handleChange,
-                            values,
-                            handleSubmit,
-                            errors,
-                            touched,
-                            handleBlur,
-                        }) => (
+                        {({ handleChange, values, handleSubmit, errors, touched, handleBlur }) => (
                             <>
                                 <Input
                                     label={t("email")}
@@ -125,9 +125,7 @@ export default function Register(props: Props): JSX.Element {
                                     onChangeText={handleChange("email")}
                                     onBlur={handleBlur("email")}
                                     errorMessage={
-                                        errors.email && touched.email
-                                            ? errors.email
-                                            : undefined
+                                        errors.email && touched.email ? errors.email : undefined
                                     }
                                     errorStyle={styles.errorMessage}
                                 />
@@ -169,8 +167,7 @@ export default function Register(props: Props): JSX.Element {
                                     onChangeText={handleChange("displayName")}
                                     onBlur={handleBlur("displayName")}
                                     errorMessage={
-                                        errors.displayName &&
-                                        touched.displayName
+                                        errors.displayName && touched.displayName
                                             ? errors.displayName
                                             : undefined
                                     }
@@ -234,18 +231,7 @@ export default function Register(props: Props): JSX.Element {
                                 <Button
                                     containerStyle={styles.buttonContainer}
                                     buttonStyle={styles.buttonRegister}
-                                    title={
-                                        t("startJourney", {
-                                            returnObjects: true,
-                                        })[
-                                            Math.floor(
-                                                Math.random() *
-                                                    t("startJourney", {
-                                                        returnObjects: true,
-                                                    }).length
-                                            )
-                                        ]
-                                    }
+                                    title={registerTitle}
                                     titleStyle={styles.buttonTitle}
                                     icon={
                                         <Icon
@@ -283,10 +269,7 @@ const validationSchema = (
             .min(8, t("validation.password.minLength", { amount: "8" })),
         password2: Yup.string()
             .required(t("validation.password.required"))
-            .oneOf(
-                [Yup.ref("password."), null],
-                t("validation.password.match")
-            ),
+            .oneOf([Yup.ref("password."), null], t("validation.password.match")),
     });
 
 const styles = StyleSheet.create({
