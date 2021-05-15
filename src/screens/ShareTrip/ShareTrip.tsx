@@ -55,27 +55,17 @@ export default function ShareTrip(props: Props): JSX.Element {
         });
     }, []);
 
-    const [
-        executeCreateInvitation,
-        { loading: loadingCreateInvitation },
-    ] = useCreateInvitationMutation();
-    const [
-        executeJoinTripMutation,
-        { data: joinTripData, loading: loadingJoinTrip },
-    ] = useJoinTripMutation();
+    const [executeCreateInvitation, { loading: loadingCreateInvitation }] =
+        useCreateInvitationMutation();
+    const [executeJoinTripMutation, { data: joinTripData, loading: loadingJoinTrip }] =
+        useJoinTripMutation();
 
-    const [
-        executeGetTripQuery,
-        { data: trip, error: getTripError, called: tripQueryCalled },
-    ] = useGetTripLazyQuery();
+    const [executeGetTripQuery, { data: trip, error: getTripError, called: tripQueryCalled }] =
+        useGetTripLazyQuery();
 
     const [
         executeGetInvitation,
-        {
-            data: invitation,
-            error: getInvitationError,
-            called: invitationQueryCalled,
-        },
+        { data: invitation, error: getInvitationError, called: invitationQueryCalled },
     ] = useGetInvitationLazyQuery({
         notifyOnNetworkStatusChange: true,
         fetchPolicy: "network-only",
@@ -96,11 +86,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                 tripId: props.route.params.tripId,
             },
         });
-    } else if (
-        mode === Mode.JOIN_TRIP &&
-        !tripQueryCalled &&
-        !invitationQueryCalled
-    ) {
+    } else if (mode === Mode.JOIN_TRIP && !tripQueryCalled && !invitationQueryCalled) {
         console.log("fetching join data", props.route.params.invitationId);
         if (props.route.params.invitationId) {
             executeGetInvitation({
@@ -111,35 +97,16 @@ export default function ShareTrip(props: Props): JSX.Element {
 
     const handleSubmitButton = (): void => {
         if (mode === Mode.SHARE_TRIP) {
-            executeCreateInvitation({
-                variables: {
-                    input: {
-                        tripId: trip?.trip.id || "",
+            const getInvitationLinkPromise = (): Promise<FetchResult<CreateInvitationMutation>> => {
+                return executeCreateInvitation({
+                    variables: {
+                        input: {
+                            tripId: trip?.trip.id || "",
+                        },
                     },
-                },
-            })
-                .then((result) => {
-                    if (result.data?.createInvitation.id) {
-                        // exp://exp.host/@community/with-webbrowser-redirect/--/shareTrip/90194i0294i4240
-                        const expoLink = Linking.createURL(
-                            "joinTrip/" + result.data?.createInvitation.id,
-                            {
-                                // queryParams: {
-                                //     invitationId:
-                                //         result.data?.createInvitation.id,
-                                // },
-                            }
-                        );
-                        console.log(expoLink);
-
-                        // https://vacatius.com/invite/shareTrip/90194i0294i4240
-                        handleSystemShareSheet(
-                            getEnvironment()?.invitationBaseUrl +
-                                encodeURIComponent(expoLink)
-                        );
-                    }
-                })
-                .catch((error) => console.error(error)); // TODO - Notify user with error modal
+                });
+            };
+            handleShare(getInvitationLinkPromise(), t);
         } else if (mode === Mode.JOIN_TRIP) {
             executeJoinTripMutation({
                 variables: {
@@ -168,28 +135,6 @@ export default function ShareTrip(props: Props): JSX.Element {
                         type: "error",
                     });
                 });
-        }
-    };
-
-    const handleSystemShareSheet = async (
-        invitationLink: string
-    ): Promise<void> => {
-        try {
-            let shareObject: ShareContent = {
-                title: t("screens.shareTrip.androidShareSheetTitle"),
-                message: invitationLink,
-            };
-            // Only use url to properly display shareable content in iOS share sheet
-            if (Platform.OS === "ios") {
-                shareObject = {
-                    url: invitationLink,
-                };
-            }
-
-            await Share.share({ ...shareObject });
-        } catch (error) {
-            // TODO - Notify user with error modal
-            console.error(error.message);
         }
     };
 
@@ -241,9 +186,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                 }
             />
             <ScrollView style={styles.scrollView}>
-                {trip.trip.description && (
-                    <Text h4>{trip.trip.description}</Text>
-                )}
+                {trip.trip.description && <Text h4>{trip.trip.description}</Text>}
                 <SvgLogo style={styles.logo} height={150} width={150} />
                 {mode === Mode.SHARE_TRIP && (
                     <Button
@@ -251,7 +194,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                         buttonStyle={styles.shareBtn}
                         title={t("screens.shareTrip.share")}
                         titleStyle={styles.btnTextStyle}
-                        onPress={() => handleSubmitButton(getInvitationLinkPromise(), t)}
+                        onPress={() => handleSubmitButton()}
                         loading={loadingCreateInvitation}
                     />
                 )}
@@ -283,6 +226,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                             handlePlanTripNavigation();
                         }
                     }}
+                    loading={mode === Mode.JOIN_TRIP ? loadingJoinTrip : false}
                 />
                 <Button
                     containerStyle={{ marginTop: -10 }}
