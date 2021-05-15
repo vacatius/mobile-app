@@ -1,14 +1,18 @@
+import { FetchResult } from "@apollo/client";
 import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Platform, ScrollView, Share, ShareContent, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Avatar, Button, Header, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
-import { getEnvironment } from "../../get-environment";
+import { handleShare } from "../../services/shareSheetHandler";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
-import { useCreateInvitationMutation } from "./types/create-invite.mutation";
+import {
+    CreateInvitationMutation,
+    useCreateInvitationMutation,
+} from "./types/create-invite.mutation";
 
 type ShareTripScreenNavigationProp = StackNavigationProp<RootStackParamList, Routes.SHARE_TRIP>;
 type ShareTripScreenRouteProp = RouteProp<RootStackParamList, Routes.SHARE_TRIP>;
@@ -20,47 +24,17 @@ type Props = {
 
 export default function ShareTrip(props: Props): JSX.Element {
     const { t } = useTranslation();
-
     const trip = props.route.params.trip;
-    const [execute, { loading }] = useCreateInvitationMutation();
 
-    const handleShare = (): void => {
-        execute({
+    const [execute, { loading }] = useCreateInvitationMutation();
+    const getInvitationLinkPromise = (): Promise<FetchResult<CreateInvitationMutation>> => {
+        return execute({
             variables: {
                 input: {
                     tripId: trip.id,
                 },
             },
-        })
-            .then((result) => {
-                if (result.data?.createInvitation.id) {
-                    handleSystemShareSheet(
-                        getEnvironment()?.invitationBaseUrl +
-                            encodeURIComponent(result.data?.createInvitation.id)
-                    );
-                }
-            })
-            .catch((error) => console.error(error)); // TODO - Notify user with error modal
-    };
-
-    const handleSystemShareSheet = async (invitationLink: string): Promise<void> => {
-        try {
-            let shareObject: ShareContent = {
-                title: t("screens.shareTrip.androidShareSheetTitle"),
-                message: invitationLink,
-            };
-            // Only use url to properly display shareable content in iOS share sheet
-            if (Platform.OS === "ios") {
-                shareObject = {
-                    url: invitationLink,
-                };
-            }
-
-            await Share.share({ ...shareObject });
-        } catch (error) {
-            // TODO - Notify user with error modal
-            console.error(error.message);
-        }
+        });
     };
 
     return (
@@ -89,7 +63,7 @@ export default function ShareTrip(props: Props): JSX.Element {
                     buttonStyle={styles.shareBtn}
                     title={t("screens.shareTrip.share")}
                     titleStyle={styles.btnTextStyle}
-                    onPress={() => handleShare()}
+                    onPress={() => handleShare(getInvitationLinkPromise(), t)}
                     loading={loading}
                 />
                 <Button
@@ -97,7 +71,6 @@ export default function ShareTrip(props: Props): JSX.Element {
                     buttonStyle={styles.planTripBtn}
                     title={t("screens.shareTrip.planTrip")}
                     titleStyle={styles.btnTextStyle}
-                    // TODO - Redirect to trip itinerary screen
                     onPress={() =>
                         props.navigation.reset({
                             index: 1,
@@ -108,8 +81,11 @@ export default function ShareTrip(props: Props): JSX.Element {
                                 {
                                     name: Routes.ITINERARY,
                                     params: {
-                                        tripId: props.route.params.trip.id,
-                                        tripName: props.route.params.trip.name,
+                                        screen: Routes.ITINERARY,
+                                        params: {
+                                            tripId: trip.id,
+                                            tripName: trip.name,
+                                        },
                                     },
                                 },
                             ],
