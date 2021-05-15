@@ -8,6 +8,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
+import { TokenRefreshLink } from "apollo-link-token-refresh";
 import * as SecureStore from "expo-secure-store";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -36,7 +37,7 @@ export default function ApolloConnection(props: Props): JSX.Element {
         uri: getEnvironment()?.backendUrl,
         credentials: "include",
     });
-    const getNewToken = async (): Promise<string> => {
+    const getNewToken = async (): Promise<Response> => {
         console.log("get new token");
 
         const password = await SecureStore.getItemAsync(
@@ -47,6 +48,7 @@ export default function ApolloConnection(props: Props): JSX.Element {
         );
         console.log("fetch token with credentials");
         if (password === null || username === null) {
+            console.log("no credentials");
             throw new Error("no credentials stored");
         }
         return client
@@ -56,10 +58,10 @@ export default function ApolloConnection(props: Props): JSX.Element {
                     input: { password: password, username: username },
                 },
                 errorPolicy: "all",
+                fetchPolicy: "no-cache",
             })
             .then((response) => {
-                // extract your accessToken from your response data and return it
-
+                console.log("got response");
                 const token = response.data?.login?.token;
 
                 if (!token) {
@@ -67,96 +69,128 @@ export default function ApolloConnection(props: Props): JSX.Element {
                         "could not get a new token with credentials"
                     );
                 }
-                return token;
+                return new Response(JSON.stringify({ token: token }), {
+                    status: 200,
+                    statusText: "OK",
+                });
             });
     };
 
     // https://able.bio/AnasT/apollo-graphql-async-access-token-refresh--470t1c8
-    const errorLink: ApolloLink = onError(
-        ({ graphQLErrors, networkError, operation, forward }) => {
-            if (graphQLErrors) {
-                for (const err of graphQLErrors) {
-                    switch (err.extensions?.code) {
-                        case "UNAUTHENTICATED":
-                            // Handle token refresh errors e.g clear stored tokens, redirect to login
-                            console.log(
-                                "Acess Token no longer valid, trying to refresh"
-                            );
+    // const errorLink: ApolloLink = onError(
+    //     ({ graphQLErrors, networkError, operation, forward }) => {
+    //         if (graphQLErrors) {
+    //             for (const err of graphQLErrors) {
+    //                 switch (err.extensions?.code) {
+    //                     case "UNAUTHENTICATED":
+    //                         // Handle token refresh errors e.g clear stored tokens, redirect to login
+    //                         console.log(
+    //                             "Access Token no longer valid, trying to refresh"
+    //                         );
 
-                            if (!isRefreshing) {
-                                isRefreshing = true;
-                                fromPromise(
-                                    getNewToken()
-                                        .then(async (accessToken) => {
-                                            console.log(
-                                                "Got a new access token using credentials"
-                                            );
-                                            await SecureStore.setItemAsync(
-                                                SecureStorageItems.ACCESS_TOKEN,
-                                                accessToken
-                                            );
-                                            resolvePendingRequests();
+    //                         if (!isRefreshing) {
+    //                             isRefreshing = true;
+    //                             fromPromise(
+    //                                 getNewToken()
+    //                                     .then(async (accessToken) => {
+    //                                         console.log(
+    //                                             "Got a new access token using credentials"
+    //                                         );
+    //                                         await SecureStore.setItemAsync(
+    //                                             SecureStorageItems.ACCESS_TOKEN,
+    //                                             accessToken
+    //                                         );
+    //                                         resolvePendingRequests();
 
-                                            const context =
-                                                operation.setContext({
-                                                    headers: {
-                                                        authorization: `Bearer ${accessToken}`,
-                                                    },
-                                                });
-                                            console.log("context start");
-                                            console.log(context);
-                                            console.log("context end");
+    //                                         const context = operation.setContext(
+    //                                             {
+    //                                                 headers: {
+    //                                                     authorization: `Bearer ${accessToken}`,
+    //                                                 },
+    //                                             }
+    //                                         );
+    //                                         console.log("context start");
+    //                                         console.log(context);
+    //                                         console.log("context end");
 
-                                            return forward(operation);
-                                        })
-                                        .catch(async (error) => {
-                                            console.log(err.message);
-                                            Toast.show({
-                                                text1: t("error.generic"),
-                                                text2: err.message,
-                                                type: "error",
-                                            });
-                                            console.error(error);
-                                            pendingRequests = [];
-                                            // Handle token refresh errors e.g clear stored tokens, redirect to login
-                                            await SecureStore.deleteItemAsync(
-                                                SecureStorageItems.ACCESS_TOKEN
-                                            );
-                                            props.navigationFn("Login", {});
-                                        })
-                                        .finally(() => {
-                                            isRefreshing = false;
-                                        })
-                                );
-                            } else {
-                                // Will only emit once the Promise is resolved
-                                fromPromise(
-                                    new Promise<void>((resolve) => {
-                                        pendingRequests.push(() => resolve());
-                                    })
-                                );
-                            }
-                            break;
-                        default:
-                            console.log(err.message);
-                            Toast.show({
-                                text1: t("error.generic"),
-                                text2: err.message,
-                                type: "error",
-                            });
-                            break;
-                    }
-                }
-            }
-            if (networkError) {
-                Toast.show({
-                    text1: t("error.network"),
-                    text2: networkError.message,
-                    type: "error",
-                });
-            }
-        }
-    );
+    //                                         return forward(operation);
+    //                                     })
+    //                                     .catch(async (error) => {
+    //                                         console.log(err.message);
+    //                                         Toast.show({
+    //                                             text1: t("error.generic"),
+    //                                             text2: err.message,
+    //                                             type: "error",
+    //                                         });
+    //                                         console.error(error);
+    //                                         pendingRequests = [];
+    //                                         // Handle token refresh errors e.g clear stored tokens, redirect to login
+    //                                         await SecureStore.deleteItemAsync(
+    //                                             SecureStorageItems.ACCESS_TOKEN
+    //                                         );
+    //                                         props.navigationFn("Login", {});
+    //                                     })
+    //                                     .finally(() => {
+    //                                         isRefreshing = false;
+    //                                     })
+    //                             );
+    //                         } else {
+    //                             // Will only emit once the Promise is resolved
+    //                             fromPromise(
+    //                                 new Promise<void>((resolve) => {
+    //                                     pendingRequests.push(() => resolve());
+    //                                 })
+    //                             );
+    //                         }
+    //                         break;
+    //                     default:
+    //                         console.log(err.message);
+    //                         Toast.show({
+    //                             text1: t("error.generic"),
+    //                             text2: err.message,
+    //                             type: "error",
+    //                         });
+    //                         break;
+    //                 }
+    //             }
+    //         }
+    //         if (networkError) {
+    //             Toast.show({
+    //                 text1: t("error.network"),
+    //                 text2: networkError.message,
+    //                 type: "error",
+    //             });
+    //         }
+    //     }
+    // );
+
+    const tokenLink = new TokenRefreshLink({
+        accessTokenField: "token",
+        isTokenValidOrUndefined: () => false, //TODO
+        fetchAccessToken: () => {
+            return getNewToken();
+        },
+        handleFetch: async (accessToken: string) => {
+            console.log("handle fetch");
+            console.log(accessToken);
+            await SecureStore.setItemAsync(
+                SecureStorageItems.ACCESS_TOKEN,
+                accessToken
+            );
+        },
+        handleError: async (err: Error) => {
+            console.log(err);
+            Toast.show({
+                text1: t("error.generic"),
+                text2: err.message,
+                type: "error",
+            });
+            pendingRequests = [];
+            // Handle token refresh errors e.g clear stored tokens, redirect to login
+            await SecureStore.deleteItemAsync(SecureStorageItems.ACCESS_TOKEN);
+            props.navigationFn("Login", {});
+        },
+    });
 
     const authLink = setContext(async (_, { headers }) => {
         // get the authentication token from secure storage if it exists
@@ -180,7 +214,7 @@ export default function ApolloConnection(props: Props): JSX.Element {
     });
 
     const client = new ApolloClient({
-        link: authLink.concat(errorLink).concat(httpLink),
+        link: tokenLink.concat(authLink).concat(httpLink),
         cache: new InMemoryCache(),
         credentials: "include",
     });

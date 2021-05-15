@@ -54,7 +54,10 @@ export default function Login(props: Props): JSX.Element {
     });
     const [execute, { error, loading }] = useLoginMutation();
 
-    const handleLogin = (values: FormikValues): void => {
+    const handleLogin = async (values: FormikValues): Promise<void> => {
+        await saveInSecureStore(SecureStorageItems.PASSWORD, values.password);
+        await saveInSecureStore(SecureStorageItems.USERNAME, values.username);
+
         execute({
             variables: {
                 input: { password: values.password, username: values.username },
@@ -74,15 +77,6 @@ export default function Login(props: Props): JSX.Element {
                         SecureStorageItems.CURRENT_USER,
                         JSON.stringify(res.data?.login.user)
                     ).catch((e) => console.log(e));
-
-                    saveInSecureStore(
-                        SecureStorageItems.PASSWORD,
-                        values.password
-                    );
-                    saveInSecureStore(
-                        SecureStorageItems.USERNAME,
-                        values.username
-                    );
                 }
                 props.navigation.replace(Routes.DASHBOARD);
             })

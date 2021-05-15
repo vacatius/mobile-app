@@ -18,6 +18,7 @@
     "@react-navigation/bottom-tabs": "^5.11.10",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.4",
+    "apollo-link-token-refresh": "^0.3.2",
     "expo": "~40.0.0",
     "expo-localization": "~9.1.0",
     "expo-secure-store": "~9.3.0",
