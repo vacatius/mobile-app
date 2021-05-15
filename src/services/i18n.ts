@@ -106,7 +106,7 @@ export const resources = {
                     androidShareSheetTitle: "Share your Trip with Friends",
                     titleJoin: "Join a Trip",
                     joinTrip: "Join this Trip",
-                    cancelJoin: "No, thank you",
+                    cancelJoin: "Decline Invitation",
                 },
                 itinerary: {
                     add: "Add Group",

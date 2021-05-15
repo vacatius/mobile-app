@@ -54,8 +54,6 @@ export default function App(): JSX.Element {
         }
 
         loadInitialRoute();
-        const expoLink = Linking.createURL("login/abc", {});
-        console.log(expoLink);
     }, []);
 
     const prefix = Linking.createURL("/");
@@ -64,7 +62,6 @@ export default function App(): JSX.Element {
         config: {
             screens: {
                 ShareTrip: "joinTrip/:invitationId",
-                Register: "login/:id",
             },
         },
     };

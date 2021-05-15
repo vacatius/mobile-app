@@ -34,7 +34,6 @@ type Props = {
 };
 
 export default function ShareTrip(props: Props): JSX.Element {
-    console.log(props.route);
     const { t } = useTranslation();
     const [mode] = useState<Mode>(props.route.params.tripId ? Mode.SHARE_TRIP : Mode.JOIN_TRIP);
 
@@ -42,14 +41,14 @@ export default function ShareTrip(props: Props): JSX.Element {
         async function getInitialUrl(): Promise<void> {
             const link = await Linking.getInitialURL();
             if (link && link !== null) {
-                console.log("we got a initial URL link ded");
-                console.log(link);
+                console.log("[Share Trip] we got a initial URL link");
+                console.log("[Share Trip] ", link);
             }
         }
         getInitialUrl();
         Linking.addEventListener("url", (event) => {
-            console.log("got event listener callback");
-            console.log(event);
+            console.log("[Share Trip] got event listener callback");
+            console.log("[Share Trip] ", event);
         });
     }, []);
 
@@ -65,7 +64,6 @@ export default function ShareTrip(props: Props): JSX.Element {
             notifyOnNetworkStatusChange: true,
             fetchPolicy: "network-only",
             onCompleted: (data) => {
-                console.log("fetching data onCompleted");
                 executeGetTripQuery({
                     variables: {
                         tripId: data.invitation.trip.id,
@@ -102,11 +100,11 @@ export default function ShareTrip(props: Props): JSX.Element {
                 });
             };
             handleShare(getInvitationLinkPromise(), t);
-        } else if (mode === Mode.JOIN_TRIP) {
+        } else if (mode === Mode.JOIN_TRIP && invitation) {
             executeJoinTripMutation({
                 variables: {
                     input: {
-                        invitationId: "", // TODO
+                        invitationId: invitation.invitation.id,
                         tripId: trip?.trip.id || "",
                     },
                 },
@@ -202,7 +200,6 @@ export default function ShareTrip(props: Props): JSX.Element {
                             : "screens.shareTrip.joinTrip"
                     )}
                     titleStyle={styles.btnTextStyle}
-                    // TODO - Redirect to trip itinerary screen
                     onPress={() => {
                         if (mode === Mode.JOIN_TRIP && invitation) {
                             executeJoinTripMutation({
