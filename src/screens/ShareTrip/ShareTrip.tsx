@@ -211,8 +211,13 @@ export default function ShareTrip(props: Props): JSX.Element {
                                 },
                             })
                                 .then(() => handlePlanTripNavigation())
-                                .catch((e) => {
-                                    console.error(e);
+                                .catch((err) => {
+                                    console.error(err);
+                                    Toast.show({
+                                        text1: t("error.generic"),
+                                        text2: err.message,
+                                        type: "error",
+                                    });
                                 });
                         } else {
                             handlePlanTripNavigation();
