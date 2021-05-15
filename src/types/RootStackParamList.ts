@@ -1,7 +1,6 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { ActivityGroupData } from "../components/ActivityGroup";
 import { LoginMutation } from "../screens/Login/types/loginMutation";
-import { Mode as ShareJoinTripMode } from "../screens/ShareTrip/ShareTrip";
 import { Mode as ActivityMode } from "../screens/ViewAddEditActivity/ViewAddEditActivity";
 import { Routes } from "./Routes";
 import TripTabParamList from "./TripTabParamList";
@@ -16,8 +15,7 @@ type RootStackParamList = {
     [Routes.ADD_TRIP]: undefined;
     [Routes.SHARE_TRIP]: {
         tripId: string;
-        // mode: ShareJoinTripMode;
-        invitationId?: string; // TODO
+        invitationId?: string;
     };
     [Routes.ADD_EDIT_ACTIVITY_GROUP]: {
         tripRoutePointToEdit?: ActivityGroupData;

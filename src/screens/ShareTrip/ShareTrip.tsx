@@ -36,9 +36,7 @@ type Props = {
 export default function ShareTrip(props: Props): JSX.Element {
     console.log(props.route);
     const { t } = useTranslation();
-    const [mode, setMode] = useState<Mode>(
-        props.route.params.tripId ? Mode.SHARE_TRIP : Mode.JOIN_TRIP
-    );
+    const [mode] = useState<Mode>(props.route.params.tripId ? Mode.SHARE_TRIP : Mode.JOIN_TRIP);
 
     useEffect(() => {
         async function getInitialUrl(): Promise<void> {
@@ -57,27 +55,24 @@ export default function ShareTrip(props: Props): JSX.Element {
 
     const [executeCreateInvitation, { loading: loadingCreateInvitation }] =
         useCreateInvitationMutation();
-    const [executeJoinTripMutation, { data: joinTripData, loading: loadingJoinTrip }] =
-        useJoinTripMutation();
+    const [executeJoinTripMutation, { loading: loadingJoinTrip }] = useJoinTripMutation();
 
     const [executeGetTripQuery, { data: trip, error: getTripError, called: tripQueryCalled }] =
         useGetTripLazyQuery();
 
-    const [
-        executeGetInvitation,
-        { data: invitation, error: getInvitationError, called: invitationQueryCalled },
-    ] = useGetInvitationLazyQuery({
-        notifyOnNetworkStatusChange: true,
-        fetchPolicy: "network-only",
-        onCompleted: (data) => {
-            console.log("fetching data onCompleted");
-            executeGetTripQuery({
-                variables: {
-                    tripId: data.invitation.trip.id,
-                },
-            });
-        },
-    });
+    const [executeGetInvitation, { data: invitation, called: invitationQueryCalled }] =
+        useGetInvitationLazyQuery({
+            notifyOnNetworkStatusChange: true,
+            fetchPolicy: "network-only",
+            onCompleted: (data) => {
+                console.log("fetching data onCompleted");
+                executeGetTripQuery({
+                    variables: {
+                        tripId: data.invitation.trip.id,
+                    },
+                });
+            },
+        });
 
     if (mode === Mode.SHARE_TRIP && !tripQueryCalled) {
         console.log("fetching share trip data", props.route.params.tripId);
