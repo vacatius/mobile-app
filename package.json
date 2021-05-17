@@ -12,7 +12,7 @@
         "format": "prettier --check ./src"
     },
     "dependencies": {
-        "@apollo/client": "^3.3.17",
+        "@apollo/client": "^3.3.18",
         "@react-native-community/datetimepicker": "^3.4.7",
         "@react-native-community/masked-view": "^0.1.11",
         "@react-navigation/bottom-tabs": "^5.11.10",
