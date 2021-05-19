@@ -10,28 +10,28 @@ export const resources = {
             register: "Register",
             email: "Email",
             password: "Password",
-            passwordNew: "New Password",
-            repeatPassword: "Repeat Password",
-            repeatPasswordNew: "Repeat New Password",
+            passwordNew: "New password",
+            repeatPassword: "Repeat password",
+            repeatPasswordNew: "Repeat new password",
             username: "Username",
             description: "Description",
-            startJourney: ["Start Journey", "Lets go"],
             displayName: "Display Name",
-            tripName: "Trip Name",
+            tripName: "Trip name",
             loading: "Loading",
             save: "Save",
             name: "Name",
             cancel: "Cancel",
             remove: "Remove",
             leave: "Leave",
+            startJourney: ["Start Journey", "Let's go"],
             error: {
-                network: "No Connection 😢",
-                credentials: "Invalid Credentials",
-                username: "Invalid Username",
-                password: "Invalid Password",
-                noDate: "No date.",
+                network: "No connection 😢",
+                credentials: "Invalid credentials",
+                username: "Invalid username",
+                password: "Invalid password",
                 takenEmailUsername:
-                    "The Email or Username is already taken, please choose another one",
+                    "The email or username is already taken, please choose another one",
+                noDate: "No date.",
                 generic: "An error occurred",
             },
             placeholder: {
@@ -70,8 +70,8 @@ export const resources = {
                 description: ["Awesome trip with my friends"],
             },
             validation: {
-                emailRequired: "Please enter a valid Email address!",
-                usernameRequired: "Please enter a Username!",
+                emailRequired: "Please enter a valid email address!",
+                usernameRequired: "Please enter a username!",
                 displayNameRequired: "Please enter a display name!",
                 password: {
                     required: "Please enter a password!",
@@ -91,7 +91,7 @@ export const resources = {
                 },
                 add_trip: {
                     title: "Create Trip",
-                    trip_name: "Give your trip a name",
+                    trip_name: "Give your Trip a name",
                     stay_home: "Stay home",
                     submit_add_trip: "Let's go!",
                 },
@@ -100,7 +100,7 @@ export const resources = {
                     currentTrips: "Current Trips",
                     pastTrips: "Past Trips",
                     errors: {
-                        noTripsFound: "No past trips found.",
+                        noTripsFound: "No past Trips found.",
                     },
                 },
                 shareTrip: {
@@ -108,10 +108,10 @@ export const resources = {
                     share: "Share with Friends",
                     planTrip: "Plan Trip",
                     goToDashboard: "Go to Dashboard",
-                    androidShareSheetTitle: "Share your Trip with Friends",
+                    androidShareSheetTitle: "Share your Trip with friends",
                     titleJoin: "Join a Trip",
                     joinTrip: "Join this Trip",
-                    cancelJoin: "Decline Invitation",
+                    cancelJoin: "Decline invitation",
                 },
                 itinerary: {
                     add: "Add Group",
@@ -119,24 +119,24 @@ export const resources = {
                 addEditActivityGroup: {
                     titleCreate: "Add Activity Group",
                     titleUpdate: "Update Activity Group",
-                    groupYourActivities: "Group your activities!😀",
+                    groupYourActivities: "Group your Activities! 😀",
                     explanation:
                         "This could be cities 🏙️ that you visit in a road trip 🚗 or weekdays if you stay in one city.",
                     submitCreate: "Add Group",
                     submitUpdate: "Update Group",
-                    activityGroupName: "Give your activity group a name",
+                    activityGroupName: "Give your Activity Group a name",
                     activityGroupDescription: "Add a short description",
                     removeActivityGroup: "Remove Group",
-                    removeDialogTitle: "Really remove activity group?",
+                    removeDialogTitle: "Really remove Activity Group?",
                     removeDialogMessage:
-                        "You will not be able to restore it afterwards. All activities inside will be deleted!",
+                        "You will not be able to restore it afterwards. All Activities inside will be deleted!",
                 },
                 profile: {
                     save: "Save",
                     logout: "Logout",
                 },
                 viewAddEditActivity: {
-                    activityName: "Activity Name",
+                    activityName: "Activity name",
                     removeActivity: "Remove Activity",
                     submitUpdate: "Update Activity",
                     submitCreate: "Add Activity",
@@ -148,7 +148,7 @@ export const resources = {
                 },
                 tripSettings: {
                     tripDetails: "Trip Details",
-                    submitUpdate: "Update Trip details",
+                    submitUpdate: "Update Trip Details",
                     members: "Members",
                     leave: {
                         button: "Leave Trip",
@@ -158,7 +158,8 @@ export const resources = {
                     },
                     removeMember: {
                         dialogTitle: "Really remove Member?",
-                        dialogMessage: "The member will need an invitation link to rejoin!",
+                        dialogMessage:
+                            "The Member '{{displayName}}' will need an invitation link to rejoin!",
                     },
                 },
             },
@@ -202,29 +203,6 @@ export const resources = {
                     minLength: "Das Passwort muss mindestens {{amount}} Zeichen besitzten",
                     match: "Die Passwörter müssen übereinstimmen!",
                 },
-                tripName: [
-                    "Roadtrip 2022",
-                    "Toller Roadtrip",
-                    "Iceland wieder einmal",
-                    "Sun'n'Fun",
-                    "Ab nach Skandinavien!",
-                ],
-                activityGroupName: [
-                    "Berlin",
-                    "München",
-                    "Los Angeles",
-                    "Amsterdam",
-                    "Vancouver",
-                    "Montag",
-                    "Dienstag",
-                    "Mittwoch",
-                    "Donnerstag",
-                    "Freitag",
-                    "Samstag",
-                    "Sonntag",
-                ],
-                activityGroupDescription: ["Montag in Wien", "Alle Parks besuchen", "Sightseeing"],
-                description: ["Cooler roadtrip meinen Freunden"],
                 nameRequired: "Bitte gib einen Namen ein!",
                 descriptionRequired: "Bitte gib eine Beschreibung für die Reise ein!",
             },
@@ -235,7 +213,7 @@ export const resources = {
                 register: {
                     info: "Registriere dich, um deine Reisen zu planen",
                     welcome:
-                        "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
+                        "Willkommen {{displayName}}!\nWir freuen uns, dich begrüßen zu dürfen 🎉",
                 },
                 add_trip: {
                     title: "Neue Reise",
@@ -267,9 +245,9 @@ export const resources = {
                 addEditActivityGroup: {
                     titleCreate: "Aktivitätsgruppe hinzufügen",
                     titleUpdate: "Aktivitätsgruppe aktualisieren",
-                    groupYourActivities: "Gruppiere deine Aktivitäten!😀",
+                    groupYourActivities: "Gruppiere deine Aktivitäten! 😀",
                     explanation:
-                        "Das könnten beispielsweise Städte 🏙️ eines Roadtrips 🚗 sein oder Wochentage wenn du in einer Stadt bleibst.",
+                        "Das könnten beispielsweise Städte 🏙️ eines Roadtrips 🚗 sein oder Wochentage, wenn du in einer Stadt bleibst.",
                     submitCreate: "Gruppe erstellen",
                     submitUpdate: "Gruppe aktualisieren",
                     activityGroupName: "Gib deiner Gruppe einen Namen",
@@ -307,7 +285,7 @@ export const resources = {
                     removeMember: {
                         dialogTitle: "Mitglied wirklich entfernen?",
                         dialogMessage:
-                            "Das Mitglied kann nur mit einem Einladungslink wieder beitreten!",
+                            "Das Mitglied '{{displayName}}' kann nur mit einem Einladungslink wieder beitreten!",
                     },
                 },
             },

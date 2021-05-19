@@ -107,10 +107,12 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
             );
     };
 
-    const handleRemoveMember = (userId: string): void => {
+    const handleRemoveMember = (userId: string, displayName: string): void => {
         Alert.alert(
             t("screens.tripSettings.removeMember.dialogTitle"),
-            t("screens.tripSettings.removeMember.dialogMessage"),
+            t("screens.tripSettings.removeMember.dialogMessage", {
+                displayName: displayName,
+            }),
             [
                 {
                     text: t("cancel"),
@@ -287,7 +289,9 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                             data.trip.admin.id === currentUser?.id &&
                             member.user.id !== currentUser?.id && (
                                 <ListItem.Chevron
-                                    onPress={() => handleRemoveMember(member.user.id)}
+                                    onPress={() =>
+                                        handleRemoveMember(member.user.id, member.user.displayName)
+                                    }
                                     name={loadingRemoveMember ? "spinner" : "trash-alt"}
                                     size={20}
                                     color="#e03030"
