@@ -83,7 +83,8 @@ export default function Login(props: Props): JSX.Element {
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
                     <SvgLogo style={styles.logo} width={150} height={150} />
-                    <Text style={styles.text}>{t("login")}</Text>
+                    <Text style={styles.text}>{t("vacatius")}</Text>
+                    <Text style={styles.info}>{t("screens.login.info")}</Text>
                     <Formik
                         initialValues={{ username: "", password: "" }}
                         onSubmit={handleLogin}
@@ -199,6 +200,11 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 40,
+        marginBottom: 10,
+        alignSelf: "center",
+    },
+    info: {
+        fontSize: 18,
         marginBottom: 30,
         alignSelf: "center",
     },
