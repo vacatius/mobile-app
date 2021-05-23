@@ -236,7 +236,7 @@ export const resources = {
                 },
                 dashboard: {
                     title: "Dashboard",
-                    currentJourneys: "Aktuelle Reisen",
+                    currentTrips: "Aktuelle Reisen",
                     pastTrips: "Vergangene Reisen",
                     errors: {
                         noTripsFound: "Keine Reisen gefunden.",
