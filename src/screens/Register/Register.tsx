@@ -96,6 +96,8 @@ export default function Register(props: Props): JSX.Element {
                         />
                     </Overlay>
                     <SvgLogo style={styles.logo} width={100} height={100} />
+                    <Text style={styles.title}>{t("vacatius")}</Text>
+                    <Text style={styles.info}>{t("screens.register.info")}</Text>
                     <Formik
                         initialValues={{
                             email: "",
@@ -302,6 +304,7 @@ const styles = StyleSheet.create({
     logo: {
         alignSelf: "center",
         marginBottom: 20,
+        marginTop: -20,
     },
     errorText: {
         fontSize: 16,
@@ -325,5 +328,15 @@ const styles = StyleSheet.create({
     buttonTitle: {
         color: "black",
         fontSize: 25,
+    },
+    title: {
+        fontSize: 40,
+        marginBottom: 10,
+        alignSelf: "center",
+    },
+    info: {
+        fontSize: 18,
+        marginBottom: 30,
+        alignSelf: "center",
     },
 });

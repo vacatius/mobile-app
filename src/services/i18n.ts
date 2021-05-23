@@ -5,6 +5,7 @@ import { initReactI18next } from "react-i18next";
 export const resources = {
     en: {
         translation: {
+            vacatius: "Vacatius",
             login: "Login",
             register: "Register",
             email: "Email",
@@ -81,7 +82,11 @@ export const resources = {
                 descriptionRequired: "Please enter a description.",
             },
             screens: {
+                login: {
+                    info: "Sign in to start planning your trips!",
+                },
                 register: {
+                    info: "Register to start planning your trips!",
                     welcome: "Welcome {{displayName}} 🎉",
                 },
                 add_trip: {
@@ -224,7 +229,11 @@ export const resources = {
                 descriptionRequired: "Bitte gib eine Beschreibung für die Reise ein!",
             },
             screens: {
+                login: {
+                    info: "Melde dich an, um deine Reisen zu planen!",
+                },
                 register: {
+                    info: "Registriere dich, um deine Reisen zu planen",
                     welcome:
                         "Willkommen {{displayName}}!\nWir freuen uns dich begrüßen zu dürfen 🎉",
                 },
