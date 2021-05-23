@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Avatar, Text, Button } from "react-native-elements";
 import { LoginMutation } from "../screens/Login/types/loginMutation";
 import stc from "string-to-color";
@@ -19,16 +19,16 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (props: ScreenHeaderProps) => 
     let textWidth = 70;
     let extraSpace = 0;
     if (props.user == undefined) {
-        extraSpace++;
+        extraSpace += 15;
     }
     if (props.actionIcon == undefined) {
-        extraSpace++;
+        extraSpace += 8;
     }
     if (!navigation.canGoBack()) {
-        extraSpace++;
+        extraSpace += 8;
     }
 
-    textWidth += extraSpace * 10;
+    textWidth += extraSpace;
     return (
         <View
             style={{
@@ -36,15 +36,16 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (props: ScreenHeaderProps) => 
                 flexDirection: "row",
                 overflow: "hidden",
                 alignItems: "center",
-                marginRight: -8,
-                marginLeft: navigation.canGoBack() ? -10 : 0,
+                minWidth: "100%",
+                marginLeft: Platform.OS === "ios" && navigation.canGoBack() ? 10 : 0,
             }}
         >
             <Text
                 numberOfLines={1}
                 style={{
                     fontSize: 22,
-                    width: `${textWidth}%`,
+                    minWidth: `${textWidth}%`,
+                    maxWidth: `${textWidth}%`,
                 }}
             >
                 {props.screenTitle}
@@ -54,12 +55,16 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (props: ScreenHeaderProps) => 
                     type="clear"
                     icon={props.actionIcon}
                     onPress={props.actionCallback}
-                    containerStyle={styles.actionButton}
+                    containerStyle={{
+                        marginLeft: "auto",
+                    }}
                 />
             )}
             {props.user !== undefined && (
                 <TouchableOpacity
-                    style={{ marginLeft: "auto" }}
+                    style={{
+                        marginLeft: "auto",
+                    }}
                     onPress={() =>
                         navigation.dispatch(
                             StackActions.push(Routes.PROFILE, {
@@ -78,15 +83,6 @@ const ScreenHeader: React.FC<ScreenHeaderProps> = (props: ScreenHeaderProps) => 
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    actionButton: {
-        minHeight: "100%",
-        justifyContent: "center",
-        marginLeft: "auto",
-        marginRight: 5,
-    },
-});
 
 ScreenHeader.displayName = "ScreenHeader";
 export default ScreenHeader;
