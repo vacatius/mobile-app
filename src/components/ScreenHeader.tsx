@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Platform, TouchableOpacity, View } from "react-native";
 import { Avatar, Text, Button } from "react-native-elements";
 import { LoginMutation } from "../screens/Login/types/loginMutation";
 import stc from "string-to-color";
