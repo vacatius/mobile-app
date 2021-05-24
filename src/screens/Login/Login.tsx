@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import * as SecureStore from "expo-secure-store";
 import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
@@ -31,24 +31,6 @@ async function saveInSecureStore(key: string, value: string): Promise<void> {
 
 export default function Login(props: Props): JSX.Element {
     const { t } = useTranslation();
-    const [placeholder] = useState({
-        username: t("placeholder.username", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.username", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-        password: t("placeholder.password", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.password", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-    });
     const [execute, { error, loading }] = useLoginMutation();
 
     const handleLogin = (values: FormikValues): void => {
@@ -100,7 +82,7 @@ export default function Login(props: Props): JSX.Element {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
-                                    placeholder={placeholder.username}
+                                    placeholder={t("placeholder.username")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}
@@ -122,7 +104,7 @@ export default function Login(props: Props): JSX.Element {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
-                                    placeholder={placeholder.password}
+                                    placeholder={t("placeholder.password")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}

@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { Button, Icon, Input } from "react-native-elements";
@@ -9,39 +9,14 @@ import { ScrollView } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
-import { Trip } from "../../types";
 import { Routes } from "../../types/Routes";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateTripMutation } from "./types/add-trip.mutation";
 
-type Props = {
-    editTrip?: Trip;
-};
-
-// TODO - Use prop or remove
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const AddTrip = (props: Props): JSX.Element => {
+export const AddTrip = (): JSX.Element => {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const [execute, { error, loading }] = useCreateTripMutation();
-    const [placeholder] = useState({
-        tripName: t("placeholder.tripName", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.tripName", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-        description: t("placeholder.description", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.description", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-    });
 
     const handleSubmit = (values: FormikValues): void => {
         console.log("add trip pressed");
@@ -99,7 +74,7 @@ export const AddTrip = (props: Props): JSX.Element => {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
-                                    placeholder={placeholder.tripName}
+                                    placeholder={t("placeholder.tripName")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}
@@ -121,7 +96,7 @@ export const AddTrip = (props: Props): JSX.Element => {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
-                                    placeholder={placeholder.description}
+                                    placeholder={t("placeholder.description")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}

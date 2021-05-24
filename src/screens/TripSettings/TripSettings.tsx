@@ -45,24 +45,6 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
     const { settingsMode, setSettingsMode, setTitle } = useContext(TripHeaderContext);
     const { getCurrentUser } = useCurrentAuthUser();
     const [currentUser, setCurrentUser] = useState<User | undefined>();
-    const [placeholder] = useState({
-        tripName: t("placeholder.tripName", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.tripName", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-        description: t("placeholder.description", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.description", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-    });
 
     getCurrentUser().then((user) => {
         setCurrentUser(user);
@@ -220,7 +202,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                         : undefined
                                 }
                                 errorStyle={styles.errorMessage}
-                                placeholder={placeholder.tripName}
+                                placeholder={t("placeholder.tripName")}
                             />
                             <Input
                                 label={t("description")}
@@ -237,7 +219,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                         : undefined
                                 }
                                 errorStyle={styles.errorMessage}
-                                placeholder={placeholder.description}
+                                placeholder={t("placeholder.description")}
                             />
                             {errorUpdate && (
                                 <Text style={styles.errorText}>{errorUpdate.message}</Text>

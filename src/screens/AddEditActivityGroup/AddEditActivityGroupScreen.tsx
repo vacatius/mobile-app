@@ -2,7 +2,7 @@ import { RouteProp } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { Button, Icon, Input, Text } from "react-native-elements";
@@ -40,27 +40,6 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
         useUpdateActivityGroupMutation();
     const [executeRemove, { error: errorRemove, loading: loadingRemove }] =
         useRemoveActivityGroupMutation();
-
-    const [placeholder] = useState({
-        tripName: t("placeholder.activityGroupName", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.activityGroupName", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-        description: t("placeholder.activityGroupDescription", {
-            returnObjects: true,
-        })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.activityGroupDescription", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-    });
 
     const handleRemove = (): void => {
         console.log("Removing activity group");
@@ -182,7 +161,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                         errors.name && touched.name ? errors.name : undefined
                                     }
                                     errorStyle={styles.errorMessage}
-                                    placeholder={placeholder.tripName}
+                                    placeholder={t("placeholder.tripName")}
                                     value={values.name}
                                     onChangeText={handleChange("name")}
                                     onBlur={handleBlur("name")}
@@ -197,7 +176,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
-                                    placeholder={placeholder.description}
+                                    placeholder={t("placeholder.description")}
                                     value={values.description}
                                     onChangeText={handleChange("description")}
                                     onBlur={handleBlur("description")}
