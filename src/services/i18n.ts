@@ -88,7 +88,7 @@ export const resources = {
                     cancelJoin: "Decline invitation",
                 },
                 itinerary: {
-                    add: "Add Group",
+                    add: "Add Activity Group",
                 },
                 addEditActivityGroup: {
                     titleCreate: "Add Activity Group",
@@ -122,7 +122,7 @@ export const resources = {
                 },
                 tripSettings: {
                     tripDetails: "Trip Details",
-                    submitUpdate: "Update Trip Details",
+                    submitUpdate: "Save",
                     members: "Members",
                     leave: {
                         button: "Leave Trip",
@@ -223,7 +223,7 @@ export const resources = {
                     cancelJoin: "Einladung ablehnen",
                 },
                 itinerary: {
-                    add: " Gruppe Hinzufügen",
+                    add: "Aktivitätsgruppe Hinzufügen",
                 },
                 addEditActivityGroup: {
                     titleCreate: "Aktivitätsgruppe hinzufügen",
@@ -257,7 +257,7 @@ export const resources = {
                 },
                 tripSettings: {
                     tripDetails: "Reisedetails",
-                    submitUpdate: "Reisedetails aktualisieren",
+                    submitUpdate: "Aktualisieren",
                     members: "Mitglieder",
                     leave: {
                         button: "Reise verlassen",
