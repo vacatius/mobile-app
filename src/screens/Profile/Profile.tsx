@@ -159,7 +159,7 @@ const Profile = (props: Props): JSX.Element => {
                             />
                             <Input
                                 label={t("repeatPasswordNew")}
-                                placeholder={t("password")}
+                                placeholder={t("repeatPasswordNew")}
                                 leftIcon={
                                     <Icon
                                         style={styles.icon}

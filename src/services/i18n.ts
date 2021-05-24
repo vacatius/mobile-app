@@ -40,7 +40,6 @@ export const resources = {
                 email: "Email",
                 tripName: "Trip name",
                 activityGroupName: "Activity Group name",
-                activityGroupDescription: "Description of your Activity Group",
                 description: "Description..",
             },
             validation: {
@@ -88,7 +87,7 @@ export const resources = {
                     cancelJoin: "Decline invitation",
                 },
                 itinerary: {
-                    add: "Add Activity Group",
+                    add: "New Activity Group",
                 },
                 addEditActivityGroup: {
                     titleCreate: "Add Activity Group",
@@ -145,9 +144,9 @@ export const resources = {
             register: "Registrieren",
             email: "Email",
             password: "Passwort",
-            passwordNew: "Neues Password",
-            repeatPassword: "Passwort Wiederholen",
-            repeatPasswordNew: "Neues Passwort Wiederholen",
+            passwordNew: "Neues Passwort",
+            repeatPassword: "Passwort wiederholen",
+            repeatPasswordNew: "Neues Passwort wiederholen",
             username: "Benutzername",
             description: "Beschreibung",
             displayName: "Anzeige Name",
@@ -174,7 +173,6 @@ export const resources = {
                 email: "E-Mail",
                 tripName: "Name der Reise",
                 activityGroupName: "Name der Aktivitätsgruppe",
-                activityGroupDescription: "Beschreibung für die Aktivitätsgruppe",
                 description: "Beschreibung..",
             },
             validation: {
@@ -223,7 +221,7 @@ export const resources = {
                     cancelJoin: "Einladung ablehnen",
                 },
                 itinerary: {
-                    add: "Aktivitätsgruppe Hinzufügen",
+                    add: "Neue Aktivitätsgruppe",
                 },
                 addEditActivityGroup: {
                     titleCreate: "Aktivitätsgruppe hinzufügen",

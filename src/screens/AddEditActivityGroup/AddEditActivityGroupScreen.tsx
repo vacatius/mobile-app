@@ -161,7 +161,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                         errors.name && touched.name ? errors.name : undefined
                                     }
                                     errorStyle={styles.errorMessage}
-                                    placeholder={t("placeholder.tripName")}
+                                    placeholder={t("placeholder.activityGroupName")}
                                     value={values.name}
                                     onChangeText={handleChange("name")}
                                     onBlur={handleBlur("name")}
