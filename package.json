@@ -23,7 +23,7 @@
         "expo-localization": "^10.1.0",
         "expo-secure-store": "^10.1.0",
         "expo-status-bar": "^1.0.4",
-        "formik": "^2.2.6",
+        "formik": "^2.2.8",
         "graphql": "^15.5.0",
         "i18next": "^20.3.0",
         "react": "16.13.1",
