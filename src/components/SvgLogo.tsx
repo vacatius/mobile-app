@@ -4,7 +4,7 @@ import Svg, { SvgProps, Path, Ellipse } from "react-native-svg";
 
 // created with: https://react-svgr.com/playground/?native=true&typescript=true
 
-function SvgComponent(props: SvgProps) {
+function SvgLogo(props: SvgProps): JSX.Element {
     return (
         <Svg
             data-name="Layer 1"
@@ -52,4 +52,4 @@ function SvgComponent(props: SvgProps) {
     );
 }
 
-export default SvgComponent;
+export default SvgLogo;
