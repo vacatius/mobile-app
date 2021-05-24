@@ -23,28 +23,6 @@ export default function Register(props: Props): JSX.Element {
     const { t } = useTranslation();
     const [execute, { error, loading }] = useCreateUserMutation();
     const [signInOverlay, setSignInOverlay] = useState("");
-    const [placeholder] = useState({
-        username: t("placeholder.username", {
-            returnObjects: true,
-        })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.username", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-        email: t("placeholder.email", {
-            returnObjects: true,
-        })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.email", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-    });
 
     const [registerTitle] = useState(
         t("startJourney", {
@@ -113,7 +91,7 @@ export default function Register(props: Props): JSX.Element {
                             <>
                                 <Input
                                     label={t("email")}
-                                    placeholder={placeholder.email}
+                                    placeholder={t("placeholder.email")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}
@@ -133,7 +111,7 @@ export default function Register(props: Props): JSX.Element {
                                 />
                                 <Input
                                     label={t("username")}
-                                    placeholder={placeholder.username}
+                                    placeholder={t("placeholder.username")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}
@@ -155,7 +133,7 @@ export default function Register(props: Props): JSX.Element {
                                 />
                                 <Input
                                     label={t("displayName")}
-                                    placeholder={placeholder.username}
+                                    placeholder={t("placeholder.username")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}
@@ -200,7 +178,7 @@ export default function Register(props: Props): JSX.Element {
                                 />
                                 <Input
                                     label={t("repeatPassword")}
-                                    placeholder={t("password")}
+                                    placeholder={t("repeatPassword")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}

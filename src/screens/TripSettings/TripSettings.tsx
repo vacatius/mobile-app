@@ -45,24 +45,6 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
     const { settingsMode, setSettingsMode, setTitle } = useContext(TripHeaderContext);
     const { getCurrentUser } = useCurrentAuthUser();
     const [currentUser, setCurrentUser] = useState<User | undefined>();
-    const [placeholder] = useState({
-        tripName: t("placeholder.tripName", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.tripName", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-        description: t("placeholder.description", { returnObjects: true })[
-            Math.floor(
-                Math.random() *
-                    t("placeholder.description", {
-                        returnObjects: true,
-                    }).length
-            )
-        ],
-    });
 
     getCurrentUser().then((user) => {
         setCurrentUser(user);
@@ -107,10 +89,12 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
             );
     };
 
-    const handleRemoveMember = (userId: string): void => {
+    const handleRemoveMember = (userId: string, displayName: string): void => {
         Alert.alert(
             t("screens.tripSettings.removeMember.dialogTitle"),
-            t("screens.tripSettings.removeMember.dialogMessage"),
+            t("screens.tripSettings.removeMember.dialogMessage", {
+                displayName: displayName,
+            }),
             [
                 {
                     text: t("cancel"),
@@ -218,7 +202,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                         : undefined
                                 }
                                 errorStyle={styles.errorMessage}
-                                placeholder={placeholder.tripName}
+                                placeholder={t("placeholder.tripName")}
                             />
                             <Input
                                 label={t("description")}
@@ -235,7 +219,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                         : undefined
                                 }
                                 errorStyle={styles.errorMessage}
-                                placeholder={placeholder.description}
+                                placeholder={t("placeholder.description")}
                             />
                             {errorUpdate && (
                                 <Text style={styles.errorText}>{errorUpdate.message}</Text>
@@ -287,7 +271,9 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                             data.trip.admin.id === currentUser?.id &&
                             member.user.id !== currentUser?.id && (
                                 <ListItem.Chevron
-                                    onPress={() => handleRemoveMember(member.user.id)}
+                                    onPress={() =>
+                                        handleRemoveMember(member.user.id, member.user.displayName)
+                                    }
                                     name={loadingRemoveMember ? "spinner" : "trash-alt"}
                                     size={20}
                                     color="#e03030"
