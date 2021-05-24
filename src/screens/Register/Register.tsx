@@ -178,7 +178,7 @@ export default function Register(props: Props): JSX.Element {
                                 />
                                 <Input
                                     label={t("repeatPassword")}
-                                    placeholder={t("password")}
+                                    placeholder={t("repeatPassword")}
                                     leftIcon={
                                         <Icon
                                             style={styles.icon}
