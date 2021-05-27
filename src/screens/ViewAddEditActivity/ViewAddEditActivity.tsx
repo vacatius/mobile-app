@@ -263,7 +263,9 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                 style={styles.textArea}
                             />
                             <View style={styles.dateTime}>
-                                <Text>{t("screens.viewAddEditActivity.from")} :</Text>
+                                <Text style={styles.fromText}>
+                                    {t("screens.viewAddEditActivity.from")}
+                                </Text>
                                 <View style={styles.dateTimePickerGroup}>
                                     {(Platform.OS === "android" || mode === Mode.VIEW) && (
                                         <>
@@ -406,27 +408,33 @@ const styles = StyleSheet.create({
     submitButton: {
         backgroundColor: "#BCE1B0",
     },
+    fromText: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#879099",
+    },
     dateTime: {
-        flexDirection: "row",
-        alignItems: "center",
-        alignContent: "space-between",
+        marginLeft: 10,
+        marginTop: -5,
     },
     dateTimePickerGroup: {
         flexDirection: "row",
-        alignItems: "center",
-        flexGrow: 1,
     },
     dateTimePicker: {
         flexGrow: 1,
         margin: 10,
+        marginLeft: 0,
+        marginBottom: 30,
         fontSize: 20,
     },
     dateButtonContainer: {
         margin: 10,
+        marginLeft: 0,
     },
     dateButton: {
         flexGrow: 1,
         margin: 10,
+        marginLeft: 0,
         fontSize: 20,
         backgroundColor: "transparent",
     },
