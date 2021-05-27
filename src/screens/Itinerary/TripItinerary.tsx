@@ -58,16 +58,16 @@ export default function TripItinerary(props: Props): JSX.Element {
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
                     {loading && <Text>{t("loading")}</Text>}
-                    <Text numberOfLines={2} style={styles.descriptionText}>
-                        {data.node.description}
-                    </Text>
                     {data.node.startDate != undefined && (
-                        <Text numberOfLines={2} style={styles.descriptionText}>
+                        <Text numberOfLines={1} style={styles.descriptionDate}>
                             {new Date(data.node.startDate).toLocaleDateString()}
                             {data.node.endDate != undefined &&
                                 ` - ${new Date(data.node.endDate).toLocaleDateString()}`}
                         </Text>
                     )}
+                    <Text numberOfLines={3} style={styles.descriptionText}>
+                        {data.node.description}
+                    </Text>
                     <Button
                         containerStyle={styles.buttonContainer}
                         buttonStyle={styles.buttonLogin}
@@ -125,5 +125,8 @@ const styles = StyleSheet.create({
     descriptionText: {
         fontSize: 18,
         marginBottom: 20,
+    },
+    descriptionDate: {
+        fontSize: 18,
     },
 });
