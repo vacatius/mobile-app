@@ -116,7 +116,7 @@ export const resources = {
                     createActivity: "Create Activity",
                     removeDialogTitle: "Really remove Activity?",
                     removeDialogMessage: "You will not be able to restore it afterwards!",
-                    from: "from",
+                    from: "Planned at",
                     to: "to",
                 },
                 tripSettings: {
@@ -250,7 +250,7 @@ export const resources = {
                     removeDialogTitle: "Aktivität wirklich löschen?",
                     createActivity: "Aktivität erstellen",
                     removeDialogMessage: "Du kannst sie nicht wiederherstellen.",
-                    from: "von",
+                    from: "Zeitpunkt",
                     to: "bis",
                 },
                 tripSettings: {
