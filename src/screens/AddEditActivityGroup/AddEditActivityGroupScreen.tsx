@@ -6,6 +6,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { Button, Icon, Input, Text } from "react-native-elements";
+import { fonts } from "react-native-elements/dist/config";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
 import SvgTravelPlan from "../../components/svg/SvgTravelPlan";
@@ -15,6 +16,7 @@ import { refetchGetTripQuery } from "../Itinerary/types/getTripQuery";
 import { useAddActivityGroupMutation } from "./types/add-activity-group.mutation";
 import { useRemoveActivityGroupMutation } from "./types/remove-activity-group.mutation";
 import { useUpdateActivityGroupMutation } from "./types/update-activity-group.mutation";
+import { theme } from "../../theme/theme";
 
 type AddEditActivityGroupScreenNavigationProp = StackNavigationProp<
     RootStackParamList,
@@ -131,10 +133,10 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                 <View style={styles.inner}>
                     {/* Undraw.co: travel plans */}
                     <SvgTravelPlan style={styles.travelPlan} width={150} height={150} />
-                    <Text h3 style={styles.textHeading}>
+                    <Text style={theme.fonts.title.style}>
                         {t("screens.addEditActivityGroup.groupYourActivities")}
                     </Text>
-                    <Text h4 style={styles.text}>
+                    <Text style={theme.fonts.regular.style}>
                         {t("screens.addEditActivityGroup.explanation")}
                     </Text>
                     <Formik
@@ -248,10 +250,6 @@ const validationSchema = (t: TFunction): any => {
 const styles = StyleSheet.create({
     text: {
         marginBottom: 30,
-        alignSelf: "center",
-    },
-    textHeading: {
-        marginBottom: 10,
         alignSelf: "center",
     },
     errorText: {
