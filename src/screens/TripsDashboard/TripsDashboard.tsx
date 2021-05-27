@@ -29,6 +29,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
         const currentTripsFiltered = tripsData?.trips.filter((trip) => {
             return (
                 (trip.startDate === null && trip.endDate === null) ||
+                (trip.startDate !== null && trip.endDate === null) ||
                 new Date(trip.endDate).getTime() >= new Date().getTime()
             );
         });
