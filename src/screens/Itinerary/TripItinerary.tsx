@@ -61,6 +61,16 @@ export default function TripItinerary(props: Props): JSX.Element {
                     <Text numberOfLines={2} style={styles.descriptionText}>
                         {data.node.description}
                     </Text>
+                    {data.node.startDate != undefined && (
+                        <Text numberOfLines={2} style={styles.descriptionText}>
+                            {data.node.startDate == undefined
+                                ? ""
+                                : new Date(data.node.startDate).toLocaleDateString()}
+                            {data.node.endDate == undefined
+                                ? ""
+                                : ` - ${new Date(data.node.endDate).toLocaleDateString()}`}
+                        </Text>
+                    )}
                     <Button
                         containerStyle={styles.buttonContainer}
                         buttonStyle={styles.buttonLogin}
@@ -104,6 +114,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "center",
         padding: 20,
+        paddingTop: -25,
     },
     iconButton: {
         marginLeft: 10,

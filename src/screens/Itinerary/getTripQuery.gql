@@ -4,6 +4,8 @@ query getTrip($tripId: ID!) {
     __typename
     ... on Trip {
       createdAt
+      startDate
+      endDate
       name
       description
       admin {
