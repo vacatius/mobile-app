@@ -335,6 +335,11 @@ export type Subscription = {
 };
 
 
+export type SubscriptionRoutePointsChangedArgs = {
+  tripId: Scalars['String'];
+};
+
+
 export type SubscriptionActivityAddedArgs = {
   tripId: Scalars['String'];
 };
