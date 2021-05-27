@@ -39,11 +39,11 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
                                     </Text>
                                 </View>
                             )}
-                            {props.trip.startDate && (
+                            {props.trip.endDate && (
                                 <View>
                                     <Text h4>
                                         {" "}
-                                        -{new Date(props.trip.endDate).toLocaleDateString()}
+                                        - {new Date(props.trip.endDate).toLocaleDateString()}
                                     </Text>
                                 </View>
                             )}
