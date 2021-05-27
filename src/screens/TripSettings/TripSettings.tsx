@@ -5,7 +5,7 @@ import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, SafeAreaView, StyleSheet } from "react-native";
+import { ActivityIndicator, Alert, SafeAreaView, StyleSheet } from "react-native";
 import { Avatar, Button, Divider, Icon, Input, ListItem, Text } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Toast from "react-native-toast-message";
@@ -168,7 +168,9 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
         );
     };
 
-    if (data === undefined) {
+    if (data === undefined && loading) {
+        return <ActivityIndicator size="large" />;
+    } else if (data === undefined) {
         return <Text>{t("error.generic")}</Text>;
     }
 
