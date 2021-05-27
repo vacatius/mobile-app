@@ -63,12 +63,9 @@ export default function TripItinerary(props: Props): JSX.Element {
                     </Text>
                     {data.node.startDate != undefined && (
                         <Text numberOfLines={2} style={styles.descriptionText}>
-                            {data.node.startDate == undefined
-                                ? ""
-                                : new Date(data.node.startDate).toLocaleDateString()}
-                            {data.node.endDate == undefined
-                                ? ""
-                                : ` - ${new Date(data.node.endDate).toLocaleDateString()}`}
+                            {new Date(data.node.startDate).toLocaleDateString()}
+                            {data.node.endDate != undefined &&
+                                ` - ${new Date(data.node.endDate).toLocaleDateString()}`}
                         </Text>
                     )}
                     <Button
