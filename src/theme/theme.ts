@@ -23,6 +23,13 @@ export const theme = {
                 fontSize: 20,
             },
         }),
+        regularCenter: StyleSheet.create({
+            style: {
+                marginBottom: 10,
+                fontSize: 20,
+                textAlign: "center",
+            },
+        }),
         label: StyleSheet.create({
             style: {
                 fontSize: 16,
@@ -57,7 +64,6 @@ export const theme = {
                 marginLeft: 10,
             },
         }),
-
         deleteButton: StyleSheet.create({
             title: {
                 color: "#e03030",
@@ -73,6 +79,20 @@ export const theme = {
     view: {
         container: {
             spacing: 20,
+        },
+    },
+    icon: {
+        input: {
+            color: "grey",
+            size: 24,
+        },
+        primaryButton: {
+            color: "black",
+            size: 15,
+        },
+        deleteButton: {
+            color: "#e03030",
+            size: 15,
         },
     },
 };

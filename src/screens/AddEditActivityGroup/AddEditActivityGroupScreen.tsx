@@ -6,7 +6,6 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, SafeAreaView, StyleSheet, View } from "react-native";
 import { Button, Icon, Input, Text } from "react-native-elements";
-import { fonts } from "react-native-elements/dist/config";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
 import SvgTravelPlan from "../../components/svg/SvgTravelPlan";
@@ -216,8 +215,8 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                             <Icon
                                                 style={theme.button.deleteButton.icon}
                                                 name="trash-alt"
-                                                size={15}
-                                                color="#e03030"
+                                                size={theme.icon.deleteButton.size}
+                                                color={theme.icon.deleteButton.color}
                                                 type="font-awesome-5"
                                             />
                                         }

@@ -80,8 +80,8 @@ export const AddTrip = (): JSX.Element => {
                                         <Icon
                                             style={styles.icon}
                                             name="suitcase"
-                                            size={24}
-                                            color="grey"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -103,8 +103,8 @@ export const AddTrip = (): JSX.Element => {
                                         <Icon
                                             style={styles.icon}
                                             name="comment"
-                                            size={24}
-                                            color="grey"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -127,8 +127,8 @@ export const AddTrip = (): JSX.Element => {
                                         <Icon
                                             style={theme.button.primaryButton.icon}
                                             name="arrow-right"
-                                            size={15}
-                                            color="black"
+                                            size={theme.icon.primaryButton.size}
+                                            color={theme.icon.primaryButton.color}
                                             type="font-awesome-5"
                                         />
                                     }

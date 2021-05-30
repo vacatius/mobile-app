@@ -78,8 +78,8 @@ export default function TripItinerary(props: Props): JSX.Element {
                             <Icon
                                 style={theme.button.primaryButton.icon}
                                 name="plus"
-                                size={25}
-                                color="black"
+                                size={theme.icon.primaryButton.size}
+                                color={theme.icon.primaryButton.color}
                                 type="font-awesome-5"
                             />
                         }
