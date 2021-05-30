@@ -9,6 +9,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
+import { theme } from "../../theme/theme";
 import { Routes } from "../../types/Routes";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
 import { useCreateTripMutation } from "./types/add-trip.mutation";
@@ -58,7 +59,7 @@ export const AddTrip = (): JSX.Element => {
             >
                 <SafeAreaView style={styles.container}>
                     <SvgLogo style={styles.logo} width={75} height={75} />
-                    <Text style={styles.text}>{t("screens.add_trip.title")}</Text>
+                    <Text style={theme.fonts.title.style}>{t("screens.add_trip.title")}</Text>
                     <Formik
                         initialValues={{ tripName: "", description: "" }}
                         onSubmit={handleSubmit}
@@ -80,13 +81,14 @@ export const AddTrip = (): JSX.Element => {
                                             style={styles.icon}
                                             name="suitcase"
                                             size={24}
-                                            color="black"
+                                            color="grey"
                                             type="font-awesome-5"
                                         />
                                     }
                                     value={values.tripName}
                                     onChangeText={handleChange("tripName")}
                                     onBlur={handleBlur("tripName")}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 <Input
                                     label={t("description")}
@@ -102,7 +104,7 @@ export const AddTrip = (): JSX.Element => {
                                             style={styles.icon}
                                             name="comment"
                                             size={24}
-                                            color="black"
+                                            color="grey"
                                             type="font-awesome-5"
                                         />
                                     }
@@ -113,19 +115,17 @@ export const AddTrip = (): JSX.Element => {
                                     multiline={true}
                                     numberOfLines={4}
                                     style={styles.textArea}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 {error && <Text style={styles.errorText}>{error.message}</Text>}
                                 <Button
-                                    containerStyle={styles.buttonContainer}
-                                    buttonStyle={styles.submitButton}
+                                    containerStyle={theme.button.primaryButton.container}
+                                    buttonStyle={theme.button.primaryButton.button}
                                     title={t("screens.add_trip.submit_add_trip")}
-                                    titleStyle={{
-                                        color: "black",
-                                        fontSize: 25,
-                                    }}
+                                    titleStyle={theme.button.primaryButton.title}
                                     icon={
                                         <Icon
-                                            style={styles.iconButton}
+                                            style={theme.button.primaryButton.icon}
                                             name="arrow-right"
                                             size={15}
                                             color="black"
@@ -140,10 +140,10 @@ export const AddTrip = (): JSX.Element => {
                         )}
                     </Formik>
                     <Button
-                        containerStyle={styles.buttonContainer}
+                        containerStyle={theme.button.tertiaryButton.container}
                         type="clear"
                         title={t("screens.add_trip.stay_home")}
-                        titleStyle={{ color: "darkslategray" }}
+                        titleStyle={theme.button.tertiaryButton.title}
                         onPress={() => navigation.navigate(Routes.DASHBOARD)}
                     />
                 </SafeAreaView>
@@ -163,12 +163,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        margin: 20,
-    },
-    text: {
-        fontSize: 40,
-        marginBottom: 30,
-        alignSelf: "center",
+        margin: theme.view.container.spacing,
     },
     icon: {
         marginRight: 10,
@@ -178,18 +173,9 @@ const styles = StyleSheet.create({
         textAlignVertical: "top",
         justifyContent: "flex-start",
     },
-    iconButton: {
-        marginLeft: 10,
-    },
-    buttonContainer: {
-        marginBottom: 20,
-    },
     logo: {
         alignSelf: "center",
         marginBottom: 20,
-    },
-    submitButton: {
-        backgroundColor: "#BCE1B0",
     },
     errorText: {
         fontSize: 16,

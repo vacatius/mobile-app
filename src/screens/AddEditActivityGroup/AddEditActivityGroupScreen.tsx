@@ -130,7 +130,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
     return (
         <SafeAreaView>
             <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-                <View style={theme.view.container.flexContainer}>
+                <View style={styles.container}>
                     {/* Undraw.co: travel plans */}
                     <SvgTravelPlan style={styles.travelPlan} width={150} height={150} />
                     <Text style={theme.fonts.title.style}>
@@ -243,6 +243,11 @@ const validationSchema = (t: TFunction): any => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        padding: theme.view.container.spacing,
+        justifyContent: "space-around",
+    },
     errorText: {
         fontSize: 16,
         marginBottom: 15,

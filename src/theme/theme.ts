@@ -4,7 +4,7 @@ export const theme = {
     fonts: {
         title: StyleSheet.create({
             style: {
-                marginBottom: 10,
+                marginBottom: 30,
                 alignSelf: "center",
                 fontSize: 32,
                 fontWeight: "bold",
@@ -47,6 +47,18 @@ export const theme = {
                 marginLeft: 10,
             },
         }),
+        tertiaryButton: StyleSheet.create({
+            title: {
+                color: "darkslategray",
+            },
+            container: {
+                marginBottom: 5,
+            },
+            icon: {
+                marginLeft: 10,
+            },
+        }),
+
         deleteButton: StyleSheet.create({
             title: {
                 color: "#e03030",
@@ -60,12 +72,8 @@ export const theme = {
         }),
     },
     view: {
-        container: StyleSheet.create({
-            flexContainer: {
-                padding: 20,
-                flex: 1,
-                justifyContent: "space-around",
-            },
-        }),
+        container: {
+            spacing: 20,
+        },
     },
 };
