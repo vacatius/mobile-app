@@ -3,6 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { Avatar, Button, Icon, Input } from "react-native-elements";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { theme } from "../../theme/theme";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { SafeAreaView, StyleSheet } from "react-native";
@@ -100,8 +101,8 @@ const Profile = (props: Props): JSX.Element => {
                                     <Icon
                                         style={styles.icon}
                                         name="user"
-                                        size={24}
-                                        color="black"
+                                        size={theme.icon.input.size}
+                                        color={theme.icon.input.color}
                                         type="font-awesome-5"
                                     />
                                 }
@@ -114,6 +115,7 @@ const Profile = (props: Props): JSX.Element => {
                                         : undefined
                                 }
                                 errorStyle={styles.errorMessage}
+                                labelStyle={theme.fonts.label.style}
                             />
                             <Input
                                 label={t("email")}
@@ -121,8 +123,8 @@ const Profile = (props: Props): JSX.Element => {
                                     <Icon
                                         style={styles.icon}
                                         name="envelope"
-                                        size={24}
-                                        color="black"
+                                        size={theme.icon.input.size}
+                                        color={theme.icon.input.color}
                                         type="font-awesome-5"
                                     />
                                 }
@@ -133,6 +135,7 @@ const Profile = (props: Props): JSX.Element => {
                                     errors.email && touched.email ? errors.email : undefined
                                 }
                                 errorStyle={styles.errorMessage}
+                                labelStyle={theme.fonts.label.style}
                             />
                             <Input
                                 label={t("passwordNew")}
@@ -141,8 +144,8 @@ const Profile = (props: Props): JSX.Element => {
                                     <Icon
                                         style={styles.icon}
                                         name="lock"
-                                        size={24}
-                                        color="black"
+                                        size={theme.icon.input.size}
+                                        color={theme.icon.input.color}
                                         type="font-awesome-5"
                                     />
                                 }
@@ -156,6 +159,7 @@ const Profile = (props: Props): JSX.Element => {
                                         : undefined
                                 }
                                 errorStyle={styles.errorMessage}
+                                labelStyle={theme.fonts.label.style}
                             />
                             <Input
                                 label={t("repeatPasswordNew")}
@@ -164,8 +168,8 @@ const Profile = (props: Props): JSX.Element => {
                                     <Icon
                                         style={styles.icon}
                                         name="lock"
-                                        size={24}
-                                        color="black"
+                                        size={theme.icon.input.size}
+                                        color={theme.icon.input.color}
                                         type="font-awesome-5"
                                     />
                                 }
@@ -179,19 +183,26 @@ const Profile = (props: Props): JSX.Element => {
                                         : undefined
                                 }
                                 errorStyle={styles.errorMessage}
+                                labelStyle={theme.fonts.label.style}
                             />
                             <Button
-                                containerStyle={styles.buttonContainer}
-                                buttonStyle={styles.buttonRegister}
+                                containerStyle={theme.button.primaryButton.container}
+                                buttonStyle={theme.button.primaryButton.button}
                                 title={t("screens.profile.save")}
-                                titleStyle={styles.buttonTitle}
+                                titleStyle={theme.button.primaryButton.title}
                                 onPress={() => handleSubmit()}
                                 loading={loading}
                             />
                         </>
                     )}
                 </Formik>
-                <Button title={t("screens.profile.logout")} type="clear" onPress={logout} />
+                <Button
+                    title={t("screens.profile.logout")}
+                    type="clear"
+                    containerStyle={theme.button.tertiaryButton.container}
+                    titleStyle={theme.button.tertiaryButton.title}
+                    onPress={logout}
+                />
             </SafeAreaView>
         </KeyboardAwareScrollView>
     );
@@ -220,31 +231,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        margin: 20,
-    },
-    text: {
-        fontSize: 40,
-        marginBottom: 30,
-        alignSelf: "center",
+        margin: theme.view.container.spacing,
     },
     icon: {
         marginRight: 10,
-    },
-    iconButton: {
-        marginLeft: 10,
-    },
-    buttonContainer: {
-        marginBottom: 20,
-    },
-    buttonContainerWelcome: {
-        margin: 20,
-    },
-    buttonRegister: {
-        backgroundColor: "#BCE1B0",
-    },
-    logo: {
-        alignSelf: "center",
-        marginBottom: 20,
     },
     errorText: {
         fontSize: 16,
@@ -255,19 +245,6 @@ const styles = StyleSheet.create({
     errorMessage: {
         color: "#e03030",
         fontSize: 13,
-    },
-    overlay: {
-        minWidth: "80%",
-        margin: 30,
-        padding: 20,
-    },
-    welcomeText: {
-        textAlign: "center",
-        fontSize: 20,
-    },
-    buttonTitle: {
-        color: "black",
-        fontSize: 25,
     },
 });
 
