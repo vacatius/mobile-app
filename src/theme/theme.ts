@@ -53,6 +53,21 @@ export const theme = {
                 marginLeft: 10,
             },
         }),
+        secondaryButton: StyleSheet.create({
+            title: {
+                color: "black",
+                fontSize: 25,
+            },
+            button: {
+                backgroundColor: "#93C3FE",
+            },
+            container: {
+                marginBottom: 5,
+            },
+            icon: {
+                marginLeft: 10,
+            },
+        }),
         tertiaryButton: StyleSheet.create({
             title: {
                 color: "darkslategray",

@@ -8,6 +8,7 @@ import { Avatar, Button, Header, Text } from "react-native-elements";
 import Toast from "react-native-toast-message";
 import SvgLogo from "../../components/SvgLogo";
 import { handleShare } from "../../services/shareSheetHandler";
+import { theme } from "../../theme/theme";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { refetchTripsQuery } from "../TripsDashboard/types/trip-dashboard.query";
@@ -40,7 +41,7 @@ export default function ShareTrip(props: Props): JSX.Element {
     useEffect(() => {
         async function getInitialUrl(): Promise<void> {
             const link = await Linking.getInitialURL();
-            if (link && link !== null) {
+            if (link) {
                 console.log("[Share Trip] we got a initial URL link");
                 console.log("[Share Trip] ", link);
             }
@@ -165,7 +166,7 @@ export default function ShareTrip(props: Props): JSX.Element {
             <Header
                 placement={"left"}
                 containerStyle={styles.header}
-                leftComponent={<Text h2>{trip.trip.name}</Text>}
+                leftComponent={<Text style={theme.fonts.title.style}>{trip.trip.name}</Text>}
                 rightComponent={
                     <Avatar
                         rounded
@@ -179,27 +180,29 @@ export default function ShareTrip(props: Props): JSX.Element {
                 }
             />
             <ScrollView style={styles.scrollView}>
-                {trip.trip.description && <Text h4>{trip.trip.description}</Text>}
+                {trip.trip.description && (
+                    <Text style={theme.fonts.regular.style}>{trip.trip.description}</Text>
+                )}
                 <SvgLogo style={styles.logo} height={150} width={150} />
                 {mode === Mode.SHARE_TRIP && (
                     <Button
-                        containerStyle={styles.btnContainer}
-                        buttonStyle={styles.shareBtn}
+                        containerStyle={theme.button.secondaryButton.container}
+                        buttonStyle={theme.button.secondaryButton.button}
                         title={t("screens.shareTrip.share")}
-                        titleStyle={styles.btnTextStyle}
+                        titleStyle={theme.button.secondaryButton.title}
                         onPress={() => handleSubmitButton()}
                         loading={loadingCreateInvitation}
                     />
                 )}
                 <Button
-                    containerStyle={styles.btnContainer}
-                    buttonStyle={styles.planTripBtn}
+                    containerStyle={theme.button.primaryButton.container}
+                    buttonStyle={theme.button.primaryButton.button}
                     title={t(
                         mode === Mode.SHARE_TRIP
                             ? "screens.shareTrip.planTrip"
                             : "screens.shareTrip.joinTrip"
                     )}
-                    titleStyle={styles.btnTextStyle}
+                    titleStyle={theme.button.primaryButton.title}
                     onPress={() => {
                         if (mode === Mode.JOIN_TRIP && invitation) {
                             executeJoinTripMutation({
@@ -226,14 +229,14 @@ export default function ShareTrip(props: Props): JSX.Element {
                     loading={mode === Mode.JOIN_TRIP ? loadingJoinTrip : false}
                 />
                 <Button
-                    containerStyle={{ marginTop: -10 }}
-                    buttonStyle={styles.backToDashboardBtn}
+                    containerStyle={theme.button.tertiaryButton.container}
+                    type="clear"
                     title={t(
                         mode === Mode.SHARE_TRIP
                             ? "screens.shareTrip.goToDashboard"
                             : "screens.shareTrip.cancelJoin"
                     )}
-                    titleStyle={{ color: "black", fontSize: 20 }}
+                    titleStyle={theme.button.tertiaryButton.title}
                     onPress={() =>
                         mode === Mode.SHARE_TRIP
                             ? props.navigation.popToTop()
@@ -258,28 +261,12 @@ const styles = StyleSheet.create({
         color: "black",
     },
     scrollView: {
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: theme.view.container.spacing,
+        paddingRight: theme.view.container.spacing,
     },
     logo: {
         alignSelf: "center",
         marginTop: 30,
         marginBottom: 40,
-    },
-    btnContainer: {
-        marginBottom: 15,
-    },
-    btnTextStyle: {
-        color: "black",
-        fontSize: 25,
-    },
-    shareBtn: {
-        backgroundColor: "#93C3FE",
-    },
-    planTripBtn: {
-        backgroundColor: "#BCE1B0",
-    },
-    backToDashboardBtn: {
-        backgroundColor: "transparent",
     },
 });
