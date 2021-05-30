@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
+import { theme } from "../../theme/theme";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import SecureStorageItems from "../../types/SecureStorageItems";
@@ -65,8 +66,8 @@ export default function Login(props: Props): JSX.Element {
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
                     <SvgLogo style={styles.logo} width={150} height={150} />
-                    <Text style={styles.text}>{t("vacatius")}</Text>
-                    <Text style={styles.info}>{t("screens.login.info")}</Text>
+                    <Text style={theme.fonts.title.style}>{t("vacatius")}</Text>
+                    <Text style={theme.fonts.regularCenter.style}>{t("screens.login.info")}</Text>
                     <Formik
                         initialValues={{ username: "", password: "" }}
                         onSubmit={handleLogin}
@@ -87,14 +88,15 @@ export default function Login(props: Props): JSX.Element {
                                         <Icon
                                             style={styles.icon}
                                             name="user"
-                                            size={24}
-                                            color="black"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
                                     value={values.username}
                                     onChangeText={handleChange("username")}
                                     onBlur={handleBlur("username")}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 <Input
                                     label={t("password")}
@@ -109,8 +111,8 @@ export default function Login(props: Props): JSX.Element {
                                         <Icon
                                             style={styles.icon}
                                             name="lock"
-                                            size={24}
-                                            color="black"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -118,6 +120,7 @@ export default function Login(props: Props): JSX.Element {
                                     secureTextEntry
                                     onChangeText={handleChange("password")}
                                     onBlur={handleBlur("password")}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 {error && (
                                     <Text style={styles.errorText}>
@@ -129,19 +132,16 @@ export default function Login(props: Props): JSX.Element {
                                     </Text>
                                 )}
                                 <Button
-                                    containerStyle={styles.buttonContainer}
-                                    buttonStyle={styles.buttonLogin}
+                                    containerStyle={theme.button.primaryButton.container}
+                                    buttonStyle={theme.button.primaryButton.button}
                                     title={t("login")}
-                                    titleStyle={{
-                                        color: "black",
-                                        fontSize: 25,
-                                    }}
+                                    titleStyle={theme.button.primaryButton.title}
                                     icon={
                                         <Icon
-                                            style={styles.iconButton}
+                                            style={theme.button.primaryButton.icon}
                                             name="arrow-right"
-                                            size={15}
-                                            color="black"
+                                            size={theme.icon.primaryButton.size}
+                                            color={theme.icon.primaryButton.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -153,10 +153,10 @@ export default function Login(props: Props): JSX.Element {
                         )}
                     </Formik>
                     <Button
-                        containerStyle={styles.buttonContainer}
+                        containerStyle={theme.button.tertiaryButton.container}
                         type="clear"
                         title={t("register")}
-                        titleStyle={{ color: "darkslategray" }}
+                        titleStyle={theme.button.tertiaryButton.title}
                         onPress={() => props.navigation.navigate(Routes.REGISTER)}
                     />
                 </SafeAreaView>
@@ -178,29 +178,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        padding: 20,
-    },
-    text: {
-        fontSize: 40,
-        marginBottom: 10,
-        alignSelf: "center",
-    },
-    info: {
-        fontSize: 18,
-        marginBottom: 30,
-        alignSelf: "center",
+        padding: theme.view.container.spacing,
     },
     icon: {
         marginRight: 10,
-    },
-    iconButton: {
-        marginLeft: 10,
-    },
-    buttonContainer: {
-        marginBottom: 20,
-    },
-    buttonLogin: {
-        backgroundColor: "#BCE1B0",
     },
     logo: {
         alignSelf: "center",
