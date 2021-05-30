@@ -20,8 +20,7 @@ export const theme = {
         regular: StyleSheet.create({
             style: {
                 marginBottom: 10,
-                alignSelf: "center",
-                fontSize: 25,
+                fontSize: 20,
             },
         }),
         label: StyleSheet.create({
