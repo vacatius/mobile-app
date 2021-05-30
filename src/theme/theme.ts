@@ -26,9 +26,45 @@ export const theme = {
         }),
         label: StyleSheet.create({
             style: {
-                marginBottom: 10,
-                alignSelf: "center",
+                fontSize: 16,
+                fontWeight: "normal",
+            },
+        }),
+    },
+    button: {
+        primaryButton: StyleSheet.create({
+            title: {
+                color: "black",
                 fontSize: 25,
+            },
+            button: {
+                backgroundColor: "#BCE1B0",
+            },
+            container: {
+                marginBottom: 5,
+            },
+            icon: {
+                marginLeft: 10,
+            },
+        }),
+        deleteButton: StyleSheet.create({
+            title: {
+                color: "#e03030",
+            },
+            container: {
+                marginBottom: 5,
+            },
+            icon: {
+                marginLeft: 10,
+            },
+        }),
+    },
+    view: {
+        container: StyleSheet.create({
+            flexContainer: {
+                padding: 20,
+                flex: 1,
+                justifyContent: "space-around",
             },
         }),
     },

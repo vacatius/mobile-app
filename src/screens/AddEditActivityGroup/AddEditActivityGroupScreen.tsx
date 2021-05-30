@@ -130,7 +130,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
     return (
         <SafeAreaView>
             <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-                <View style={styles.inner}>
+                <View style={theme.view.container.flexContainer}>
                     {/* Undraw.co: travel plans */}
                     <SvgTravelPlan style={styles.travelPlan} width={150} height={150} />
                     <Text style={theme.fonts.title.style}>
@@ -193,33 +193,28 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                     <Text style={styles.errorText}>{errorRemove.message}</Text>
                                 )}
                                 <Button
-                                    containerStyle={styles.buttonContainer}
-                                    buttonStyle={styles.submitButton}
+                                    containerStyle={theme.button.primaryButton.container}
+                                    buttonStyle={theme.button.primaryButton.button}
                                     title={
                                         props.route.params.tripRoutePointToEdit === undefined
                                             ? t("screens.addEditActivityGroup.submitCreate")
                                             : t("screens.addEditActivityGroup.submitUpdate")
                                     }
-                                    titleStyle={{
-                                        color: "black",
-                                        fontSize: 25,
-                                    }}
+                                    titleStyle={theme.button.primaryButton.title}
                                     onPress={() => handleSubmit()}
                                     loading={loadingCreate || loadingUpdate}
                                 />
                                 {props.route.params.tripRoutePointToEdit !== undefined && (
                                     <Button
-                                        containerStyle={styles.buttonContainer}
+                                        containerStyle={theme.button.deleteButton.container}
                                         title={t(
                                             "screens.addEditActivityGroup.removeActivityGroup"
                                         )}
                                         type="clear"
-                                        titleStyle={{
-                                            color: "#e03030",
-                                        }}
+                                        titleStyle={theme.button.deleteButton.title}
                                         icon={
                                             <Icon
-                                                style={styles.iconButton}
+                                                style={theme.button.deleteButton.icon}
                                                 name="trash-alt"
                                                 size={15}
                                                 color="#e03030"
@@ -248,10 +243,6 @@ const validationSchema = (t: TFunction): any => {
 };
 
 const styles = StyleSheet.create({
-    text: {
-        marginBottom: 30,
-        alignSelf: "center",
-    },
     errorText: {
         fontSize: 16,
         marginBottom: 15,
@@ -262,22 +253,8 @@ const styles = StyleSheet.create({
         color: "#e03030",
         fontSize: 13,
     },
-    iconButton: {
-        marginLeft: 10,
-    },
-    buttonContainer: {
-        marginBottom: 5,
-    },
-    submitButton: {
-        backgroundColor: "#BCE1B0",
-    },
     travelPlan: {
         alignSelf: "center",
-    },
-    inner: {
-        padding: 20,
-        flex: 1,
-        justifyContent: "space-around",
     },
 });
 export default AddEditActivityGroupScreen;
