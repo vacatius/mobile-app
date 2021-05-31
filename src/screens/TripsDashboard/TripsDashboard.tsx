@@ -27,18 +27,24 @@ export default function TripsDashboard(props: Props): JSX.Element {
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
         const currentTripsFiltered = tripsData?.trips.filter((trip) => {
-            return (
-                (trip.startDate === null && trip.endDate === null) ||
-                (trip.startDate !== null && trip.endDate === null) ||
-                new Date(trip.endDate).getTime() >= new Date().getTime()
-            );
+            const noStartAndEndDate = trip.startDate === null && trip.endDate === null;
+            const startDateInFuture =
+                trip.startDate !== null &&
+                new Date(trip.startDate).getTime() >= new Date().getTime() &&
+                trip.endDate === null;
+            const endDateInFuture = new Date(trip.endDate).getTime() >= new Date().getTime();
+            return noStartAndEndDate || startDateInFuture || endDateInFuture;
         });
         const pastTripsFiltered = tripsData?.trips.filter((trip) => {
-            return (
+            const startAndEndDateInPast =
                 trip.startDate !== null &&
                 trip.endDate !== null &&
-                new Date(trip.endDate).getTime() < new Date().getTime()
-            );
+                new Date(trip.endDate).getTime() < new Date().getTime();
+            const startDateInPast =
+                trip.startDate !== null &&
+                new Date(trip.startDate).getTime() <= new Date().getTime() &&
+                trip.endDate === null;
+            return startAndEndDateInPast || startDateInPast;
         });
 
         setCurrentTrips(currentTripsFiltered || []);
