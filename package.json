@@ -26,7 +26,7 @@
         "formik": "^2.2.8",
         "graphql": "^15.5.0",
         "i18next": "^20.3.1",
-        "react": "16.13.1",
+        "react": "16.14.0",
         "react-dom": "16.13.1",
         "react-i18next": "^11.8.15",
         "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
