@@ -60,7 +60,7 @@ export default function TripItinerary(props: Props): JSX.Element {
                 <SafeAreaView style={styles.container}>
                     {loading && <Text>{t("loading")}</Text>}
                     {data.node.startDate != undefined && (
-                        <Text numberOfLines={1} style={theme.fonts.regular.style}>
+                        <Text numberOfLines={1} style={theme.fonts.regularCenter.style}>
                             {new Date(data.node.startDate).toLocaleDateString()}
                             {data.node.endDate != undefined &&
                                 ` - ${new Date(data.node.endDate).toLocaleDateString()}`}
