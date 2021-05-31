@@ -58,7 +58,7 @@ export default function TripItinerary(props: Props): JSX.Element {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
-                    {loading && <Text>{t("loading")}</Text>}
+                    {loading && <Text style={theme.fonts.regularCenter.style}>{t("loading")}</Text>}
                     {data.node.startDate != undefined && (
                         <Text numberOfLines={1} style={theme.fonts.regularCenter.style}>
                             {new Date(data.node.startDate).toLocaleDateString()}

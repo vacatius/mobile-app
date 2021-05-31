@@ -13,6 +13,7 @@ import stc from "string-to-color";
 import * as Yup from "yup";
 import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
 import TripHeaderContext from "../../routes/TripHeaderContext";
+import { theme } from "../../theme/theme";
 import { TripUserRole, User } from "../../types.d";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
@@ -176,7 +177,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
 
     return (
         <SafeAreaView style={styles.container}>
-            {loading && <Text>{t("loading")}</Text>}
+            {loading && <Text style={theme.fonts.regularCenter.style}>{t("loading")}</Text>}
 
             <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
                 <Text h3 style={{ marginBottom: 15 }}>
