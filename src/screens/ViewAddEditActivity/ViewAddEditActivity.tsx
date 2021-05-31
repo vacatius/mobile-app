@@ -1,6 +1,7 @@
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { Formik, FormikValues } from "formik";
 import { TFunction } from "i18next";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,9 +11,9 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import * as Yup from "yup";
 import ScreenHeader from "../../components/ScreenHeader";
 import SvgStrandedTraveller from "../../components/svg/SvgStrandedTraveller";
+import { theme } from "../../theme/theme";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
-import { Formik, FormikValues } from "formik";
 import { refetchGetTripQuery } from "../Itinerary/types/getTripQuery";
 import { useCreateActivityMutation } from "./types/createActivityMutation";
 import { useGetActivityLazyQuery } from "./types/getActivityQuery";
@@ -102,7 +103,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                     actionIcon={
                         mode === Mode.VIEW ? (
                             <Icon
-                                style={styles.iconButton}
+                                style={theme.button.primaryButton.icon}
                                 name={"pen"}
                                 size={20}
                                 color="#222"
@@ -245,6 +246,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                         <>
                             <Input
                                 label={t("screens.viewAddEditActivity.activityName")}
+                                labelStyle={theme.fonts.label.style}
                                 value={values.name}
                                 onChangeText={handleChange("name")}
                                 disabled={mode === Mode.VIEW}
@@ -254,6 +256,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                             />
                             <Input
                                 label={t("description")}
+                                labelStyle={theme.fonts.label.style}
                                 value={values.description ? values.description : ""}
                                 onChangeText={handleChange("description")}
                                 onBlur={handleBlur("description")}
@@ -263,7 +266,7 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                                 style={styles.textArea}
                             />
                             <View style={styles.dateTime}>
-                                <Text style={styles.fromText}>
+                                <Text style={{ ...styles.fromText, ...theme.fonts.label.style }}>
                                     {t("screens.viewAddEditActivity.from")}
                                 </Text>
                                 <View style={styles.dateTimePickerGroup}>
@@ -327,35 +330,30 @@ const ViewAddEditActivity = (props: Props): JSX.Element => {
                             )}
                             {mode !== Mode.VIEW && (
                                 <Button
-                                    containerStyle={styles.buttonContainer}
-                                    buttonStyle={styles.submitButton}
+                                    containerStyle={theme.button.primaryButton.container}
+                                    buttonStyle={theme.button.primaryButton.button}
                                     title={t(
                                         mode === Mode.ADD
                                             ? "screens.viewAddEditActivity.submitCreate"
                                             : "screens.viewAddEditActivity.submitUpdate"
                                     )}
-                                    titleStyle={{
-                                        color: "black",
-                                        fontSize: 25,
-                                    }}
+                                    titleStyle={theme.button.primaryButton.title}
                                     onPress={() => handleSubmit()}
                                     loading={mode === Mode.ADD ? loadingCreate : loadingUpdate}
                                 />
                             )}
                             {mode === Mode.EDIT && (
                                 <Button
-                                    containerStyle={styles.buttonContainer}
+                                    containerStyle={theme.button.deleteButton.container}
                                     title={t("screens.viewAddEditActivity.removeActivity")}
                                     type="clear"
-                                    titleStyle={{
-                                        color: "#e03030",
-                                    }}
+                                    titleStyle={theme.button.deleteButton.title}
                                     icon={
                                         <Icon
-                                            style={styles.iconButton}
+                                            style={theme.button.deleteButton.icon}
                                             name="trash-alt"
-                                            size={15}
-                                            color="#e03030"
+                                            size={theme.icon.deleteButton.size}
+                                            color={theme.icon.deleteButton.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -383,7 +381,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "flex-start",
-        margin: 20,
+        margin: theme.view.container.spacing,
     },
     errorMessage: {
         color: "#e03030",
@@ -399,18 +397,7 @@ const styles = StyleSheet.create({
         height: 130,
         textAlignVertical: "top",
     },
-    iconButton: {
-        marginLeft: 10,
-    },
-    buttonContainer: {
-        marginBottom: 20,
-    },
-    submitButton: {
-        backgroundColor: "#BCE1B0",
-    },
     fromText: {
-        fontSize: 16,
-        fontWeight: "bold",
         color: "#879099",
     },
     dateTime: {

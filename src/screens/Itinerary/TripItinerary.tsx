@@ -3,10 +3,11 @@ import { CompositeNavigationProp, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, ScrollView, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Button, Icon } from "react-native-elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActivityGroup, { ActivityGroupData } from "../../components/ActivityGroup";
+import { theme } from "../../theme/theme";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { Mode } from "../ViewAddEditActivity/ViewAddEditActivity";
@@ -57,44 +58,46 @@ export default function TripItinerary(props: Props): JSX.Element {
         return (
             <ScrollView keyboardShouldPersistTaps="handled" bounces={false}>
                 <SafeAreaView style={styles.container}>
-                    {loading && <Text>{t("loading")}</Text>}
+                    {loading && <Text style={theme.fonts.regularCenter.style}>{t("loading")}</Text>}
                     {data.node.startDate != undefined && (
-                        <Text numberOfLines={1} style={styles.descriptionDate}>
+                        <Text numberOfLines={1} style={theme.fonts.regularCenter.style}>
                             {new Date(data.node.startDate).toLocaleDateString()}
                             {data.node.endDate != undefined &&
                                 ` - ${new Date(data.node.endDate).toLocaleDateString()}`}
                         </Text>
                     )}
-                    <Text numberOfLines={3} style={styles.descriptionText}>
+                    <Text numberOfLines={3} style={theme.fonts.regularCenter.style}>
                         {data.node.description}
                     </Text>
                     <Button
-                        containerStyle={styles.buttonContainer}
-                        buttonStyle={styles.buttonLogin}
+                        containerStyle={theme.button.primaryButton.container}
+                        buttonStyle={theme.button.primaryButton.button}
                         title={t("screens.itinerary.add")}
-                        titleStyle={{ color: "black", fontSize: 25 }}
+                        titleStyle={theme.button.primaryButton.title}
                         icon={
                             <Icon
-                                style={styles.iconButton}
+                                style={theme.button.primaryButton.icon}
                                 name="plus"
-                                size={25}
-                                color="black"
+                                size={theme.icon.primaryButton.size}
+                                color={theme.icon.primaryButton.color}
                                 type="font-awesome-5"
                             />
                         }
                         iconRight
                         onPress={() => onEditActivityGroup()}
                     />
-                    {data.node.itinerary.map((i, position) => (
-                        <ActivityGroup
-                            key={i.id}
-                            position={position}
-                            activityGroupData={i}
-                            tripId={props.route.params.tripId}
-                            onEditActivityGroup={onEditActivityGroup}
-                            onAddActivity={onAddActivity}
-                        />
-                    ))}
+                    <View style={{ marginTop: 20 }}>
+                        {data.node.itinerary.map((i, position) => (
+                            <ActivityGroup
+                                key={i.id}
+                                position={position}
+                                activityGroupData={i}
+                                tripId={props.route.params.tripId}
+                                onEditActivityGroup={onEditActivityGroup}
+                                onAddActivity={onAddActivity}
+                            />
+                        ))}
+                    </View>
                 </SafeAreaView>
             </ScrollView>
         );
@@ -110,23 +113,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        padding: 20,
+        padding: theme.view.container.spacing,
         paddingTop: -25,
-    },
-    iconButton: {
-        marginLeft: 10,
-    },
-    buttonContainer: {
-        marginBottom: 20,
-    },
-    buttonLogin: {
-        backgroundColor: "#BCE1B0",
-    },
-    descriptionText: {
-        fontSize: 18,
-        marginBottom: 20,
-    },
-    descriptionDate: {
-        fontSize: 18,
     },
 });

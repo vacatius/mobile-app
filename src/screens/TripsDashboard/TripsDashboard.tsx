@@ -2,10 +2,18 @@ import { RouteProp, useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ActivityIndicator, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+    ActivityIndicator,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    TouchableOpacity,
+    View,
+} from "react-native";
 import { Button, Text } from "react-native-elements";
 import SvgLogo from "../../components/SvgLogo";
 import TripCard from "../../components/TripCard/TripCard";
+import { theme } from "../../theme/theme";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { TripsQuery, useTripsQuery } from "./types/trip-dashboard.query";
@@ -27,18 +35,24 @@ export default function TripsDashboard(props: Props): JSX.Element {
     useEffect(() => {
         console.debug("[TripsDashboard] Trips data has changed");
         const currentTripsFiltered = tripsData?.trips.filter((trip) => {
-            return (
-                (trip.startDate === null && trip.endDate === null) ||
-                (trip.startDate !== null && trip.endDate === null) ||
-                new Date(trip.endDate).getTime() >= new Date().getTime()
-            );
+            const noStartAndEndDate = trip.startDate === null && trip.endDate === null;
+            const startDateInFuture =
+                trip.startDate !== null &&
+                new Date(trip.startDate).getTime() >= new Date().getTime() &&
+                trip.endDate === null;
+            const endDateInFuture = new Date(trip.endDate).getTime() >= new Date().getTime();
+            return noStartAndEndDate || startDateInFuture || endDateInFuture;
         });
         const pastTripsFiltered = tripsData?.trips.filter((trip) => {
-            return (
+            const startAndEndDateInPast =
                 trip.startDate !== null &&
                 trip.endDate !== null &&
-                new Date(trip.endDate).getTime() < new Date().getTime()
-            );
+                new Date(trip.endDate).getTime() < new Date().getTime();
+            const startDateInPast =
+                trip.startDate !== null &&
+                new Date(trip.startDate).getTime() <= new Date().getTime() &&
+                trip.endDate === null;
+            return startAndEndDateInPast || startDateInPast;
         });
 
         setCurrentTrips(currentTripsFiltered || []);
@@ -72,31 +86,33 @@ export default function TripsDashboard(props: Props): JSX.Element {
     };
     return (
         <>
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.scrollView}>
-                <Text h3 style={styles.headlines}>
-                    {t("screens.dashboard.currentTrips")}
-                </Text>
-                {currentTrips &&
-                    currentTrips?.map((trip) => (
-                        <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
-                    ))}
-                {(!currentTrips || currentTrips.length === 0) && (
-                    <Text style={styles.noTripsFound}>
-                        {t("screens.dashboard.errors.noTripsFound")}
+            <ScrollView>
+                <SafeAreaView style={styles.container}>
+                    <Text style={theme.fonts.subtitle.style}>
+                        {t("screens.dashboard.currentTrips")}
                     </Text>
-                )}
-                <Text h3 style={styles.headlines}>
-                    {t("screens.dashboard.pastTrips")}
-                </Text>
-                {pastTrips &&
-                    pastTrips?.map((trip) => (
-                        <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
-                    ))}
-                {(!pastTrips || pastTrips.length === 0) && (
-                    <Text style={styles.noTripsFound}>
-                        {t("screens.dashboard.errors.noTripsFound")}
+                    {currentTrips &&
+                        currentTrips?.map((trip) => (
+                            <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
+                        ))}
+                    {(!currentTrips || currentTrips.length === 0) && (
+                        <Text style={theme.fonts.regularCenter.style}>
+                            {t("screens.dashboard.errors.noTripsFound")}
+                        </Text>
+                    )}
+                    <Text style={theme.fonts.subtitle.style}>
+                        {t("screens.dashboard.pastTrips")}
                     </Text>
-                )}
+                    {pastTrips &&
+                        pastTrips?.map((trip) => (
+                            <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
+                        ))}
+                    {(!pastTrips || pastTrips.length === 0) && (
+                        <Text style={theme.fonts.regularCenter.style}>
+                            {t("screens.dashboard.errors.noTripsFound")}
+                        </Text>
+                    )}
+                </SafeAreaView>
             </ScrollView>
             <TouchableOpacity activeOpacity={0.7} style={styles.floatingTouchableOpacity}>
                 <Button
@@ -105,7 +121,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
                     title={t("screens.add_trip.title")}
                     titleStyle={{
                         color: "white",
-                        fontSize: 24,
+                        fontSize: theme.button.primaryButton.title.fontSize,
                     }}
                     buttonStyle={styles.floatingButton}
                     onPress={addTrip}
@@ -116,21 +132,14 @@ export default function TripsDashboard(props: Props): JSX.Element {
 }
 
 const styles = StyleSheet.create({
-    scrollView: {
-        paddingLeft: 10,
-        paddingRight: 10,
+    container: {
+        marginLeft: theme.view.container.spacing,
+        marginRight: theme.view.container.spacing,
+        marginBottom: theme.view.container.spacing,
     },
     logo: {
         alignSelf: "center",
         marginLeft: 10,
-    },
-    headlines: {
-        marginBottom: 10,
-        marginTop: 20,
-        textAlign: "left",
-    },
-    noTripsFound: {
-        textAlign: "center",
     },
     floatingButton: {
         height: 70,

@@ -9,6 +9,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Yup from "yup";
 import SvgLogo from "../../components/SvgLogo";
+import { theme } from "../../theme/theme";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
 import { useCreateUserMutation } from "./types/registerMutation";
@@ -74,8 +75,10 @@ export default function Register(props: Props): JSX.Element {
                         />
                     </Overlay>
                     <SvgLogo style={styles.logo} width={100} height={100} />
-                    <Text style={styles.title}>{t("vacatius")}</Text>
-                    <Text style={styles.info}>{t("screens.register.info")}</Text>
+                    <Text style={theme.fonts.title.style}>{t("vacatius")}</Text>
+                    <Text style={theme.fonts.regularCenter.style}>
+                        {t("screens.register.info")}
+                    </Text>
                     <Formik
                         initialValues={{
                             email: "",
@@ -96,8 +99,8 @@ export default function Register(props: Props): JSX.Element {
                                         <Icon
                                             style={styles.icon}
                                             name="envelope"
-                                            size={24}
-                                            color="black"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -108,6 +111,7 @@ export default function Register(props: Props): JSX.Element {
                                         errors.email && touched.email ? errors.email : undefined
                                     }
                                     errorStyle={styles.errorMessage}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 <Input
                                     label={t("username")}
@@ -116,8 +120,8 @@ export default function Register(props: Props): JSX.Element {
                                         <Icon
                                             style={styles.icon}
                                             name="user"
-                                            size={24}
-                                            color="black"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -130,6 +134,7 @@ export default function Register(props: Props): JSX.Element {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 <Input
                                     label={t("displayName")}
@@ -138,8 +143,8 @@ export default function Register(props: Props): JSX.Element {
                                         <Icon
                                             style={styles.icon}
                                             name="user"
-                                            size={24}
-                                            color="black"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -152,6 +157,7 @@ export default function Register(props: Props): JSX.Element {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 <Input
                                     label={t("password")}
@@ -160,8 +166,8 @@ export default function Register(props: Props): JSX.Element {
                                         <Icon
                                             style={styles.icon}
                                             name="lock"
-                                            size={24}
-                                            color="black"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -175,6 +181,7 @@ export default function Register(props: Props): JSX.Element {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 <Input
                                     label={t("repeatPassword")}
@@ -183,8 +190,8 @@ export default function Register(props: Props): JSX.Element {
                                         <Icon
                                             style={styles.icon}
                                             name="lock"
-                                            size={24}
-                                            color="black"
+                                            size={theme.icon.input.size}
+                                            color={theme.icon.input.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -198,6 +205,7 @@ export default function Register(props: Props): JSX.Element {
                                             : undefined
                                     }
                                     errorStyle={styles.errorMessage}
+                                    labelStyle={theme.fonts.label.style}
                                 />
                                 {error && (
                                     <Text style={styles.errorText}>
@@ -209,16 +217,16 @@ export default function Register(props: Props): JSX.Element {
                                     </Text>
                                 )}
                                 <Button
-                                    containerStyle={styles.buttonContainer}
-                                    buttonStyle={styles.buttonRegister}
+                                    containerStyle={theme.button.primaryButton.container}
+                                    buttonStyle={theme.button.primaryButton.button}
                                     title={registerTitle}
-                                    titleStyle={styles.buttonTitle}
+                                    titleStyle={theme.button.primaryButton.title}
                                     icon={
                                         <Icon
-                                            style={styles.iconButton}
+                                            style={theme.button.primaryButton.icon}
                                             name="umbrella-beach"
-                                            size={15}
-                                            color="black"
+                                            size={theme.icon.primaryButton.size}
+                                            color={theme.icon.primaryButton.color}
                                             type="font-awesome-5"
                                         />
                                     }
@@ -257,21 +265,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         justifyContent: "center",
-        padding: 20,
-    },
-    text: {
-        fontSize: 40,
-        marginBottom: 30,
-        alignSelf: "center",
+        padding: theme.view.container.spacing,
     },
     icon: {
         marginRight: 10,
-    },
-    iconButton: {
-        marginLeft: 10,
-    },
-    buttonContainer: {
-        marginBottom: 20,
     },
     buttonContainerWelcome: {
         margin: 20,
@@ -306,15 +303,5 @@ const styles = StyleSheet.create({
     buttonTitle: {
         color: "black",
         fontSize: 25,
-    },
-    title: {
-        fontSize: 40,
-        marginBottom: 10,
-        alignSelf: "center",
-    },
-    info: {
-        fontSize: 18,
-        marginBottom: 30,
-        alignSelf: "center",
     },
 });

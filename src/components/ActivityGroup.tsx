@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
+import { Text } from "react-native-elements";
+import { theme } from "../theme/theme";
 import * as Types from "./../types.d";
 import ActivityCard from "./ActivityCard/ActivityCard";
 import ActivityGroupHeader from "./ActivityGroupHeader";
@@ -36,6 +39,7 @@ export interface ActivityGroupProps {
 
 export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
     const [isOpen, setOpen] = useState(props.position === 0);
+    const { t } = useTranslation();
 
     const onEdit = (): void => {
         console.log("edit activity group");
@@ -76,6 +80,9 @@ export default function ActivityGroup(props: ActivityGroupProps): JSX.Element {
                             name={a.name}
                         />
                     ))}
+                {isOpen && props.activityGroupData.activities.length === 0 && (
+                    <Text style={theme.fonts.label.style}>{t("screens.itinerary.noActivity")}</Text>
+                )}
             </View>
         </View>
     );

@@ -71,6 +71,10 @@
 
 ## Pictures
 
-1. Undraw.co
+1. Undraw.co - Logo and Illustrations
     - [documentation](https://undraw.co/)
     - license: Custom open source license
+   
+1. FontAwesome - Icons
+   - [documentation](https://fontawesome.com/)
+   - license [CC BY 4.0 License](https://github.com/FortAwesome/Font-Awesome/blob/master/LICENSE.txt)

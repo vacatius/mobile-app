@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Card, Icon, Text } from "react-native-elements";
 import { TripsQuery } from "../../screens/TripsDashboard/types/trip-dashboard.query";
+import { theme } from "../../theme/theme";
 import AvatarList from "./AvatarList";
 
 export interface TripCardProps {
@@ -19,9 +20,7 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
             }}
         >
             <Card containerStyle={styles.tripCard}>
-                <Card.Title h4 style={styles.tripCardTitle}>
-                    {props.trip.name}
-                </Card.Title>
+                <Card.Title style={styles.tripCardTitle}>{props.trip.name}</Card.Title>
                 <Card.Divider />
 
                 <View style={styles.tripCardContent}>
@@ -29,19 +28,21 @@ const TripCard: React.FC<TripCardProps> = (props: TripCardProps) => {
                         <Card.FeaturedTitle style={styles.tripCardDate}>
                             {!props.trip.startDate && !props.trip.endDate && (
                                 <View>
-                                    <Text h4>{t("error.noDate")}</Text>
+                                    <Text style={theme.fonts.regular.style}>
+                                        {t("error.noDate")}
+                                    </Text>
                                 </View>
                             )}
                             {props.trip.startDate && (
                                 <View>
-                                    <Text h4>
+                                    <Text style={theme.fonts.regular.style}>
                                         {new Date(props.trip.startDate).toLocaleDateString()}
                                     </Text>
                                 </View>
                             )}
                             {props.trip.endDate && (
                                 <View>
-                                    <Text h4>
+                                    <Text style={theme.fonts.regular.style}>
                                         {" "}
                                         - {new Date(props.trip.endDate).toLocaleDateString()}
                                     </Text>
@@ -82,6 +83,8 @@ const styles = StyleSheet.create({
     tripCardTitle: {
         color: "black",
         textAlign: "left",
+        fontSize: theme.fonts.regular.style.fontSize,
+        marginBottom: theme.fonts.regular.style.marginBottom,
     },
     tripCardDate: {
         color: "black",

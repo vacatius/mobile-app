@@ -13,6 +13,7 @@ import stc from "string-to-color";
 import * as Yup from "yup";
 import useCurrentAuthUser from "../../hooks/useCurrentAuthUser";
 import TripHeaderContext from "../../routes/TripHeaderContext";
+import { theme } from "../../theme/theme";
 import { TripUserRole, User } from "../../types.d";
 import RootStackParamList from "../../types/RootStackParamList";
 import { Routes } from "../../types/Routes";
@@ -176,10 +177,10 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
 
     return (
         <SafeAreaView style={styles.container}>
-            {loading && <Text>{t("loading")}</Text>}
+            {loading && <Text style={theme.fonts.regularCenter.style}>{t("loading")}</Text>}
 
             <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-                <Text h3 style={{ marginBottom: 15 }}>
+                <Text style={theme.fonts.smallSubtitle.style}>
                     {t("screens.tripSettings.tripDetails")}
                 </Text>
                 <Formik
@@ -194,6 +195,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                         <>
                             <Input
                                 label={t("tripName")}
+                                labelStyle={theme.fonts.label.style}
                                 value={values.tripName}
                                 onChangeText={handleChange("tripName")}
                                 disabled={settingsMode == Mode.VIEW}
@@ -208,6 +210,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                             />
                             <Input
                                 label={t("description")}
+                                labelStyle={theme.fonts.label.style}
                                 value={values.description ? values.description : ""}
                                 onChangeText={handleChange("description")}
                                 disabled={settingsMode == Mode.VIEW}
@@ -229,13 +232,10 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                             {settingsMode === Mode.EDIT && (
                                 <>
                                     <Button
-                                        containerStyle={styles.buttonContainer}
-                                        buttonStyle={styles.submitButton}
+                                        containerStyle={theme.button.primaryButton.container}
+                                        buttonStyle={theme.button.primaryButton.button}
                                         title={t("screens.tripSettings.submitUpdate")}
-                                        titleStyle={{
-                                            color: "black",
-                                            fontSize: 25,
-                                        }}
+                                        titleStyle={theme.button.primaryButton.title}
                                         onPress={() => handleSubmit()}
                                         loading={loadingUpdate}
                                     />
@@ -245,7 +245,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                         </>
                     )}
                 </Formik>
-                <Text h3 style={{ marginBottom: 15 }}>
+                <Text style={theme.fonts.smallSubtitle.style}>
                     {t("screens.tripSettings.members")}
                 </Text>
                 {data.trip.members.map((member) => (
@@ -278,7 +278,7 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                                     }
                                     name={loadingRemoveMember ? "spinner" : "trash-alt"}
                                     size={20}
-                                    color="#e03030"
+                                    color={theme.icon.deleteButton.color}
                                     type="font-awesome-5"
                                 />
                             )}
@@ -290,18 +290,16 @@ export default function TripSettings(props: TripSettingsProps): JSX.Element {
                 )}
                 {data.trip.admin.id !== currentUser?.id && data.trip.members.length > 1 && (
                     <Button
-                        containerStyle={styles.buttonContainer}
+                        containerStyle={theme.button.deleteButton.container}
                         title={t("screens.tripSettings.leave.button")}
                         type="clear"
-                        titleStyle={{
-                            color: "#e03030",
-                        }}
+                        titleStyle={theme.button.deleteButton.title}
                         icon={
                             <Icon
-                                style={styles.iconButton}
+                                style={theme.button.deleteButton.icon}
                                 name="sign-out-alt"
-                                size={15}
-                                color="#e03030"
+                                size={theme.icon.deleteButton.size}
+                                color={theme.icon.deleteButton.color}
                                 type="font-awesome-5"
                             />
                         }
@@ -327,7 +325,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: "flex-start",
-        margin: 20,
+        margin: theme.view.container.spacing,
     },
     errorMessage: {
         color: "#e03030",
@@ -343,16 +341,8 @@ const styles = StyleSheet.create({
         height: 130,
         textAlignVertical: "top",
     },
-    buttonContainer: {
-        marginBottom: 20,
-    },
-    submitButton: {
-        backgroundColor: "#BCE1B0",
-    },
-    iconButton: {
-        marginLeft: 10,
-    },
     divider: {
+        marginTop: 10,
         marginBottom: 20,
     },
 });
