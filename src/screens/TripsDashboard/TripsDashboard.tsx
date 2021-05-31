@@ -96,7 +96,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
                             <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
                         ))}
                     {(!currentTrips || currentTrips.length === 0) && (
-                        <Text style={styles.noTripsFound}>
+                        <Text style={theme.fonts.regularCenter.style}>
                             {t("screens.dashboard.errors.noTripsFound")}
                         </Text>
                     )}
@@ -108,7 +108,7 @@ export default function TripsDashboard(props: Props): JSX.Element {
                             <TripCard key={trip.id} trip={trip} openTripDetails={openTripDetails} />
                         ))}
                     {(!pastTrips || pastTrips.length === 0) && (
-                        <Text style={styles.noTripsFound}>
+                        <Text style={theme.fonts.regularCenter.style}>
                             {t("screens.dashboard.errors.noTripsFound")}
                         </Text>
                     )}
@@ -140,9 +140,6 @@ const styles = StyleSheet.create({
     logo: {
         alignSelf: "center",
         marginLeft: 10,
-    },
-    noTripsFound: {
-        textAlign: "center",
     },
     floatingButton: {
         height: 70,
