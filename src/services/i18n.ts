@@ -88,6 +88,7 @@ export const resources = {
                 },
                 itinerary: {
                     add: "New Activity Group",
+                    noActivity: "This Activity Group is still empty.",
                 },
                 addEditActivityGroup: {
                     titleCreate: "Add Activity Group",
@@ -222,6 +223,7 @@ export const resources = {
                 },
                 itinerary: {
                     add: "Neue Aktivitätsgruppe",
+                    noActivity: "Diese Aktivitätsgruppe hat noch keine Aktivitäten.",
                 },
                 addEditActivityGroup: {
                     titleCreate: "Aktivitätsgruppe hinzufügen",
