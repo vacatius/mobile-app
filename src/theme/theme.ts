@@ -18,6 +18,12 @@ export const theme = {
                 fontSize: 32,
             },
         }),
+        smallSubtitle: StyleSheet.create({
+            style: {
+                fontSize: 28,
+                marginBottom: 10,
+            },
+        }),
         regular: StyleSheet.create({
             style: {
                 marginBottom: 10,
