@@ -56,10 +56,10 @@ export const resources = {
             },
             screens: {
                 login: {
-                    info: "Sign in to start planning your trips!",
+                    info: "Sign in to start planning your Trips!",
                 },
                 register: {
-                    info: "Register to start planning your trips!",
+                    info: "Register to start planning your Trips!",
                     welcome: "Welcome {{displayName}} 🎉",
                 },
                 add_trip: {
@@ -193,7 +193,7 @@ export const resources = {
                     info: "Melde dich an, um deine Reisen zu planen!",
                 },
                 register: {
-                    info: "Registriere dich, um deine Reisen zu planen",
+                    info: "Registriere dich, um deine Reisen zu planen!",
                     welcome:
                         "Willkommen {{displayName}}!\nWir freuen uns, dich begrüßen zu dürfen 🎉",
                 },
