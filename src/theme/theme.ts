@@ -12,6 +12,7 @@ export const theme = {
         }),
         subtitle: StyleSheet.create({
             style: {
+                marginTop: 10,
                 marginBottom: 10,
                 alignSelf: "center",
                 fontSize: 32,
