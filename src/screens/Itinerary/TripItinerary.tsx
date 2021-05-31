@@ -66,7 +66,7 @@ export default function TripItinerary(props: Props): JSX.Element {
                                 ` - ${new Date(data.node.endDate).toLocaleDateString()}`}
                         </Text>
                     )}
-                    <Text numberOfLines={3} style={theme.fonts.regular.style}>
+                    <Text numberOfLines={3} style={theme.fonts.regularCenter.style}>
                         {data.node.description}
                     </Text>
                     <Button
