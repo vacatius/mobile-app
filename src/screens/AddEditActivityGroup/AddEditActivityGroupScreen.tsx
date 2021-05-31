@@ -158,6 +158,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                             <>
                                 <Input
                                     label={t("screens.addEditActivityGroup.activityGroupName")}
+                                    labelStyle={theme.fonts.label.style}
                                     errorMessage={
                                         errors.name && touched.name ? errors.name : undefined
                                     }
@@ -171,6 +172,7 @@ const AddEditActivityGroupScreen = (props: Props): JSX.Element => {
                                     label={t(
                                         "screens.addEditActivityGroup.activityGroupDescription"
                                     )}
+                                    labelStyle={theme.fonts.label.style}
                                     errorMessage={
                                         errors.description && touched.description
                                             ? errors.description
