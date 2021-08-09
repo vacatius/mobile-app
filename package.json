@@ -54,7 +54,7 @@
         "@types/react": "^17.0.8",
         "@types/react-dom": "^17.0.5",
         "@types/react-native": "^0.64.5",
-        "@typescript-eslint/eslint-plugin": "^4.23.0",
+        "@typescript-eslint/eslint-plugin": "^4.29.0",
         "@typescript-eslint/parser": "^4.23.0",
         "eslint": "^7.26.0",
         "eslint-config-airbnb": "^18.2.1",
